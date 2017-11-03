@@ -22,7 +22,7 @@ function getEntries(config) {
     entries = {}
 
   for (i = 0; i < len; i += 1) {
-    entries[config.entryNames[i]] = path.resolve(__dirname, config.entryPaths[i]).replace('.hbs', '.js')
+    entries[config.entryNames[i]] = path.resolve(__dirname, config.entryPaths[i])
   }
 
   return entries

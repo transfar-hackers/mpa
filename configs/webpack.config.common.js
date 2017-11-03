@@ -14,7 +14,7 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.handlebars$/,
+      test: /\.template$/,
       exclude: /node_modules/,
       use: {
         loader: 'handlebars-loader'

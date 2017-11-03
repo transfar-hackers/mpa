@@ -4,13 +4,7 @@
  */
 
 import './style.css'
-
-var template = `<div>
-<div><span>Name:</span><input type='text' /></div>
-<div><span>Gender:</span><input type='text' /></div>
-<div><span>Gender:</span><span>{{info.name}}<</div>
-<div><span>Gender:</span><span>{{info.gender}}<</div>
-</div>`
+var template = require('./BasicInformation.template')
 
 module.exports = {
   render: render

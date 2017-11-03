@@ -1,0 +1,6 @@
+<div>
+  <div><span>Name:</span><input type='text' /></div>
+  <div><span>Gender:</span><input type='text' /></div>
+  <div><span>Gender:</span><span>{{info.name}}</span></div>
+  <div><span>Gender:</span><span>{{info.gender}}</span></div>
+</div>

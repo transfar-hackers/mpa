@@ -1,5 +1,5 @@
 import './style.css'
-const messageTemplate = require('./index.handlebars')
+const messageTemplate = require('./Index.template')
 const BasicInfo = require('../../components/BasicInfoComponent/index.js')
 
 $((function(host) {
