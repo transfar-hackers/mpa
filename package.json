@@ -1,0 +1,50 @@
+{
+  "name": "try-webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --env.isDevelopment --config configs/webpack.config.development.js --colors",
+    "watch": "webpack --env.isDevelopment --watch --config configs/webpack.config.development.js --colors --progress",
+    "build:dev": "webpack --env.isDevelopment --config configs/webpack.config.development.js --colors",
+    "build:test": "webpack --env.isTest --config configs/webpack.config.test.js --colors --progress",
+    "build:prod": "webpack --env.isProduction --config configs/webpack.config.production.js --colors --progress"
+  },
+  "author": "j-sparrow",
+  "license": "ISC",
+  "dependencies": {
+    "handlebars": "^4.0.11",
+    "handlebars-layouts": "^3.1.4",
+    "handlebars-loader": "^1.6.0",
+    "jquery": "^3.2.1",
+    "moment": "^2.19.1",
+    "sass-loader": "^6.0.6"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "clean-webpack-plugin": "^0.1.17",
+    "css-loader": "^0.28.7",
+    "csv-loader": "^2.1.1",
+    "debug": "^3.1.0",
+    "express": "^4.16.2",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.4",
+    "html-webpack-harddisk-plugin": "^0.1.0",
+    "html-webpack-plugin": "^2.30.1",
+    "image-webpack-loader": "^3.4.2",
+    "less-loader": "^4.0.5",
+    "nodemon": "^1.12.1",
+    "serve-static": "^1.13.1",
+    "style-loader": "^0.18.2",
+    "uglifyjs-webpack-plugin": "*",
+    "webpack": "^3.6.0",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-dev-server": "^2.9.1",
+    "webpack-merge": "^4.1.0",
+    "whatwg-fetch": "^2.0.3",
+    "xml-loader": "^1.2"
+  }
+}
