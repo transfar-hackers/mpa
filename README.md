@@ -1,2 +1,2 @@
 # playground
-a front end code playground for sharing
+a front end code playground for sharing ideas
