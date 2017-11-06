@@ -6,9 +6,11 @@ a scafflod project based on webpack 3.x, aralejs, handlebars.js and jquery for m
 
 2 execute: yarn              --> installs all dependencies
 
-3 execute: npm run build:dev --> this builds the project into ./dist directory
+3 execute: npm run watch     --> this builds the project into ./dist directory and watch it
 
-4 execute: npm start         --> this will start webpack-dev-server and listens on http://localhost:3000
+4 execute: nodemon ./index.js --> this starts up express.js web-server to serve the ./dist directory
+
+5 execute browser, navigate to http://localhost:3000/index/index.html
 
 # project structure conventions
 1 resources are grouped by pages using directories

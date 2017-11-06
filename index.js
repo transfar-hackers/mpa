@@ -4,11 +4,7 @@
  */
 const express = require('express')
 const path = require('path')
-const webpack = require('webpack')
-const WebpackMiddleware = require('webpack-dev-middleware')
-const config = require('./configs/webpack.config.development.js')
 const debug = require('debug')('express')
-
 const app = express();
 const port = 3000;
 
