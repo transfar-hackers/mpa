@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --env.isDevelopment --config configs/webpack.config.development.js --colors",
-    "watch": "webpack --env.isDevelopment --watch --config configs/webpack.config.development.js --colors --progress",
-    "build:dev": "webpack --env.isDevelopment --config configs/webpack.config.development.js --colors",
-    "build:test": "webpack --env.isTest --config configs/webpack.config.test.js --colors --progress",
-    "build:prod": "webpack --env.isProduction --config configs/webpack.config.production.js --colors --progress"
+    "watch": "webpack --env.isDevelopment --watch --config configs/webpack.config.development.js --colors",
+    "build:dev": "webpack --env.isDevelopment --config configs/webpack.config.development.js --colors --watch",
+    "build:prod": "webpack --env.isProduction --config configs/webpack.config.production.js --colors"
   },
   "author": "j-sparrow",
   "license": "ISC",

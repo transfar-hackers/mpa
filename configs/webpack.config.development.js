@@ -16,9 +16,9 @@ const devConfig = {
   ],
   devtool: 'inline-source-map',
   devServer: { // this is for webpack-dev-server
-    contentBase: './dist',
-    hot: true,
-    port: 3000
+    // contentBase: './dist',
+    // hot: true,
+    // port: 3000
   }
 }
 
