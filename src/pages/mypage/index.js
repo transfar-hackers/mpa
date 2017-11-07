@@ -9,7 +9,7 @@ module.exports = {
 
 $((function(host) {
   const html = messageTemplate({
-    author: 'j-sparrow'
+    author: 'j-sparrowssss'
   })
 
   $('#message').html(html)

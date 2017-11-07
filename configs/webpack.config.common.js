@@ -1,6 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const HtmlWebpackHarddisPlugin = require('html-webpack-harddisk-plugin')
+  // const HtmlWebpackHarddisPlugin = require('html-webpack-harddisk-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')

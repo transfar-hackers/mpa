@@ -46,8 +46,14 @@ function generatePlugins(config) {
   return plugins
 }
 
+function removePostfix(fullname) {
+  // console.log(fullname)
+  return fullname.split('.')[0]
+}
+
 module.exports = {
   calculateHtmlOutpath: calculateHtmlOutpath,
   getEntries: getEntries,
-  generatePlugins: generatePlugins
+  generatePlugins: generatePlugins,
+  removePostfix: removePostfix
 }

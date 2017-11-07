@@ -2,13 +2,14 @@ import './style.css'
 const messageTemplate = require('./Index.template')
 const BasicInfo = require('../../components/BasicInfoComponent/index.js')
 
-
 $((function(host) {
   const html = messageTemplate({
-    author: 'j-sparrow'
+    author: 'Jack Sparrow'
   })
 
-  $('#message').html(html)
+  console.log(html)
+    // $('#message').html(html)
+  document.getElementById('message').innerHTML = 'index page'
 
 
 })(window))
