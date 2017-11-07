@@ -11,10 +11,12 @@ module.exports = {
 }
 
 function render(data) {
-  let compiler = handlebars.compile(template)
-  let html = compiler({
+  let html = template({
     info: {
-      name: 'jack sparrow'
+      name: 'jack sparrow',
+      gender: 'female'
     }
   })
+
+  return html
 }
