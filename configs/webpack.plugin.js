@@ -27,12 +27,19 @@ function AssetsFilterForHTML(options) {}
 AssetsFilterForHTML.prototype.apply = function(compiler) {
   compiler.plugin('compilation', function(compilation) {
     compilation.plugin('html-webpack-plugin-before-html-processing', function(htmlPluginData, callback) {
-      let htmlName = MyPath.removePostfix(htmlPluginData.outputName.split('/')[0])
+      let isWindows = htmlPluginData.outputName.indexOf('\\') !== -1
+      let htmlName = ''
       let upperAssetsJS = htmlPluginData.assets.js,
         upperAssetsCSS = htmlPluginData.assets.css,
         usefulJS = [],
         usefulCSS = [],
         commonJS = ''
+
+      if (!isWindows) {
+        htmlName = MyPath.removePostfix(htmlPluginData.outputName.split('/')[0])
+      } else {
+        htmlName = MyPath.removePostfix(htmlPluginData.outputName.split(`\\`)[0])
+      }
 
       for (let i = 0; i < upperAssetsJS.length; i += 1) {
         if (upperAssetsJS[i].indexOf('common.js') !== -1) {
@@ -41,6 +48,7 @@ AssetsFilterForHTML.prototype.apply = function(compiler) {
       }
       // console.log(htmlPluginData.assets.js)
       for (let i = 0; i < upperAssetsJS.length; i += 1) {
+        console.log(`htmlname: ${htmlName}, js name: ${upperAssetsJS[i]}`)
         if (upperAssetsJS[i].indexOf(htmlName) !== -1) {
           usefulJS.push(upperAssetsJS[i])
         }
