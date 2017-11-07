@@ -8,8 +8,8 @@ $((function(host) {
   })
 
   console.log(html)
-    // $('#message').html(html)
-  document.getElementById('message').innerHTML = 'index page'
+  $('#message').html(html)
+    // document.getElementById('message').innerHTML = 'index page'
 
 
 })(window))

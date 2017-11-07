@@ -52,13 +52,22 @@ AssetsFilterForHTML.prototype.apply = function(compiler) {
       let upperAssetsJS = htmlPluginData.assets.js,
         upperAssetsCSS = htmlPluginData.assets.css,
         usefulJS = [],
-        usefulCSS = []
+        usefulCSS = [],
+        commonJS = ''
+
+      for (let i = 0; i < upperAssetsJS.length; i += 1) {
+        if (upperAssetsJS[i].indexOf('common.js') !== -1) {
+          commonJS = upperAssetsJS[i]
+        }
+      }
+      console.log(htmlPluginData.assets.js)
 
       for (let i = 0; i < upperAssetsJS.length; i += 1) {
         if (upperAssetsJS[i].indexOf(htmlName) !== -1) {
           usefulJS.push(upperAssetsJS[i])
         }
       }
+      usefulJS.splice(0, 0, commonJS)
       htmlPluginData.assets.js = usefulJS
 
       for (let i = 0; i < upperAssetsCSS.length; i += 1) {
@@ -71,7 +80,7 @@ AssetsFilterForHTML.prototype.apply = function(compiler) {
       //console.log(`assets after: `)
       //console.log(usefulAssets)
       // htmlPluginData.plugin.assetJson = JSON.stringify(usefulAssets)
-      console.log(htmlPluginData)
+      // console.log(htmlPluginData)
       callback(null, htmlPluginData)
     })
   })
