@@ -1,5 +1,5 @@
 # mpa-scafflod
-a scafflod project based on webpack 3.x, aralejs, handlebars.js and jquery for multiple pages web application
+a scafflod project based on handlebars.js, jquery and aralejs for multiple pages web application
 
 # how to run it?
 1 navigate to the root directory(where this README.md file resides)
@@ -10,7 +10,7 @@ a scafflod project based on webpack 3.x, aralejs, handlebars.js and jquery for m
 
 4 execute: nodemon ./index.js --> this starts up express.js web-server to serve the ./dist directory
 
-5 execute browser, navigate to http://localhost:3000/index/index.html
+5 use web browser, navigate to http://localhost:3000/index/index.html
 
 # project structure conventions
 1 resources are grouped by pages using directories

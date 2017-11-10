@@ -1,4 +1,6 @@
+import 'babel-polyfill'
 import './style.css'
+
 const messageTemplate = require('./Index.template')
 const BasicInfo = require('../../components/BasicInfoComponent/index.js')
 
@@ -7,12 +9,11 @@ $((function(host) {
     author: 'Jack Sparrow!!!'
   })
 
-  console.log(BasicInfo)
-
   let html2 = BasicInfo.render()
-    // console.log(html2)
 
-  console.log(html)
+  var greet = (msg) => console.log(msg)
+  greet('hello babel')
+
   $('#message').html(html)
   $('#message').append(html2)
 

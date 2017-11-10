@@ -1,6 +1,7 @@
+import 'babel-polyfill'
 import './style.css'
-const messageTemplate = require('./Message.template')
 
+const messageTemplate = require('./Message.template')
 const BasicInfo = require('../../components/BasicInfoComponent/index.js')
 
 module.exports = {

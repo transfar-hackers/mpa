@@ -17,7 +17,7 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common' // name the bundle for common modules across different bundles
     }),
-    new AssetsFilterForHTML({
+    new AssetsFilterForHTML({ // custom plugin to filter irrelevant assets
       options: AppConfig
     })
   ]
@@ -48,7 +48,7 @@ AssetsFilterForHTML.prototype.apply = function(compiler) {
       }
       // console.log(htmlPluginData.assets.js)
       for (let i = 0; i < upperAssetsJS.length; i += 1) {
-        console.log(`htmlname: ${htmlName}, js name: ${upperAssetsJS[i]}`)
+        // console.log(`htmlname: ${htmlName}, js name: ${upperAssetsJS[i]}`)
         if (upperAssetsJS[i].indexOf(htmlName) !== -1) {
           usefulJS.push(upperAssetsJS[i])
         }
