@@ -6,7 +6,7 @@ a scafflod project based on handlebars.js, jquery and aralejs for multiple pages
 
 2 execute: yarn              --> installs all dependencies
 
-3 execute: npm run watch     --> this builds the project into ./dist directory and watch it
+3 execute: npm run build     --> this builds the project into ./dist directory and watch it
 
 4 execute: nodemon ./index.js --> this starts up express.js web-server to serve the ./dist directory
 

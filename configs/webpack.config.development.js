@@ -15,10 +15,10 @@ const devConfig = {
     new webpack.HotModuleReplacementPlugin()
   ],
   devtool: 'inline-source-map',
-  devServer: { // this is for webpack-dev-server
-    // contentBase: './dist',
-    // hot: true,
-    // port: 3000
+  watch: true,
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000
   }
 }
 

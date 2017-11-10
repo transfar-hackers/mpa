@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run watch && nodemon ../app.js",
-    "watch": "webpack --env.isDevelopment --watch --config configs/webpack.config.development.js --colors",
     "build": "webpack --config configs/webpack.config.development.js --colors",
-    "build:prod": "webpack --config configs/webpack.config.production.js --colors"
+    "release": "webpack --config configs/webpack.config.production.js --colors"
   },
   "author": "j-sparrow",
   "license": "ISC",
