@@ -9,8 +9,7 @@ const debug = require('debug')('webpack.config.common')
 module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
-    // publicPath: '',
-    filename: '[name]/[name].js'
+    filename: '[name]/[hash:8][name].js'
   },
   module: {
     rules: [{
@@ -72,8 +71,7 @@ module.exports = {
         loader: 'file-loader',
         options: {
           name: 'styles/fonts/[hash:8][name].[ext]',
-          publicPath: '../',
-          //outputPath: path.resolve(__dirname, '../dist/contracts/')
+          publicPath: '../'
         }
       }]
     }, {

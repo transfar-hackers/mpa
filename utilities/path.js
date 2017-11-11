@@ -6,6 +6,8 @@
  */
 
 const path = require('path')
+const fs = require('fs')
+const _ = require('lodash')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 // get output path of .html pages from entry path of .hbs files
@@ -51,9 +53,35 @@ function removePostfix(fullname) {
   return fullname.split('.')[0]
 }
 
+// walk through a directory recursively, and return all files in tree structure
+function walkDirSync(dir) {
+  return fs.lstatSync(dir).isDirectory() ?
+    fs.readdirSync(dir).map(file => walkDirSync(path.join(dir, file))) :
+    dir;
+}
+
+// return in flat array
+function walkDirSyncFlat(dir) {
+  let fileTree = walkDirSync(dir),
+    filesFlat = []
+
+  function collectFile(name) {
+    _.isArray(name) ? _.each(name, (item) => {
+        collectFile(item)
+      }) :
+      filesFlat.push(name)
+  }
+
+  collectFile(fileTree)
+
+  return filesFlat
+}
+
 module.exports = {
   calculateHtmlOutpath: calculateHtmlOutpath,
   getEntries: getEntries,
   generatePlugins: generatePlugins,
-  removePostfix: removePostfix
+  removePostfix: removePostfix,
+  walkDirSync: walkDirSync,
+  walkDirSyncFlat: walkDirSyncFlat
 }

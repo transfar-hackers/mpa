@@ -5,6 +5,8 @@
  *
  */
 const path = require('path')
+const fs = require('fs')
+const _ = require('lodash')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -17,14 +19,24 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common' // name the bundle for common modules across different bundles
     }),
-    new AssetsFilterForHTML({ // custom plugin to filter irrelevant assets
-      options: AppConfig
+    new AssetsFilterWebpackPlugin({ // custom plugin to filter irrelevant assets
+      options: null
+    }),
+    new BuildCleanerWebpackPlugin({
+      options: null
     })
   ]
 };
 
-function AssetsFilterForHTML(options) {}
-AssetsFilterForHTML.prototype.apply = function(compiler) {
+/*
+ * while generating assets(.js|.css files) and attach them to the html pages,
+ * html-webpack-plugin attach all of them to each html file, which, is not what we
+ * wanted.
+ * we filter out the assets files which do not belong to the specific html file.
+ * author: j-sparrow
+ */
+function AssetsFilterWebpackPlugin(options) {}
+AssetsFilterWebpackPlugin.prototype.apply = function(compiler) {
   compiler.plugin('compilation', function(compilation) {
     compilation.plugin('html-webpack-plugin-before-html-processing', function(htmlPluginData, callback) {
       let isWindows = htmlPluginData.outputName.indexOf('\\') !== -1
@@ -64,6 +76,32 @@ AssetsFilterForHTML.prototype.apply = function(compiler) {
       htmlPluginData.assets.css = usefulCSS
 
       callback(null, htmlPluginData)
+    })
+  })
+}
+
+/*
+ * In watch mode, any changes made will cause webpack to rebuild incrementally, and each rebuild
+ * generates lots of extra files.
+ * CleanWebpackPlugin is triggered only when webpack builds the whole project, so
+ * here we need a cleaner whenever an incremental(partial) build is performed.
+ * author: j-sparrow
+ */
+function BuildCleanerWebpackPlugin(options) {}
+BuildCleanerWebpackPlugin.prototype.apply = function(compiler) {
+  compiler.plugin('done', function(compilation) {
+    let existingFiles = MyPath.walkDirSyncFlat(path.resolve(__dirname, '../dist'))
+    let newFiles = Object.keys(compilation.compilation.assets)
+      // remove outdated output files
+    _.each(existingFiles, file => {
+      var shortname = file.split('dist')[1].slice(1)
+      console.log(`file: ${file}, shortname: ${shortname}`)
+      if (newFiles.indexOf(shortname) === -1) {
+        // file outdated, delete it
+        fs.unlink(file, () => {
+          console.log(`${file} deleted`)
+        })
+      }
     })
   })
 }
