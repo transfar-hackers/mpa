@@ -2,7 +2,6 @@
  * filename: webpack.plugin.js
  * purpose: generate entries depending on app.config.js
  * author: j-sparrow
- *
  */
 const path = require('path')
 const fs = require('fs')
@@ -95,12 +94,15 @@ BuildCleanerWebpackPlugin.prototype.apply = function(compiler) {
       // remove outdated output files
     _.each(existingFiles, file => {
       var shortname = file.split('dist')[1].slice(1)
-      console.log(`file: ${file}, shortname: ${shortname}`)
-      if (newFiles.indexOf(shortname) === -1) {
+      var reg = /\.(woff|ttf|gif|svg|eot)$/ // (ignore .woff, .ttf, .gif, .svg, .eot files, they don't regrenerate)
+      if (newFiles.indexOf(shortname) === -1 &&
+        (!reg.test(shortname))) {
         // file outdated, delete it
         fs.unlink(file, () => {
-          console.log(`${file} deleted`)
+          console.log(`${file} outdated and therefore deleted`)
         })
+
+        console.log('incremental compilation done! please press F5 to refresh page')
       }
     })
   })

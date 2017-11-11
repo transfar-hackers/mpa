@@ -9,6 +9,7 @@ a scafflod project based on handlebars.js, jquery and aralejs for multiple pages
 3 execute: npm run build     --> this builds the project into ./dist directory and watch it
 
 4 execute: nodemon ./index.js --> this starts up express.js web-server to serve the ./dist directory
+                              --> it's recommended to use nginx server to serve ./dist directory
 
 5 use web browser, navigate to http://localhost:3000/index/index.html
 

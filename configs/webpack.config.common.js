@@ -52,11 +52,6 @@ module.exports = {
       test: /\.xml$/,
       use: ['xml-loader']
     }, {
-      test: require.resolve('tinymce/tinymce'),
-      use: ['imports-loader?this=>window',
-        'exports-loader?window.tinymce'
-      ]
-    }, {
       test: /\.(png|svg|jpg|gif)$/,
       use: {
         loader: 'file-loader',
@@ -74,9 +69,6 @@ module.exports = {
           publicPath: '../'
         }
       }]
-    }, {
-      test: /tinymce\/(themes|plugins)\//,
-      use: ['imports-loader?this=>window']
     }]
   },
   plugins: [

@@ -23,6 +23,9 @@ import 'tinymce/plugins/preview/plugin'
 import 'tinymce/plugins/save/plugin'
 import 'tinymce/plugins/autoresize/plugin'
 
+// language package
+import './zh_CN.js'
+
 // const template = require('./Contract.template')
 
 module.exports = tinymce
