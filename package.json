@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run watch && nodemon ../app.js",
+    "start": "npm run build && nodemon ../app.js",
     "build": "webpack --config configs/webpack.config.development.js --colors --progress",
     "release": "webpack --config configs/webpack.config.production.js --colors --progress"
   },
