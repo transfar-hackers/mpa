@@ -6,7 +6,7 @@
  */
 const path = require('path')
 const AppConfig = require('./app.config.js')
-const MyPath = require('../utilities/path.js')
+const MyPath = require('../src/utilities/path.js')
 
 module.exports = {
   entry: MyPath.getEntries(AppConfig)

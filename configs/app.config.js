@@ -9,7 +9,7 @@ const path = require('path')
 
 module.exports = {
   srcPath: path.resolve(__dirname, '../src'),
-  entryNames: ['index', 'mypage', 'contracts'],
-  entryPaths: ['../src/pages/index/index.js', '../src/pages/mypage/index.js', '../src/pages/contracts/index.js'],
+  entryNames: ['index', 'mypage', 'contracts'], // per entry per html(used for html-webpack-plugin)
+  entryPaths: ['index.js', 'index.js', 'index.js'], // per html page per entry(for webpack to generate dependency graph)
   outputRoot: path.resolve(__dirname, '../dist')
 }

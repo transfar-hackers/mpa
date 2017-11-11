@@ -1,7 +1,0 @@
-<div>
-  <!-- <form method='post'> -->
-    <span>{{info.name}}</span><br />
-    <span>{{info.gender}}</span>
-    <div id='editor'></div>
-  <!-- </form> -->
-</div>

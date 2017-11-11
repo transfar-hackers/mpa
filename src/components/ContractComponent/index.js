@@ -1,9 +1,9 @@
 /*
  * filename: index.js
- * purpose: entry point of contract component
+ * purpose: exports a tinymce object, this component does not have UI
+ * author: j-sparrow
  */
 
-import './style.css'
 import tinymce from 'tinymce/tinymce'
 import 'tinymce/themes/modern/theme'
 import 'tinymce/skins/lightgray/skin.min.css'
@@ -26,29 +26,4 @@ import 'tinymce/plugins/autoresize/plugin'
 // language package
 import './zh_CN.js'
 
-// const template = require('./Contract.template')
-
 module.exports = tinymce
-
-/*
-function render(data) {
-  let html = template({
-    info: {
-      name: 'jack sparrow',
-      gender: 'male'
-    }
-  })
-
-  tinymce.init({
-    // selector: '#contractEditor',
-    target: $(html)[0],
-    height: 200,
-    skin: false,
-    // inline: true,
-    plugins: 'advlist autolink link image imagetools lists charmap preview save autoresize',
-    toolbar: 'undo redo | styleselect | bold italic | link image',
-  })
-
-  return html
-}
-*/
