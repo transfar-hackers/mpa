@@ -35,9 +35,9 @@ module.exports = {
  * author: j-sparrow
  */
 function AssetsFilterWebpackPlugin(options) {}
-AssetsFilterWebpackPlugin.prototype.apply = function(compiler) {
-  compiler.plugin('compilation', function(compilation) {
-    compilation.plugin('html-webpack-plugin-before-html-processing', function(htmlPluginData, callback) {
+AssetsFilterWebpackPlugin.prototype.apply = function (compiler) {
+  compiler.plugin('compilation', function (compilation) {
+    compilation.plugin('html-webpack-plugin-before-html-processing', function (htmlPluginData, callback) {
       let isWindows = htmlPluginData.outputName.indexOf('\\') !== -1
       let htmlName = ''
       let upperAssetsJS = htmlPluginData.assets.js,
@@ -87,19 +87,21 @@ AssetsFilterWebpackPlugin.prototype.apply = function(compiler) {
  * author: j-sparrow
  */
 function BuildCleanerWebpackPlugin(options) {}
-BuildCleanerWebpackPlugin.prototype.apply = function(compiler) {
-  compiler.plugin('done', function(compilation) {
+BuildCleanerWebpackPlugin.prototype.apply = function (compiler) {
+  compiler.plugin('done', function (compilation) {
     let existingFiles = MyPath.walkDirSyncFlat(path.resolve(__dirname, '../dist'))
     let newFiles = Object.keys(compilation.compilation.assets)
       // remove outdated output files
+    console.log(`new files: ${newFiles}`)
     _.each(existingFiles, file => {
       var shortname = file.split('dist')[1].slice(1)
-      var reg = /\.(woff|ttf|gif|svg|eot)$/ // (ignore .woff, .ttf, .gif, .svg, .eot files, they don't regrenerate)
-      if (newFiles.indexOf(shortname) === -1 &&
+      var reg = /\.(woff|ttf|gif|svg|eot|html)$/ // (ignore .woff, .ttf, .gif, .svg, .eot files, they don't regrenerate)
+        // console.log(`existing file: ${shortname}`)
+      if (newFiles.indexOf(shortname.replace(`\\`, `/`)) === -1 &&
         (!reg.test(shortname))) {
         // file outdated, delete it
         fs.unlink(file, () => {
-          console.log(`${file} outdated and therefore deleted`)
+          console.log(`${file} is outdated and therefore deleted `)
         })
 
         console.log('incremental compilation done! please press F5 to refresh page')
