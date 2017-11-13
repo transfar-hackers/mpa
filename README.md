@@ -4,11 +4,11 @@ a scafflod project based on handlebars.js, jquery and aralejs for multiple pages
 # how to run it?
 1 navigate to the root directory(where this README.md file resides)
 
-2 execute: yarn              --> installs all dependencies, if yarn doesn't work on your machine, use 'cnpm install' instead
+2 execute: cnpm i            --> installs all dependencies
 
 3 execute: npm run build     --> this builds the project into ./dist directory and watch it
 
-4 execute: npm start         --> this starts up express.js web-server to serve the ./dist directory
+4 execute: npm run listen    --> this starts up express.js web-server to serve the ./dist directory
                              --> it's recommended to use nginx server instead to serve ./dist directory
 
 5 use web browser, navigate to http://localhost:3000/index/index.html
