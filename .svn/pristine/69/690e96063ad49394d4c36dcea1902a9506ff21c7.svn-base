@@ -1,0 +1,69 @@
+import 'babel-polyfill'
+import './style.css'
+
+const orders = require('../../utilities/mock_data.js').logistic_orders
+const http = require('../../common/http.js')
+const OrderListTemplate = require('./templates/orderlist.template')
+const HeaderTemplate = require('../../components/HeaderComponent/index.js')
+
+$((function(host) {
+  let orderListHTML = OrderListTemplate({
+    orders: orders
+  })
+
+  let headerHTML = ''
+  HeaderTemplate.getUserInfo().then(userStatus => {
+    HeaderTemplate.getEnterpriseRole(userStatus).then(userStatus => {
+      headerHTML = HeaderTemplate.render(userStatus)
+      $('.header').html(headerHTML)
+      initHeader()
+    }, error => {})
+  }, error => {})
+
+  $('.order-list').html(orderListHTML)
+
+})(window))
+
+function initHeader() {
+  // 反馈按钮
+  var fkHtml = `<script id="tfFeedBackScriptId" src='https://hive.tf56.com/hiveService/js/views/feedback/feedback.js'
+                    product="B2B" productVersion="V1.1.1"></script>`;
+  // $("body").append(fkHtml);
+
+  $(document).on('click', '#logOut', function() {
+    http.ajax({
+      url: '/passport/logoutWeb',
+      domain: getDomain(),
+      noToken: true,
+      cache: true,
+      dataType: 'jsonp',
+      type: 'get'
+    }).then(function(data) {
+      if (data[1] === 'success') {
+        initPage();
+        window.location.reload();
+      }
+    }, function(data) {});
+  }).on('click', '#login', function() {
+    http.ajax({
+      url: '/treasureWeb/main/getLoginServerAddress.do',
+      type: 'post'
+    }).then(function(data) {
+      var data = data[0];
+      if (data && data.code == 0) {
+        window.location.href = data.data + window.document.location.href;
+      }
+    }, function(data) {});
+  }).on('click', '#registe', function() {
+    http.ajax({
+      url: '/treasureWeb/main/getLoginServerAddress.do',
+      type: 'post'
+    }).then(function(data) {
+      var data = data[0];
+      if (data && data.code == 0) {
+        window.location.href = data.data + window.document.location.href;
+      }
+
+    }, function(data) {});
+  });
+}

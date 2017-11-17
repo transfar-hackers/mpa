@@ -1,0 +1,16 @@
+<div class="header-topbar">
+    <div class="header-box">
+        <ul class="header-fr">
+            <li >
+                {{#if isLogin}}
+                <a href="#">{{partyname}}</a> | <a href="#" id="logOut">退出</a>
+                {{else}}
+                <a href="#" id='login'>登录</a> | <a href="#" id="registe">注册</a>
+                {{/if}}
+                |<a href="/index.html">回到首页</a>
+            </li>
+            <li><a href="{{url}}">运营中心</a></li>
+            <li><span id="header"></span></li>
+        </ul>
+    </div>
+</div>

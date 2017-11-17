@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>订单详情 - 传化商城</title>
+    <meta name="description" content="传化商城是一个致力于打造信息流、商流、资金流、物流四流合一的电商综合服务平台，为采购商和供应商提供全供应链式服务，实现无门槛的线上交易。"/>
+    <meta name="Author" content="Transfar,传化"/>
+</head>
+<body>
+<div id="header"></div>
+<div id="content"></div>
+<div id="footer"></div>
+</body>
+</html>

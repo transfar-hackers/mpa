@@ -1,0 +1,13 @@
+import 'babel-polyfill'
+import './style.css'
+
+const orders = require('../../utilities/mock_data.js').logistic_orders
+const OrderTemplate = require('./templates/order.template')
+
+
+$((function(host) {
+  let orderHTML = OrderTemplate(orders[0])
+
+  $('.order-list').html(orderHTML)
+
+})(window))

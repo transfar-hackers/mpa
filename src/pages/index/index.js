@@ -3,18 +3,13 @@ import './style.css'
 
 const messageTemplate = require('./Index.template')
 const BasicInfo = require('../../components/BasicInfoComponent/index.js')
-
+  // const links = require('../../components/LinksComponent/index.js');
+import Links from '../../components/LinksComponent/index';
 $((function(host) {
   const html = messageTemplate({
     author: 'Jack Sparrow!!!'
   })
 
-  let html2 = BasicInfo.render()
-
-  var greet = (msg) => console.log(msg)
-  greet('hello babel')
-
   $('#message').html(html)
-  $('#message').append(html2)
-
+  Links.render($("#links"))
 })(window))

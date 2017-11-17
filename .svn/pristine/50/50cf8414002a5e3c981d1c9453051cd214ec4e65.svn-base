@@ -1,0 +1,26 @@
+<div class="m-leftnav">
+    {{#each data}}
+        {{#equel ../roleData roleType}}
+        <div  class="m-leftnav-con">
+        <div id={{roleType}} class="m-leftnav-item">
+        <h3><i class='iconfont {{iconfont}}'></i><a>{{listName}}</a></h3>
+            <ul>
+                {{#each subList}}
+                    {{#if goodsAdminList}}
+                        <li class="btn"><a href="javascript:void(0);">{{this.linksName}}</a><span class="f-float-right arrow"></span>
+                            <ul class="subnav">
+                                {{#each goodsAdminList}}
+                                    <li><a href={{this.links}}>{{this.linksName}}</a></li>
+                                {{/each}}
+                            </ul>
+                        </li>
+                    {{else}}
+                        <li><a href={{this.links}}>{{this.linksName}}</a></li>
+                    {{/if}}
+                {{/each}}
+            </ul>
+        </div>
+        </div>
+        {{/equel}}
+    {{/each}}
+</div>

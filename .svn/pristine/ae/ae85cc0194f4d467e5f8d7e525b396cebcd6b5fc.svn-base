@@ -1,0 +1,19 @@
+<!doctype html>
+<html class="no-js" lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>传化商城 - 全供应链式服务的B2B商城</title>
+    <meta name="description" content="传化商城是一个致力于打造信息流、商流、资金流、物流四流合一的电商综合服务平台，为采购商和供应商提供全供应链式服务，实现无门槛的线上交易。" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+  </head>
+  <body>
+    <a href="../mypage/index.html">Go to mypage</a><br>
+    <a href='../contracts/index.html'>Go to contract editor page</a><br>
+    <a href="../orderdetail/index.html">Go to order detail page</a><br>
+    <a href="../logisticOrders/index.html">Go to logistic orders page</a><br>
+    <div id='message'></div>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+import './header.css'
+import http from '../../common/http'
+
+let template = require('./Header.template')
+
+function getUserInfo() {
+    http.ajax({
+        url: '/treasureWeb/main/getUserSeesion.do',
+        type: 'POST'
+    }).then(()=> {
+        console.log(1)
+    })
+}
+getUserInfo()
+module.exports = {
+    render: (data) => {
+        let html = template({
+            info: {
+                name: 'jack sparrow',
+                gender: 'female'
+            }
+        })
+        return html
+    }
+}

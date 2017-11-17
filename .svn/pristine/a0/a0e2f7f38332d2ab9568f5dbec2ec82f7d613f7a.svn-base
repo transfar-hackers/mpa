@@ -1,0 +1,10 @@
+.comp-banner {
+  height: 84px;
+  width: 1190px;
+  margin: auto;
+}
+.comp-logo {
+  /* width: 1190px; */
+  /* margin: auto; */
+  padding-top: 15px;
+}

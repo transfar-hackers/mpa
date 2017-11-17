@@ -1,0 +1,5 @@
+.order-list {
+  width: 900px;
+  margin-left: 250px;
+  background-color: white;
+}

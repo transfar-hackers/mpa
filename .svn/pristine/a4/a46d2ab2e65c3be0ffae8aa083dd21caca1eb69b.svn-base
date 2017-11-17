@@ -1,0 +1,145 @@
+import './header.css'
+import http from '../../common/http'
+
+let template = require('./Header.template')
+
+/**
+ *  获取用户登录状态
+ */
+function getUserInfo() {
+  return http.ajax({
+    url: '/treasureWeb/main/getUserSeesion.do',
+    type: 'POST'
+  }).then((res) => {
+    let result = res[0];
+    if (result && result.code === 0) {
+      let isLogin = result.data ? true : false;
+      let loginInfoData = {
+        isLogin: isLogin,
+        partyname: isLogin ? result.data.partyname ? result.data.partyname : '' : ''
+      };
+      return loginInfoData;
+    }
+  })
+}
+
+/**
+ *  获取相关权限
+ * @param loginInfoData 登录信息
+ */
+function getEnterpriseRole(loginInfoData) {
+  return http.ajax({
+    url: "/treasureWeb/main/getEnterpriseRole.do",
+    type: 'POST'
+  }).then((res) => {
+    let data = res[0];
+    let role = '';
+
+    if (data && data.code === 0) {
+      let rolePriorities = ['visitor', '采购商', '供应商', '运营商'];
+      let roleDefaultPage = ['/user/orderList.html', '/user/orderList.html', '/seller/orderList.html', '/seller/requirement.html'];
+      let roleLevel = -1;
+      // loop through all roles of a user
+      $(data.data).each(function(index, item) {
+        if (item.roleType === '运营商') {
+          role = '运营商';
+          roleLevel = 3;
+        } else if (item.roleType === '供应商') {
+          role = '供应商';
+          roleLevel > 2 ? '' : roleLevel = 2;
+        } else if (item.roleType === '采购商') {
+          role = '采购商';
+          roleLevel = 1;
+          roleLevel > 1 ? '' : roleLevel = 1;
+        } else {
+          // no role or visitor rule
+          role = 'visitor';
+          ua.url = '';
+          loginInfoData.url = '';
+          roleLevel = 0;
+        }
+      });
+      loginInfoData.role = rolePriorities[roleLevel];
+      loginInfoData.url = roleDefaultPage[roleLevel];
+      return loginInfoData;
+    }
+    return null
+  })
+}
+
+function initPage() {
+  getUserInfo().then((res) => {
+    return getEnterpriseRole(res)
+  }).then((loginInfoData) => {
+    $("header").html(template(loginInfoData));
+
+  })
+}
+
+function isProduct() {
+  // if hostname contains 'test' or 'dev', it's not production
+  var bIsProduct = window.location.hostname.indexOf('test') === -1 || window.location.hostname.indexOf('dev') === -1
+  return bIsProduct
+}
+
+/**
+ * 根据isProduct获取登录、登出域名
+ * @return {[type]} [description]
+ */
+function getDomain() {
+  return isProduct() ? 'https://passport.tf56.com' : '//sitetest.tf56.com';
+}
+
+/**
+ *  渲染
+ */
+$(() => {
+  initPage();
+  // 反馈按钮
+  var fkHtml = `<script id="tfFeedBackScriptId" src='https://hive.tf56.com/hiveService/js/views/feedback/feedback.js'
+                    product="B2B" productVersion="V1.1.1"></script>`;
+  // $("body").append(fkHtml);
+
+  /**
+   *  事件代理
+   *  1.退出登录
+   *  2.登录
+   *  3.注册
+   */
+  $(document).on('click', '#logOut', function() {
+    http.ajax({
+      url: '/passport/logoutWeb',
+      domain: getDomain(),
+      noToken: true,
+      cache: true,
+      dataType: 'jsonp',
+      type: 'get'
+    }).then(function(data) {
+      if (data[1] === 'success') {
+        initPage();
+        window.location.reload();
+      }
+    }, function(data) {});
+  }).on('click', '#login', function() {
+    http.ajax({
+      url: '/treasureWeb/main/getLoginServerAddress.do',
+      type: 'post'
+    }).then(function(data) {
+      var data = data[0];
+      if (data && data.code == 0) {
+        window.location.href = data.data + window.document.location.href;
+      }
+    }, function(data) {});
+  }).on('click', '#registe', function() {
+    http.ajax({
+      url: '/treasureWeb/main/getLoginServerAddress.do',
+      type: 'post'
+    }).then(function(data) {
+      var data = data[0];
+      if (data && data.code == 0) {
+        window.location.href = data.data + window.document.location.href;
+      }
+
+    }, function(data) {});
+  });
+})

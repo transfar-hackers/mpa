@@ -1,0 +1,24 @@
+.order-list {
+
+}
+
+.comp-lo-order {
+  margin: 10px;
+}
+
+.content {
+  width: 970px;
+  margin-left: 250px;
+  background-color: white;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 14px;
+  padding: 20px 0px 10px 30px;
+}
+
+.hr {
+  border-top: 1px solid #EEEEEE;
+  margin: 0 20px;
+}

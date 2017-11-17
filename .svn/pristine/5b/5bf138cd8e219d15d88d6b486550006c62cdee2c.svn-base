@@ -1,0 +1,3 @@
+<div class='banner'>
+  <img src="{{img_url}}" />
+</div>
