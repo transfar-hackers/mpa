@@ -1,6 +1,0 @@
-<div>
-  <div><span class='bold'>Name:</span><input type='text' /></div>
-  <div><span class='bold'>Gender:</span><input type='text' /></div>
-  <div><span class='upper-case'>{{info.name}}</span></div>
-  <div><span class='upper-case'>{{info.gender}}</span></div>
-</div>

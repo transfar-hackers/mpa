@@ -1,0 +1,122 @@
+.zoom{float: right; margin-right: 10px;}
+.pagination,
+.pagination ul,
+.pagination li{
+    padding:0;
+    margin:0;
+    list-style: none;
+    font-size: 14px;
+    font-family: "微软雅黑";
+}
+.pagination{
+    overflow: hidden;
+    padding-left:1px;
+}
+.pagination ul{
+    float: left;
+}
+.pagination li{
+    float: left;
+    background: #fefcfd;
+    text-align: center;
+}
+.pagination li a{
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    color: #5B3E41;
+    padding:3px 0;
+    width: 30px;
+    border:1px solid #ddd;
+    margin: 0 2px;
+}
+.pagination li:hover a{
+    color: #005580;
+    position: relative;
+    border:1px solid #ff6100;
+}
+.pagination li.arrow{
+
+}
+.pagination li.arrow a{
+    width: auto;
+    padding:3px 5px;
+}
+.pagination li.arrow a i{
+    font-style: normal;
+    font-size: 18px;
+    line-height:14px;
+    *line-height: 21px;
+    font-family: Arial;
+}
+.pagination li.arrow a span{
+    font-size: 14px;
+}
+.pagination li.active a{
+    color: #fff;
+    cursor: default;
+    border:1px solid #eb4339;
+    background: #eb4339;
+}
+.pagination li.active:hover a{
+    position: inherit;
+}
+.pagination li.dot{
+    border: none;
+    line-height: 22px;
+    width: 24px;
+    cursor: default;
+    padding:0;
+    color: #999;
+}
+.pagination li.disabled a{
+    color: #5B3E41;
+    cursor: default;
+    background: #fefcfd;
+}
+.pagination li.disabled:hover a{
+    border:1px solid #ddd;
+    position: inherit;
+}
+.fastPageTurning{
+    float: left;
+    font-size: 14px;
+    padding: 2px 0 0 15px;
+}
+.fastPageTurning input{
+    border:1px solid #ddd;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding:4px 0;
+    width: 35px;
+    margin: 0 5px;
+    padding-left:5px;
+    vertical-align: middle;
+}
+.fastPageTurning .numberSubmit{
+    border: 1px solid #ddd;
+    padding:3px 5px;
+    *padding:2px 5px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+.fastPageTurning .numberSubmit:hover{
+    border: 1px solid #ff6100;
+}
+
+.simplePagination li.hidden{
+    display: none !important;
+}
+.simplePagination li.arrow a span{
+    display: inline-block;
+}
+.simplePagination li a{
+    padding: 4px 12px;
+    width: auto;
+}

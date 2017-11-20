@@ -1,6 +1,6 @@
 <div>
-  <div><span class='bold'>Name:</span><input type='text' /></div>
-  <div><span class='bold'>Gender:</span><input type='text' /></div>
-  <div><span class='upper-case'>{{info.name}}</span></div>
-  <div><span class='upper-case'>{{info.gender}}</span></div>
+  <div><span class='bold'>My name is:</span><input type='text' /></div>
+  <div><span class='bold'>My hobbies are:</span><input type='text' /></div><br>
+  <div><span class='upper-case'>My name is: {{info.name}}</span></div>
+  <div><span class='upper-case'>I love {{info.hobbies}}</span></div>
 </div>

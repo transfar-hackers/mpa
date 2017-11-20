@@ -1,0 +1,21 @@
+<div class='step-comp-wrap'>
+  <ul class='step-comp-ul'>
+    {{#each steps}}
+    {{#if isActive}}
+    <li class='step-comp-li active' style='width:{{countWidthHelper ../steps}}'>
+    {{else}}
+    <li class='step-comp-li' style='width:{{countWidthHelper ../steps}}'>
+    {{/if}}
+      <div class='step-comp-process'>
+        <div class='step-comp-left-line'></div>
+        <div class='step-comp-right-line'></div>
+      </div>
+      <div class='step-comp-icon'>
+        <i class='iconfont {{icon}}'></i>
+      </div>
+      <div class='step-comp-title'>{{title}}</div>
+      <div class='step-comp-time'>{{time}}</div>
+    </li>
+    {{/each}}
+  </ul>
+</div>

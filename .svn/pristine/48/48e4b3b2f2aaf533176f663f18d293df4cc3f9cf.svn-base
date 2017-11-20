@@ -1,5 +1,0 @@
-<div class="linksBox">
-  {{#each data}}
-    <a href={{link}}>{{linkName}}</a>
-  {{/each}}
-</div>

@@ -9,22 +9,34 @@
     </div>
   </div>
   <div class='comp-lo-order-body'>
-    <div class='receiver'>
-      <span>{{order.buyer.name}}</span>
+    <div class='name'>
+      <span>{{itemName}}</span>
       <span>{{order.buyer.address}}</span>
     </div >
-    <div class='deliver'>
+    <div class='price'>
       <span>{{order.deliver}}</span>
     </div>
-    <div class='sender'>
-      <span>{{order.sender}}</span>
+    <div class='number'>
+      <span>{{}}</span>
     </div>
-    <div class='operations'>
+    <div class='totalprice'>
+      <span>{{}}</span>
+    </div>
+    <div class='paytype'>
+      <span>{{}}</span>
+    </div>
+    <div class='suppler'>
+      <span>{{}}</span>
+    </div>
+    <div class='orderstatus'>
       <span>{{order.status}}</span>
     </div>
-    <div>
+    <div class='operations'>
       <a href='#'>查看订单</a><br>
       <a href='#'>物流跟踪</a>
+    </div>
+     <div class='elecontract'>
+      <span>{{}}</span>
     </div>
   </div>
 </div>

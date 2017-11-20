@@ -6,18 +6,38 @@
 const path = require('path')
 const fs = require('fs')
 const _ = require('lodash')
+const colors = require('colors')
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const AppConfig = require('./app.config.js')
 const MyPath = require('../src/utilities/path.js')
-const colors = require('colors')
 
 module.exports = {
   plugins: [
     ...MyPath.generatePlugins(AppConfig),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common' // name the bundle for common modules across different bundles
+    }),
+    new CleanWebpackPlugin([path.resolve(__dirname, '../dist')], {
+      root: path.resolve(__dirname, '../')
+    }),
+    new webpack.ProvidePlugin({
+      lodash: 'lodash',
+      jQuery: "jquery",
+      "window.jQuery": "jquery",
+      Proper: ['proper.js', 'default'],
+      $: 'jquery',
+      moment: 'moment',
+      handlebars: 'handlebars'
+    }),
+    new webpack.DefinePlugin({
+      appRoot: JSON.stringify(path.resolve(__dirname, '..'))
+    }),
+    new ExtractTextPlugin({
+      filename: "[name]/[chunkhash][name].css",
+      allChunks: true
     }),
     new AssetsFilterWebpackPlugin({ // custom plugin to filter irrelevant assets
       options: null

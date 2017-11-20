@@ -1,8 +1,0 @@
-import 'babel-polyfill'
-import './style.css'
-const Header = require('../../components/HeaderComponent/index.js')
-
-$(() => {
-    let header = Header.render();
-    $("#header").html(header);
-})

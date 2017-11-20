@@ -16,6 +16,39 @@
     <a href='../contracts/index.html'>Go to contract editor page</a><br>
     <a href="../logisticOrders/index.html">Go to logistic orders page</a><br>
     <div class="m-leftnav"></div>
-    <header></header>
-  </body>
+  <header></header>
+  <!-- Button to trigger modal dialog -->
+  <button type="button" data-target="#myDialog" class="btn btn-primary" data-toggle="modal" data-backdrop='static'>
+  Dialog
+  </button>
+  <div class='comp-dialog'></div>
+  <!-- end of dialog  -->
+  <!-- pagination code -->
+  <div class='my-pagination'></div>
+  <div class='hero-list'></div>
+  <!-- end of pagination code -->
+  <!-- bootstraps tabs code -->
+  <div class='my-tabs'>
+  <ul class='nav nav-tabs my-tab-header'>
+    <li><a data-toggle='tab' href='#contracts-management'>Contracts Management</a></li>
+    <li class='active'><a data-toggle='tab' href='#contract-templates-management'>Contract Templates Management</a></li>
+    <li><a data-toggle='tab' href='#other-contents'>Some other contents</a></li>
+  </ul>
+  <div class='tab-content'>
+    <div id='contracts-management' class='tab-pane fade'>
+      <span>I'm Jack Sparrow</span><br>
+      <span>I'm managing your CONTRACTS!</span>
+    </div>
+    <div id='contract-templates-management' class='tab-pane fade in active'>
+      <span>I'm Jack Sparrow</span><br>
+      <span>I'm managing your contract TEMPLATES!</span>
+    </div>
+    <div id='other-contents' class='tab-pane fade'>
+      <span>I'm Jack Sparrow</span><br>
+      <span>Here are some other contents for you!</span>
+    </div>
+  </div>
+  </div>
+  <!--end of bootstraps tabs code -->
+</body>
 </html>

@@ -1,3 +1,0 @@
-<div>
-  <h3>Welcome to mypage, by abc: {{author}}!</h3>
-</div>

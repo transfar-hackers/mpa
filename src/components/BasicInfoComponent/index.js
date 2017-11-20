@@ -12,10 +12,11 @@ module.exports = {
 }
 
 function render(data) {
-  let html = template({
+  let html = template(data ? data : {
     info: {
       name: 'jack sparrow',
-      gender: 'female'
+      hobbies: 'adventure, and the ocean',
+      gender: 'male'
     }
   })
 

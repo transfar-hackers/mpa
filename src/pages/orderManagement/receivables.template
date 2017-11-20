@@ -1,0 +1,46 @@
+<div class="receivables-container">
+  {{#receivablesData}}
+  <div class="order-header">
+    <div class="td-width1">总应收账款：<span>{{totalMoney}}</span>&nbsp元</div>
+    <div class="td-width1">未到账：<span>{{weidao}}</span>&nbsp元</div>
+    <div class="td-width1">已到账：<span>{{yidao}}</span>&nbsp元</div>
+  </div>
+  <div class="order-title">
+    <div class="td-width2">客户名称</div>
+    <div class="td-width3">合同总金额(元)</div>
+    <div class="td-width3">商品总金额(元)</div>
+    <div class="td-width2">运费(元)</div>
+    <div class="td-width2">应收款项(元)</div>
+    <div class="td-width3">未收款项(元)</div>
+    <div class="td-width2">已收款项(元)</div>
+    <div class="td-width2">操作</div>
+    <div class="td-width2"><input type="checkbox" value='vertification' id="vertif">只看待核销</div>
+  </div>
+
+  <div class="orderManagementTable">
+    {{#each order}}
+    <div class="order">
+      <div class="order-up">
+        <div class="td-width3">订单编号：{{this.number}}</div>
+        <div class="td-width5">下单时间：{{this.orderDateTime}}</div>
+      </div>
+      <div class="order-down">
+        <div class="td-width2">{{this.buyer.name}}</div>
+        <div class="td-width3">{{this.orderMoney}}</div>
+        <div class="td-width3">{{this.goodsMoney}}</div>
+        <div class="td-width2">{{this.deliverMoney}}</div>
+        <div class="td-width3">{{this.receiveMoney}}</div>
+        <div class="td-width3">{{this.weishou}}</div>
+        <div class="td-width3">{{this.yishou}}</div>
+        <div class="td-width2">
+          <button type="button" class="vertificate" data-toggle="modal" data-target="#exampleModal" data-backdrop='static' data-id={{number}}>核销</button>
+          <!--<button type="button" value="vertificate" class="vertificate" data-id={{number}}>-->
+        </div>
+        <div class="td-width2"><a href="#">查看订单</a></div>
+    </div>
+    </div>
+    {{/each}}
+  </div>
+
+  {{/receivablesData}}
+</div>

@@ -1,7 +1,7 @@
 {
   "name": "try-webpack",
   "version": "1.0.0",
-  "description": "",
+  "description": "a Component based, multiple pages web application scaffold, created with jQuery, Handlebars.js, Bootstrap and some aralejs",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config configs/webpack.config.development.js --colors --progress",

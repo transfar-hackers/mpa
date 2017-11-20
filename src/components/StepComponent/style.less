@@ -1,0 +1,67 @@
+@import '../../styles/fonts/iconfont';
+.step-comp-wrap {
+  width: 100%;
+  font-family: MicrosoftYaHei;
+  letter-spacing: 0;
+
+  .step-comp-ul {
+    list-style: none;
+    font-size: 0;
+    .active {
+      color: #4565F7!important;
+      .step-comp-left-line {
+        background: #4565F7!important;
+      }
+      .step-comp-right-line {
+        background: #4565F7!important;
+      }
+    }
+
+    // 隐藏最左边的进度条
+    .step-comp-li:first-child .step-comp-left-line {
+      background: white!important;
+    }
+    // 隐藏最右边边的进度条
+    .step-comp-li:last-child .step-comp-right-line {
+      background: white!important;
+    }
+    .step-comp-li{
+      position: relative;
+      font-size: 14px;
+      display: inline-block;
+      text-align: center;
+      color: #D4D4D4;
+      .step-comp-process {
+        position: absolute;
+        width: 100%;
+        top: 15.6px;
+        left: 0;
+        .step-comp-left-line {
+          float: left;
+          width: 55px;
+          height: 2px;
+          background: #DFDFDF;
+        }
+        .step-comp-right-line {
+          float: right;
+          width: 55px;
+          height: 2px;
+          background: #DFDFDF;
+        }
+      }
+      .step-comp-icon {
+        .iconfont {
+          font-size: 32px;
+        }
+      }
+      .step-comp-title{
+        margin: 22.7px 0 16px 0;
+        font-size: 14px;
+      }
+      .step-comp-time {
+        font-size: 12px;
+        color: #999999!important;
+      }
+    }
+  }
+}

@@ -1,3 +1,3 @@
 <div>
-  <h3>Welcome to index page, author: {{author}}!</h3>
+  <h2 style='text-align:center'>Welcome to index page, author: {{author}}!</h2>
 </div>

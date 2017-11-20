@@ -1,6 +1,5 @@
 .order-list {
 }
-
 .comp-lo-order {
   margin: 10px;
   border: solid 1px #dddddd;
@@ -18,7 +17,6 @@
   display:  flex;
   padding:  10px;
 }
-
 .content {
   width: 970px;
   margin-left: 250px;
@@ -37,9 +35,10 @@
 }
 
 .list-header {
-  margin-left: 5%;
+  margin-left: 10px;
   display: flex;
 }
+
 
 .statistic {
   width: 10%;
@@ -47,24 +46,38 @@
 
 .list-title {
   float: left;
+  text-align: center;
 }
 
-.receiver {
-  width: 20%
+.name {
+  width: 14%
 }
 
-.deliver {
-  width: 20%
+.price {
+  width: 10%
 }
 
-.sender {
-  width: 20%
+.number {
+  width: 10%
 }
 
-.status {
-  width: 15%
+.totalprice {
+  width: 12%
+}
+.paytype{
+  width: 10%
+}
+.suppler{
+  width: 14%
+}
+.orderstatus{
+  width: 10%
 }
 
 .operations {
-  width: 20%
+  width: 10%
+}
+
+.elecontract{
+  width: 10%
 }

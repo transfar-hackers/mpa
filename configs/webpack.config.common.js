@@ -1,6 +1,4 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const AppConfig = require('./app.config.js')
@@ -19,6 +17,7 @@ module.exports = {
         loader: 'handlebars-loader',
         options: {
           helperDirs: [path.resolve(__dirname, '../src/utilities/hbs_helpers')],
+          partialDirs: [path.resolve(__dirname, '../src/utilities/hbs_partials')],
           extensions: ['.template']
         }
       }
@@ -57,13 +56,13 @@ module.exports = {
       use: ['xml-loader']
     }, {
       test: /\.(png|svg|jpg|gif)$/,
-      use: {
+      use: [{
         loader: 'file-loader',
         options: {
           name: 'styles/images/[hash:8][name].[ext]',
           publicPath: '../',
         }
-      }
+      }]
     }, {
       test: /\.(woff|woff2|eot|ttf|otf)$/,
       use: [{
@@ -75,23 +74,14 @@ module.exports = {
       }]
     }]
   },
-  plugins: [
-    new CleanWebpackPlugin([path.resolve(__dirname, '../dist')], {
-      root: path.resolve(__dirname, '../')
-    }),
-    new webpack.ProvidePlugin({
-      lodash: 'lodash',
-      jQuery: "jquery",
-      "window.jQuery": "jquery",
-      $: 'jquery',
-      moment: 'moment',
-      handlebars: 'handlebars'
-    }),
-    new ExtractTextPlugin({
-      filename: "[name]/[chunkhash][name].css",
-      allChunks: true
-    })
-  ],
+  resolve: {
+    alias: {
+      components: path.resolve(__dirname, '../src/components/'),
+      common: path.resolve(__dirname, '../src/common/'),
+      utilities: path.resolve(__dirname, '../src/utilities/'),
+      styles: path.resolve(__dirname, '../src/styles/'),
+    }
+  },
   node: {
     fs: 'empty'
   }

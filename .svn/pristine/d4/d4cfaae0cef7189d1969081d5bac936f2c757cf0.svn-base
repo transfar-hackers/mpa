@@ -1,6 +1,0 @@
-import 'babel-polyfill'
-import './style.less'
-import '../../components/HeaderComponent/index.js'
-
-$(() => {
-});
