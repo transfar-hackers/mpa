@@ -1,0 +1,14 @@
+<hr>
+<div class='list-header'>
+  <span class='list-title contract'>合同名称及订单号</span>
+  <span class='list-title seller'>甲方</span>
+  <span class='list-title buyer'>乙方</span>
+  <span class='list-title contract-date'>合同创建时间</span>
+  <span class='list-title effect-date'>生效时间</span>
+  <span class='list-title contract-status'>状态</span>
+  <span class='list-title operations'>操作</span>
+</div>
+<hr>
+{{#contracts}}
+  {{> contract}}
+{{/contracts}}

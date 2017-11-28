@@ -1,32 +1,32 @@
 /*! artDialog v6.0.5 | https://github.com/aui/artDialog */ !(function() {
 
-  var __modules__ = {};
+  var __modules__ = {}
 
   function require(id) {
-    var mod = __modules__[id];
-    var exports = 'exports';
+    var mod = __modules__[id]
+    var exports = 'exports'
 
     if (typeof mod === 'object') {
-      return mod;
+      return mod
     }
 
     if (!mod[exports]) {
-      mod[exports] = {};
-      mod[exports] = mod.call(mod[exports], require, mod[exports], mod) || mod[exports];
+      mod[exports] = {}
+      mod[exports] = mod.call(mod[exports], require, mod[exports], mod) || mod[exports]
     }
 
-    return mod[exports];
+    return mod[exports]
   }
 
   function define(path, fn) {
-    __modules__[path] = fn;
+    __modules__[path] = fn
   }
 
 
 
-  define("jquery", function() {
-    return jQuery;
-  });
+  define('jquery', function() {
+    return jQuery
+  })
 
 
   /*!
@@ -39,18 +39,18 @@
    * For details, see: http://www.gnu.org/licenses/lgpl-2.1.html
    */
 
-  define("popup", function(require) {
+  define('popup', function(require) {
 
-    var $ = require("jquery");
+    var $ = require('jquery')
 
-    var _count = 0;
-    var _isIE6 = !('minWidth' in $('html')[0].style);
-    var _isFixed = !_isIE6;
+    var _count = 0
+    var _isIE6 = !('minWidth' in $('html')[0].style)
+    var _isFixed = !_isIE6
 
 
     function Popup() {
 
-      this.destroyed = false;
+      this.destroyed = false
 
 
       this.__popup = $('<div />')
@@ -72,22 +72,22 @@
         })
         .attr('tabindex', '-1')
         .html(this.innerHTML)
-        .appendTo('body');
+        .appendTo('body')
 
 
       this.__backdrop = this.__mask = $('<div />')
         .css({
           opacity: .7,
           background: '#000'
-        });
+        })
 
 
       // 使用 HTMLElement 作为外部接口使用，而不是 jquery 对象
       // 统一的接口利于未来 Popup 移植到其他 DOM 库中
-      this.node = this.__popup[0];
-      this.backdrop = this.__backdrop[0];
+      this.node = this.__popup[0]
+      this.backdrop = this.__backdrop[0]
 
-      _count++;
+      _count++
     }
 
 
@@ -172,17 +172,17 @@
       show: function(anchor) {
 
         if (this.destroyed) {
-          return this;
+          return this
         }
 
-        var that = this;
-        var popup = this.__popup;
-        var backdrop = this.__backdrop;
+        var that = this
+        var popup = this.__popup
+        var backdrop = this.__backdrop
 
-        this.__activeElement = this.__getActive();
+        this.__activeElement = this.__getActive()
 
-        this.open = true;
-        this.follow = anchor || this.follow;
+        this.open = true
+        this.follow = anchor || this.follow
 
 
         // 初始化 show 方法
@@ -191,10 +191,10 @@
           popup
             .addClass(this.className)
             .attr('role', this.modal ? 'alertdialog' : 'dialog')
-            .css('position', this.fixed ? 'fixed' : 'absolute');
+            .css('position', this.fixed ? 'fixed' : 'absolute')
 
           if (!_isIE6) {
-            $(window).on('resize', $.proxy(this.reset, this));
+            $(window).on('resize', $.proxy(this.reset, this))
           }
 
           // 模态浮层的遮罩
@@ -208,10 +208,10 @@
               overflow: 'hidden',
               userSelect: 'none',
               zIndex: this.zIndex || Popup.zIndex
-            };
+            }
 
 
-            popup.addClass(this.className + '-modal');
+            popup.addClass(this.className + '-modal')
 
 
             if (!_isFixed) {
@@ -219,7 +219,7 @@
                 position: 'absolute',
                 width: $(window).width() + 'px',
                 height: $(document).height() + 'px'
-              });
+              })
             }
 
 
@@ -228,46 +228,46 @@
               .attr({
                 tabindex: '0'
               })
-              .on('focus', $.proxy(this.focus, this));
+              .on('focus', $.proxy(this.focus, this))
 
             // 锁定 tab 的焦点操作
             this.__mask = backdrop
               .clone(true)
               .attr('style', '')
-              .insertAfter(popup);
+              .insertAfter(popup)
 
             backdrop
               .addClass(this.className + '-backdrop')
-              .insertBefore(popup);
+              .insertBefore(popup)
 
-            this.__ready = true;
+            this.__ready = true
           }
 
 
           if (!popup.html()) {
-            popup.html(this.innerHTML);
+            popup.html(this.innerHTML)
           }
         }
 
 
         popup
           .addClass(this.className + '-show')
-          .show();
+          .show()
 
-        backdrop.show();
+        backdrop.show()
 
 
-        this.reset().focus();
-        this.__dispatchEvent('show');
+        this.reset().focus()
+        this.__dispatchEvent('show')
 
-        return this;
+        return this
       },
 
 
       /** 显示模态浮层。参数参见 show() */
       showModal: function() {
-        this.modal = true;
-        return this.show.apply(this, arguments);
+        this.modal = true
+        return this.show.apply(this, arguments)
       },
 
 
@@ -277,17 +277,17 @@
         if (!this.destroyed && this.open) {
 
           if (result !== undefined) {
-            this.returnValue = result;
+            this.returnValue = result
           }
 
-          this.__popup.hide().removeClass(this.className + '-show');
-          this.__backdrop.hide();
-          this.open = false;
-          this.blur(); // 恢复焦点，照顾键盘操作的用户
-          this.__dispatchEvent('close');
+          this.__popup.hide().removeClass(this.className + '-show')
+          this.__backdrop.hide()
+          this.open = false
+          this.blur() // 恢复焦点，照顾键盘操作的用户
+          this.__dispatchEvent('close')
         }
 
-        return this;
+        return this
       },
 
 
@@ -295,108 +295,108 @@
       remove: function() {
 
         if (this.destroyed) {
-          return this;
+          return this
         }
 
-        this.__dispatchEvent('beforeremove');
+        this.__dispatchEvent('beforeremove')
 
         if (Popup.current === this) {
-          Popup.current = null;
+          Popup.current = null
         }
 
 
         // 从 DOM 中移除节点
-        this.__popup.remove();
-        this.__backdrop.remove();
-        this.__mask.remove();
+        this.__popup.remove()
+        this.__backdrop.remove()
+        this.__mask.remove()
 
 
         if (!_isIE6) {
-          $(window).off('resize', this.reset);
+          $(window).off('resize', this.reset)
         }
 
 
-        this.__dispatchEvent('remove');
+        this.__dispatchEvent('remove')
 
         for (var i in this) {
-          delete this[i];
+          delete this[i]
         }
 
-        return this;
+        return this
       },
 
 
       /** 重置位置 */
       reset: function() {
 
-        var elem = this.follow;
+        var elem = this.follow
 
         if (elem) {
-          this.__follow(elem);
+          this.__follow(elem)
         } else {
-          this.__center();
+          this.__center()
         }
 
-        this.__dispatchEvent('reset');
+        this.__dispatchEvent('reset')
 
-        return this;
+        return this
       },
 
 
       /** 让浮层获取焦点 */
       focus: function() {
 
-        var node = this.node;
-        var popup = this.__popup;
-        var current = Popup.current;
-        var index = this.zIndex = Popup.zIndex++;
+        var node = this.node
+        var popup = this.__popup
+        var current = Popup.current
+        var index = this.zIndex = Popup.zIndex++
 
         if (current && current !== this) {
-          current.blur(false);
+          current.blur(false)
         }
 
         // 检查焦点是否在浮层里面
         if (!$.contains(node, this.__getActive())) {
-          var autofocus = popup.find('[autofocus]')[0];
+          var autofocus = popup.find('[autofocus]')[0]
 
           if (!this._autofocus && autofocus) {
-            this._autofocus = true;
+            this._autofocus = true
           } else {
-            autofocus = node;
+            autofocus = node
           }
 
-          this.__focus(autofocus);
+          this.__focus(autofocus)
         }
 
         // 设置叠加高度
-        popup.css('zIndex', index);
+        popup.css('zIndex', index)
         //this.__backdrop.css('zIndex', index);
 
-        Popup.current = this;
-        popup.addClass(this.className + '-focus');
+        Popup.current = this
+        popup.addClass(this.className + '-focus')
 
-        this.__dispatchEvent('focus');
+        this.__dispatchEvent('focus')
 
-        return this;
+        return this
       },
 
 
       /** 让浮层失去焦点。将焦点退还给之前的元素，照顾视力障碍用户 */
       blur: function() {
 
-        var activeElement = this.__activeElement;
-        var isBlur = arguments[0];
+        var activeElement = this.__activeElement
+        var isBlur = arguments[0]
 
 
         if (isBlur !== false) {
-          this.__focus(activeElement);
+          this.__focus(activeElement)
         }
 
-        this._autofocus = false;
-        this.__popup.removeClass(this.className + '-focus');
-        this.__dispatchEvent('blur');
+        this._autofocus = false
+        this.__popup.removeClass(this.className + '-focus')
+        this.__dispatchEvent('blur')
 
-        return this;
+        return this
       },
 
 
@@ -406,8 +406,8 @@
        * @param   {Function}  监听函数
        */
       addEventListener: function(type, callback) {
-        this.__getEventListener(type).push(callback);
-        return this;
+        this.__getEventListener(type).push(callback)
+        return this
       },
 
 
@@ -417,39 +417,39 @@
        * @param   {Function}  监听函数
        */
       removeEventListener: function(type, callback) {
-        var listeners = this.__getEventListener(type);
+        var listeners = this.__getEventListener(type)
         for (var i = 0; i < listeners.length; i++) {
           if (callback === listeners[i]) {
-            listeners.splice(i--, 1);
+            listeners.splice(i--, 1)
           }
         }
-        return this;
+        return this
       },
 
 
       // 获取事件缓存
       __getEventListener: function(type) {
-        var listener = this.__listener;
+        var listener = this.__listener
         if (!listener) {
-          listener = this.__listener = {};
+          listener = this.__listener = {}
         }
         if (!listener[type]) {
-          listener[type] = [];
+          listener[type] = []
         }
-        return listener[type];
+        return listener[type]
       },
 
 
       // 派发事件
       __dispatchEvent: function(type) {
-        var listeners = this.__getEventListener(type);
+        var listeners = this.__getEventListener(type)
 
         if (this['on' + type]) {
-          this['on' + type]();
+          this['on' + type]()
         }
 
         for (var i = 0; i < listeners.length; i++) {
-          listeners[i].call(this);
+          listeners[i].call(this)
         }
       },
 
@@ -461,7 +461,7 @@
         try {
           // ie11 bug: iframe 页面点击会跳到顶部
           if (this.autofocus && !/^iframe$/i.test(elem.nodeName)) {
-            elem.focus();
+            elem.focus()
           }
         } catch (e) {}
       },
@@ -470,10 +470,10 @@
       // 获取当前焦点的元素
       __getActive: function() {
         try { // try: ie8~9, iframe #26
-          var activeElement = document.activeElement;
-          var contentDocument = activeElement.contentDocument;
-          var elem = contentDocument && contentDocument.activeElement || activeElement;
-          return elem;
+          var activeElement = document.activeElement
+          var contentDocument = activeElement.contentDocument
+          var elem = contentDocument && contentDocument.activeElement || activeElement
+          return elem
         } catch (e) {}
       },
 
@@ -481,89 +481,89 @@
       // 居中浮层
       __center: function() {
 
-        var popup = this.__popup;
-        var $window = $(window);
-        var $document = $(document);
-        var fixed = this.fixed;
-        var dl = fixed ? 0 : $document.scrollLeft();
-        var dt = fixed ? 0 : $document.scrollTop();
-        var ww = $window.width();
-        var wh = $window.height();
-        var ow = popup.width();
-        var oh = popup.height();
-        var left = (ww - ow) / 2 + dl;
-        var top = (wh - oh) * 382 / 1000 + dt; // 黄金比例
-        var style = popup[0].style;
+        var popup = this.__popup
+        var $window = $(window)
+        var $document = $(document)
+        var fixed = this.fixed
+        var dl = fixed ? 0 : $document.scrollLeft()
+        var dt = fixed ? 0 : $document.scrollTop()
+        var ww = $window.width()
+        var wh = $window.height()
+        var ow = popup.width()
+        var oh = popup.height()
+        var left = (ww - ow) / 2 + dl
+        var top = (wh - oh) * 382 / 1000 + dt // 黄金比例
+        var style = popup[0].style
 
 
-        style.left = (Math.max(parseInt(left), dl) + this.options.marginLeft) + 'px';
-        style.top = (Math.max(parseInt(top), dt) + this.options.marginTop) + 'px';
+        style.left = (Math.max(parseInt(left), dl) + this.options.marginLeft) + 'px'
+        style.top = (Math.max(parseInt(top), dt) + this.options.marginTop) + 'px'
       },
 
 
       // 指定位置 @param    {HTMLElement, Event}  anchor
       __follow: function(anchor) {
 
-        var $elem = anchor.parentNode && $(anchor);
-        var popup = this.__popup;
+        var $elem = anchor.parentNode && $(anchor)
+        var popup = this.__popup
 
 
         if (this.__followSkin) {
-          popup.removeClass(this.__followSkin);
+          popup.removeClass(this.__followSkin)
         }
 
 
         // 隐藏元素不可用
         if ($elem) {
-          var o = $elem.offset();
+          var o = $elem.offset()
           if (o.left * o.top < 0) {
-            return this.__center();
+            return this.__center()
           }
         }
 
-        var that = this;
-        var fixed = this.fixed;
+        var that = this
+        var fixed = this.fixed
 
-        var $window = $(window);
-        var $document = $(document);
-        var winWidth = $window.width();
-        var winHeight = $window.height();
-        var docLeft = $document.scrollLeft();
-        var docTop = $document.scrollTop();
-
-
-        var popupWidth = popup.width();
-        var popupHeight = popup.height();
-        var width = $elem ? $elem.outerWidth() : 0;
-        var height = $elem ? $elem.outerHeight() : 0;
-        var offset = this.__offset(anchor);
-        var x = offset.left;
-        var y = offset.top;
-        var left = fixed ? x - docLeft : x;
-        var top = fixed ? y - docTop : y;
+        var $window = $(window)
+        var $document = $(document)
+        var winWidth = $window.width()
+        var winHeight = $window.height()
+        var docLeft = $document.scrollLeft()
+        var docTop = $document.scrollTop()
 
 
-        var minLeft = fixed ? 0 : docLeft;
-        var minTop = fixed ? 0 : docTop;
-        var maxLeft = minLeft + winWidth - popupWidth;
-        var maxTop = minTop + winHeight - popupHeight;
+        var popupWidth = popup.width()
+        var popupHeight = popup.height()
+        var width = $elem ? $elem.outerWidth() : 0
+        var height = $elem ? $elem.outerHeight() : 0
+        var offset = this.__offset(anchor)
+        var x = offset.left
+        var y = offset.top
+        var left = fixed ? x - docLeft : x
+        var top = fixed ? y - docTop : y
 
 
-        var css = {};
-        var align = this.align.split(' ');
-        var className = this.className + '-';
+        var minLeft = fixed ? 0 : docLeft
+        var minTop = fixed ? 0 : docTop
+        var maxLeft = minLeft + winWidth - popupWidth
+        var maxTop = minTop + winHeight - popupHeight
+
+
+        var css = {}
+        var align = this.align.split(' ')
+        var className = this.className + '-'
         var reverse = {
           top: 'bottom',
           bottom: 'top',
           left: 'right',
           right: 'left'
-        };
+        }
         var name = {
           top: 'top',
           bottom: 'top',
           left: 'left',
           right: 'left'
-        };
+        }
 
 
         var temp = [{
@@ -576,19 +576,19 @@
           bottom: top - popupHeight + height,
           left: left,
           right: left - popupWidth + width
-        }];
+        }]
 
 
         var center = {
           left: left + width / 2 - popupWidth / 2,
           top: top + height / 2 - popupHeight / 2
-        };
+        }
 
 
         var range = {
           left: [minLeft, maxLeft],
           top: [minTop, maxTop]
-        };
+        }
 
 
         // 超出可视区域重新适应位置
@@ -596,38 +596,38 @@
 
           // 超出右或下边界：使用左或者上边对齐
           if (temp[i][val] > range[name[val]][1]) {
-            val = align[i] = reverse[val];
+            val = align[i] = reverse[val]
           }
 
           // 超出左或右边界：使用右或者下边对齐
           if (temp[i][val] < range[name[val]][0]) {
-            align[i] = reverse[val];
+            align[i] = reverse[val]
           }
 
-        });
+        })
 
 
         // 一个参数的情况
         if (!align[1]) {
-          name[align[1]] = name[align[0]] === 'left' ? 'top' : 'left';
-          temp[1][align[1]] = center[name[align[1]]];
+          name[align[1]] = name[align[0]] === 'left' ? 'top' : 'left'
+          temp[1][align[1]] = center[name[align[1]]]
         }
 
 
         //添加follow的css, 为了给css使用
-        className += align.join('-') + ' ' + this.className + '-follow';
+        className += align.join('-') + ' ' + this.className + '-follow'
 
-        that.__followSkin = className;
+        that.__followSkin = className
 
 
         if ($elem) {
-          popup.addClass(className);
+          popup.addClass(className)
         }
 
 
-        css[name[align[0]]] = parseInt(temp[0][align[0]]);
-        css[name[align[1]]] = parseInt(temp[1][align[1]]);
-        popup.css(css);
+        css[name[align[0]]] = parseInt(temp[0][align[0]])
+        css[name[align[1]]] = parseInt(temp[1][align[1]])
+        popup.css(css)
 
       },
 
@@ -636,53 +636,53 @@
       // 暂时不支持两层以上的 iframe 套嵌
       __offset: function(anchor) {
 
-        var isNode = anchor.parentNode;
+        var isNode = anchor.parentNode
         var offset = isNode ? $(anchor).offset() : {
           left: anchor.pageX,
           top: anchor.pageY
-        };
+        }
 
 
-        anchor = isNode ? anchor : anchor.target;
-        var ownerDocument = anchor.ownerDocument;
-        var defaultView = ownerDocument.defaultView || ownerDocument.parentWindow;
+        anchor = isNode ? anchor : anchor.target
+        var ownerDocument = anchor.ownerDocument
+        var defaultView = ownerDocument.defaultView || ownerDocument.parentWindow
 
         if (defaultView == window) { // IE <= 8 只能使用两个等于号
-          return offset;
+          return offset
         }
 
         // {Element: Ifarme}
-        var frameElement = defaultView.frameElement;
-        var $ownerDocument = $(ownerDocument);
-        var docLeft = $ownerDocument.scrollLeft();
-        var docTop = $ownerDocument.scrollTop();
-        var frameOffset = $(frameElement).offset();
-        var frameLeft = frameOffset.left;
-        var frameTop = frameOffset.top;
+        var frameElement = defaultView.frameElement
+        var $ownerDocument = $(ownerDocument)
+        var docLeft = $ownerDocument.scrollLeft()
+        var docTop = $ownerDocument.scrollTop()
+        var frameOffset = $(frameElement).offset()
+        var frameLeft = frameOffset.left
+        var frameTop = frameOffset.top
 
         return {
           left: offset.left + frameLeft - docLeft,
           top: offset.top + frameTop - docTop
-        };
+        }
       }
 
-    });
+    })
 
 
     /** 当前叠加高度 */
-    Popup.zIndex = 1024;
+    Popup.zIndex = 1024
 
 
     /** 顶层浮层的实例 */
-    Popup.current = null;
+    Popup.current = null
 
 
-    return Popup;
+    return Popup
 
-  });
+  })
 
   // artDialog - 默认配置
-  define("dialog-config", {
+  define('dialog-config', {
 
     /* -----已注释的配置继承自 popup.js，仍可以再这里重新定义它----- */
 
@@ -781,7 +781,7 @@
       '</table>' +
       '</div>'
 
-  });
+  })
 
   /*!
    * artDialog
@@ -792,40 +792,40 @@
    * This is licensed under the GNU LGPL, version 2.1 or later.
    * For details, see: http://www.gnu.org/licenses/lgpl-2.1.html
    */
-  define("dialog", function(require) {
+  define('dialog', function(require) {
 
-    var $ = require("jquery");
-    var Popup = require("popup");
-    var defaults = require("dialog-config");
-    var css = defaults.cssUri;
+    var $ = require('jquery')
+    var Popup = require('popup')
+    var defaults = require('dialog-config')
+    var css = defaults.cssUri
 
 
     // css loader: RequireJS & SeaJS
     if (css) {
-      var fn = require[require.toUrl ? 'toUrl' : 'resolve'];
+      var fn = require[require.toUrl ? 'toUrl' : 'resolve']
       if (fn) {
-        css = fn(css);
-        css = '<link rel="stylesheet" href="' + css + '" />';
+        css = fn(css)
+        css = '<link rel="stylesheet" href="' + css + '" />'
         if ($('base')[0]) {
-          $('base').before(css);
+          $('base').before(css)
         } else {
-          $('head').append(css);
+          $('head').append(css)
         }
       }
     }
 
 
-    var _count = 0;
-    var _expando = new Date() - 0; // Date.now()
-    var _isIE6 = !('minWidth' in $('html')[0].style);
+    var _count = 0
+    var _expando = new Date() - 0 // Date.now()
+    var _isIE6 = !('minWidth' in $('html')[0].style)
     var _isMobile = 'createTouch' in document && !('onmousemove' in document) ||
-      /(iPhone|iPad|iPod)/i.test(navigator.userAgent);
-    var _isFixed = !_isIE6 && !_isMobile;
+      /(iPhone|iPad|iPod)/i.test(navigator.userAgent)
+    var _isFixed = !_isIE6 && !_isMobile
 
 
     var artDialog = function(options, ok, cancel) {
 
-      var originalOptions = options = options || {};
+      var originalOptions = options = options || {}
 
 
       if (typeof options === 'string' || options.nodeType === 1) {
@@ -833,45 +833,45 @@
         options = {
           content: options,
           fixed: !_isMobile
-        };
+        }
       }
 
 
-      options = $.extend(true, {}, artDialog.defaults, options);
-      options.original = originalOptions;
+      options = $.extend(true, {}, artDialog.defaults, options)
+      options.original = originalOptions
 
-      var id = options.id = options.id || _expando + _count;
-      var api = artDialog.get(id);
+      var id = options.id = options.id || _expando + _count
+      var api = artDialog.get(id)
 
 
       // 如果存在同名的对话框对象，则直接返回
       if (api) {
-        return api.focus();
+        return api.focus()
       }
 
 
       // 目前主流移动设备对fixed支持不好，禁用此特性
       if (!_isFixed) {
-        options.fixed = false;
+        options.fixed = false
       }
 
 
       // 快捷关闭支持：点击对话框外快速关闭对话框
       if (options.quickClose) {
-        options.modal = true;
-        options.backdropOpacity = 0;
+        options.modal = true
+        options.backdropOpacity = 0
       }
 
 
       // 按钮组
       if (!$.isArray(options.button)) {
-        options.button = [];
+        options.button = []
       }
 
 
       // 确定按钮
       if (ok !== undefined) {
-        options.ok = ok;
+        options.ok = ok
       }
 
       if (options.ok) {
@@ -880,13 +880,13 @@
           value: options.okValue,
           callback: options.ok,
           autofocus: true
-        });
+        })
       }
 
 
       // 取消按钮
       if (cancel !== undefined) {
-        options.cancel = cancel;
+        options.cancel = cancel
       }
 
       if (options.cancel) {
@@ -895,42 +895,42 @@
           value: options.cancelValue,
           callback: options.cancel,
           display: options.cancelDisplay
-        });
+        })
       }
 
 
-      return artDialog.list[id] = new artDialog.create(options);
-    };
+      return artDialog.list[id] = new artDialog.create(options)
+    }
 
-    var popup = function() {};
-    popup.prototype = Popup.prototype;
-    var prototype = artDialog.prototype = new popup();
+    var popup = function() {}
+    popup.prototype = Popup.prototype
+    var prototype = artDialog.prototype = new popup()
 
     artDialog.create = function(options) {
-      var that = this;
+      var that = this
 
-      $.extend(this, new Popup());
+      $.extend(this, new Popup())
 
-      var originalOptions = options.original;
-      var $popup = $(this.node).html(options.innerHTML);
-      var $backdrop = $(this.backdrop);
+      var originalOptions = options.original
+      var $popup = $(this.node).html(options.innerHTML)
+      var $backdrop = $(this.backdrop)
 
-      this.options = options;
-      this._popup = $popup;
+      this.options = options
+      this._popup = $popup
 
 
       $.each(options, function(name, value) {
         if (typeof that[name] === 'function') {
-          that[name](value);
+          that[name](value)
         } else {
-          that[name] = value;
+          that[name] = value
         }
-      });
+      })
 
 
       // 更新 zIndex 全局配置
       if (options.zIndex) {
-        Popup.zIndex = options.zIndex;
+        Popup.zIndex = options.zIndex
       }
 
 
@@ -940,7 +940,7 @@
           .attr('id', 'title:' + this.id).attr('id'),
         'aria-describedby': this._$('content')
           .attr('id', 'content:' + this.id).attr('id')
-      });
+      })
 
 
       // 关闭按钮
@@ -948,14 +948,14 @@
         .css('display', this.cancel === false ? 'none' : '')
         .attr('title', this.cancelValue)
         .on('click', function(event) {
-          that._trigger('cancel');
-          event.preventDefault();
-        });
+          that._trigger('cancel')
+          event.preventDefault()
+        })
 
 
       // 添加视觉参数
-      this._$('dialog').addClass(this.skin);
-      this._$('body').css('padding', this.padding);
+      this._$('dialog').addClass(this.skin)
+      this._$('body').css('padding', this.padding)
 
 
       // 点击任意空白处关闭对话框
@@ -964,18 +964,18 @@
           .on(
             'onmousedown' in document ? 'mousedown' : 'click',
             function() {
-              that._trigger('cancel');
-              return false; // 阻止抢夺焦点
-            });
+              that._trigger('cancel')
+              return false // 阻止抢夺焦点
+            })
       }
       if (!options.showHeader) {
-        this._$('header').parent().hide();
+        this._$('header').parent().hide()
       }
       if (!options.showFooter) {
-        this._$('footer').parent().hide();
+        this._$('footer').parent().hide()
       }
       if (!options.showIcon) {
-        this._$('icon').hide();
+        this._$('icon').hide()
       }
       // if(options.marginLeft !== 0){
       // this._$('dialog').parent().css('margin-left', options.marginLeft);
@@ -992,44 +992,44 @@
           background: options.backdropBackground
         }).animate({
           opacity: options.backdropOpacity
-        }, 50);
-      });
+        }, 50)
+      })
 
 
       // ESC 快捷键关闭对话框
       this._esc = function(event) {
-        var target = event.target;
-        var nodeName = target.nodeName;
-        var rinput = /^input|textarea$/i;
-        var isTop = Popup.current === that;
-        var keyCode = event.keyCode;
+        var target = event.target
+        var nodeName = target.nodeName
+        var rinput = /^input|textarea$/i
+        var isTop = Popup.current === that
+        var keyCode = event.keyCode
 
         // 避免输入状态中 ESC 误操作关闭
         if (!isTop || rinput.test(nodeName) && target.type !== 'button') {
-          return;
+          return
         }
 
         if (keyCode === 27) {
-          that._trigger('cancel');
+          that._trigger('cancel')
         }
-      };
+      }
 
-      $(document).on('keydown', this._esc);
+      $(document).on('keydown', this._esc)
       this.addEventListener('remove', function() {
-        $(document).off('keydown', this._esc);
-        delete artDialog.list[this.id];
-      });
+        $(document).off('keydown', this._esc)
+        delete artDialog.list[this.id]
+      })
 
 
-      _count++;
+      _count++
 
-      artDialog.oncreate(this);
+      artDialog.oncreate(this)
 
-      return this;
-    };
+      return this
+    }
 
 
-    artDialog.create.prototype = prototype;
+    artDialog.create.prototype = prototype
 
 
 
@@ -1136,24 +1136,24 @@
        */
       content: function(html) {
 
-        var $content = this._$('content');
+        var $content = this._$('content')
 
         // HTMLElement
         if (typeof html === 'object') {
-          html = $(html);
-          $content.empty('').append(html.show());
+          html = $(html)
+          $content.empty('').append(html.show())
           //此代码作用：关闭弹窗时将窗口内容append到body底部
           if (this.options.beforeRemove) {
             this.addEventListener('beforeremove', function() {
-              $('body').append(html.hide());
-            });
+              $('body').append(html.hide())
+            })
           }
           // String
         } else {
-          $content.html(html);
+          $content.html(html)
         }
 
-        return this.reset();
+        return this.reset()
       },
 
 
@@ -1162,23 +1162,23 @@
        * @param    {String}   标题内容
        */
       title: function(text) {
-        this._$('title').text(text);
-        this._$('header')[text ? 'show' : 'hide']();
-        return this;
+        this._$('title').text(text)
+        this._$('header')[text ? 'show' : 'hide']()
+        return this
       },
 
 
       /** 设置宽度 */
       width: function(value) {
-        this._$('content').css('width', value);
-        return this.reset();
+        this._$('content').css('width', value)
+        return this.reset()
       },
 
 
       /** 设置高度 */
       height: function(value) {
-        this._$('content').css('height', value);
-        return this.reset();
+        this._$('content').css('height', value)
+        return this.reset()
       },
 
 
@@ -1188,28 +1188,28 @@
        * Options: value, callback, autofocus, disabled
        */
       button: function(args) {
-        args = args || [];
-        var that = this;
-        var html = '';
-        var number = 0;
-        this.callbacks = {};
+        args = args || []
+        var that = this
+        var html = ''
+        var number = 0
+        this.callbacks = {}
 
 
         if (typeof args === 'string') {
-          html = args;
-          number++;
+          html = args
+          number++
         } else {
           $.each(args, function(i, val) {
 
-            var id = val.id = val.id || val.value;
-            var style = '';
-            that.callbacks[id] = val.callback;
+            var id = val.id = val.id || val.value
+            var style = ''
+            that.callbacks[id] = val.callback
 
 
             if (val.display === false) {
-              style = ' style="display:none"';
+              style = ' style="display:none"'
             } else {
-              number++;
+              number++
             }
 
             html +=
@@ -1221,61 +1221,61 @@
               (val.autofocus ? ' autofocus class="ui-dialog-autofocus"' : '') +
               '>' +
               val.value +
-              '</button>';
+              '</button>'
 
             that._$('button')
               .on('click', '[i-id=' + id + ']', function(event) {
-                var $this = $(this);
+                var $this = $(this)
                 if (!$this.attr('disabled')) { // IE BUG
-                  that._trigger(id);
+                  that._trigger(id)
                 }
 
-                event.preventDefault();
-              });
+                event.preventDefault()
+              })
 
-          });
+          })
         }
 
-        this._$('button').html(html);
-        this._$('footer')[number ? 'show' : 'hide']();
+        this._$('button').html(html)
+        this._$('footer')[number ? 'show' : 'hide']()
 
-        return this;
+        return this
       },
 
 
       statusbar: function(html) {
         this._$('statusbar')
-          .html(html)[html ? 'show' : 'hide']();
+          .html(html)[html ? 'show' : 'hide']()
 
-        return this;
+        return this
       },
 
 
       _$: function(i) {
-        return this._popup.find('[i=' + i + ']');
+        return this._popup.find('[i=' + i + ']')
       },
 
 
       // 触发按钮回调函数
       _trigger: function(id) {
-        var fn = this.callbacks[id];
+        var fn = this.callbacks[id]
 
         return typeof fn !== 'function' || fn.call(this) !== false ?
-          this.close().remove() : this;
+          this.close().remove() : this
       }
 
-    });
+    })
 
 
 
-    artDialog.oncreate = $.noop;
+    artDialog.oncreate = $.noop
 
 
 
     /** 获取最顶层的对话框API */
     artDialog.getCurrent = function() {
-      return Popup.current;
-    };
+      return Popup.current
+    }
 
 
 
@@ -1287,23 +1287,23 @@
     artDialog.get = function(id) {
       return id === undefined ?
         artDialog.list :
-        artDialog.list[id];
-    };
+        artDialog.list[id]
+    }
 
-    artDialog.list = {};
+    artDialog.list = {}
 
 
 
     /**
      * 默认配置
      */
-    artDialog.defaults = defaults;
+    artDialog.defaults = defaults
 
 
 
-    return artDialog;
+    return artDialog
 
-  });
+  })
 
 
 
@@ -1317,127 +1317,127 @@
    * This is licensed under the GNU LGPL, version 2.1 or later.
    * For details, see: http://www.gnu.org/licenses/lgpl-2.1.html
    */
-  define("drag", function(require) {
+  define('drag', function(require) {
 
-    var $ = require("jquery");
+    var $ = require('jquery')
 
 
-    var $window = $(window);
-    var $document = $(document);
-    var isTouch = 'createTouch' in document;
-    var html = document.documentElement;
-    var isIE6 = !('minWidth' in html.style);
-    var isLosecapture = !isIE6 && 'onlosecapture' in html;
-    var isSetCapture = 'setCapture' in html;
+    var $window = $(window)
+    var $document = $(document)
+    var isTouch = 'createTouch' in document
+    var html = document.documentElement
+    var isIE6 = !('minWidth' in html.style)
+    var isLosecapture = !isIE6 && 'onlosecapture' in html
+    var isSetCapture = 'setCapture' in html
 
 
     var types = {
       start: isTouch ? 'touchstart' : 'mousedown',
       over: isTouch ? 'touchmove' : 'mousemove',
       end: isTouch ? 'touchend' : 'mouseup'
-    };
+    }
 
 
     var getEvent = isTouch ? function(event) {
       if (!event.touches) {
-        event = event.originalEvent.touches.item(0);
+        event = event.originalEvent.touches.item(0)
       }
-      return event;
+      return event
     } : function(event) {
-      return event;
-    };
+      return event
+    }
 
 
     var DragEvent = function() {
-      this.start = $.proxy(this.start, this);
-      this.over = $.proxy(this.over, this);
-      this.end = $.proxy(this.end, this);
-      this.onstart = this.onover = this.onend = $.noop;
-    };
+      this.start = $.proxy(this.start, this)
+      this.over = $.proxy(this.over, this)
+      this.end = $.proxy(this.end, this)
+      this.onstart = this.onover = this.onend = $.noop
+    }
 
-    DragEvent.types = types;
+    DragEvent.types = types
 
     DragEvent.prototype = {
 
       start: function(event) {
-        event = this.startFix(event);
+        event = this.startFix(event)
 
         $document
           .on(types.over, this.over)
-          .on(types.end, this.end);
+          .on(types.end, this.end)
 
-        this.onstart(event);
-        return false;
+        this.onstart(event)
+        return false
       },
 
       over: function(event) {
-        event = this.overFix(event);
-        this.onover(event);
-        return false;
+        event = this.overFix(event)
+        this.onover(event)
+        return false
       },
 
       end: function(event) {
-        event = this.endFix(event);
+        event = this.endFix(event)
 
         $document
           .off(types.over, this.over)
-          .off(types.end, this.end);
+          .off(types.end, this.end)
 
-        this.onend(event);
-        return false;
+        this.onend(event)
+        return false
       },
 
       startFix: function(event) {
-        event = getEvent(event);
+        event = getEvent(event)
 
-        this.target = $(event.target);
+        this.target = $(event.target)
         this.selectstart = function() {
-          return false;
-        };
+          return false
+        }
 
         $document
           .on('selectstart', this.selectstart)
-          .on('dblclick', this.end);
+          .on('dblclick', this.end)
 
         if (isLosecapture) {
-          this.target.on('losecapture', this.end);
+          this.target.on('losecapture', this.end)
         } else {
-          $window.on('blur', this.end);
+          $window.on('blur', this.end)
         }
 
         if (isSetCapture) {
-          this.target[0].setCapture();
+          this.target[0].setCapture()
         }
 
-        return event;
+        return event
       },
 
       overFix: function(event) {
-        event = getEvent(event);
-        return event;
+        event = getEvent(event)
+        return event
       },
 
       endFix: function(event) {
-        event = getEvent(event);
+        event = getEvent(event)
 
         $document
           .off('selectstart', this.selectstart)
-          .off('dblclick', this.end);
+          .off('dblclick', this.end)
 
         if (isLosecapture) {
-          this.target.off('losecapture', this.end);
+          this.target.off('losecapture', this.end)
         } else {
-          $window.off('blur', this.end);
+          $window.off('blur', this.end)
         }
 
         if (isSetCapture) {
-          this.target[0].releaseCapture();
+          this.target[0].releaseCapture()
         }
 
-        return event;
+        return event
       }
 
-    };
+    }
 
 
     /**
@@ -1446,93 +1446,93 @@
      * @param   {Event} 触发拖拽的事件对象。可选，若无则监听 elem 的按下事件启动
      */
     DragEvent.create = function(elem, event) {
-      var $elem = $(elem);
-      var dragEvent = new DragEvent();
-      var startType = DragEvent.types.start;
-      var noop = function() {};
+      var $elem = $(elem)
+      var dragEvent = new DragEvent()
+      var startType = DragEvent.types.start
+      var noop = function() {}
       var className = elem.className
-        .replace(/^\s|\s.*/g, '') + '-drag-start';
+        .replace(/^\s|\s.*/g, '') + '-drag-start'
 
-      var minX;
-      var minY;
-      var maxX;
-      var maxY;
+      var minX
+      var minY
+      var maxX
+      var maxY
 
       var api = {
         onstart: noop,
         onover: noop,
         onend: noop,
         off: function() {
-          $elem.off(startType, dragEvent.start);
+          $elem.off(startType, dragEvent.start)
         }
-      };
+      }
 
 
       dragEvent.onstart = function(event) {
-        var isFixed = $elem.css('position') === 'fixed';
-        var dl = $document.scrollLeft();
-        var dt = $document.scrollTop();
-        var w = $elem.width();
-        var h = $elem.height();
+        var isFixed = $elem.css('position') === 'fixed'
+        var dl = $document.scrollLeft()
+        var dt = $document.scrollTop()
+        var w = $elem.width()
+        var h = $elem.height()
 
-        minX = 0;
-        minY = 0;
-        maxX = isFixed ? $window.width() - w + minX : $document.width() - w;
-        maxY = isFixed ? $window.height() - h + minY : $document.height() - h;
+        minX = 0
+        minY = 0
+        maxX = isFixed ? $window.width() - w + minX : $document.width() - w
+        maxY = isFixed ? $window.height() - h + minY : $document.height() - h
 
-        var offset = $elem.offset();
-        var left = this.startLeft = isFixed ? offset.left - dl : offset.left;
-        var top = this.startTop = isFixed ? offset.top - dt : offset.top;
+        var offset = $elem.offset()
+        var left = this.startLeft = isFixed ? offset.left - dl : offset.left
+        var top = this.startTop = isFixed ? offset.top - dt : offset.top
 
-        this.clientX = event.clientX;
-        this.clientY = event.clientY;
+        this.clientX = event.clientX
+        this.clientY = event.clientY
 
-        $elem.addClass(className);
-        api.onstart.call(elem, event, left, top);
-      };
+        $elem.addClass(className)
+        api.onstart.call(elem, event, left, top)
+      }
 
 
       dragEvent.onover = function(event) {
-        var left = event.clientX - this.clientX + this.startLeft;
-        var top = event.clientY - this.clientY + this.startTop;
-        var style = $elem[0].style;
+        var left = event.clientX - this.clientX + this.startLeft
+        var top = event.clientY - this.clientY + this.startTop
+        var style = $elem[0].style
 
-        left = Math.max(minX, Math.min(maxX, left));
-        top = Math.max(minY, Math.min(maxY, top));
+        left = Math.max(minX, Math.min(maxX, left))
+        top = Math.max(minY, Math.min(maxY, top))
 
-        style.left = left + 'px';
-        style.top = top + 'px';
+        style.left = left + 'px'
+        style.top = top + 'px'
 
-        api.onover.call(elem, event, left, top);
-      };
+        api.onover.call(elem, event, left, top)
+      }
 
 
       dragEvent.onend = function(event) {
-        var position = $elem.position();
-        var left = position.left;
-        var top = position.top;
-        $elem.removeClass(className);
-        api.onend.call(elem, event, left, top);
-      };
+        var position = $elem.position()
+        var left = position.left
+        var top = position.top
+        $elem.removeClass(className)
+        api.onend.call(elem, event, left, top)
+      }
 
 
       dragEvent.off = function() {
-        $elem.off(startType, dragEvent.start);
-      };
+        $elem.off(startType, dragEvent.start)
+      }
 
 
       if (event) {
-        dragEvent.start(event);
+        dragEvent.start(event)
       } else {
-        $elem.on(startType, dragEvent.start);
+        $elem.on(startType, dragEvent.start)
       }
 
-      return api;
-    };
+      return api
+    }
 
-    return DragEvent;
+    return DragEvent
 
-  });
+  })
 
   /*!
    * artDialog-plus
@@ -1543,76 +1543,76 @@
    * This is licensed under the GNU LGPL, version 2.1 or later.
    * For details, see: http://www.gnu.org/licenses/lgpl-2.1.html
    */
-  define("dialog-plus", function(require) {
+  define('dialog-plus', function(require) {
 
-    var $ = require("jquery");
-    var dialog = require("dialog");
-    var drag = require("drag");
+    var $ = require('jquery')
+    var dialog = require('dialog')
+    var drag = require('drag')
 
     dialog.oncreate = function(api) {
 
-      var options = api.options;
-      var originalOptions = options.original;
+      var options = api.options
+      var originalOptions = options.original
 
       // 页面地址
-      var url = options.url;
+      var url = options.url
       // 页面加载完毕的事件
-      var oniframeload = options.oniframeload;
+      var oniframeload = options.oniframeload
 
-      var $iframe;
+      var $iframe
 
 
       if (url) {
-        this.padding = options.padding = 0;
+        this.padding = options.padding = 0
 
-        $iframe = $('<iframe />');
+        $iframe = $('<iframe />')
 
         $iframe.attr({
-            src: url,
-            name: api.id,
-            width: '100%',
-            height: '100%',
-            allowtransparency: 'yes',
-            frameborder: 'no',
-            scrolling: 'no'
-          })
+          src: url,
+          name: api.id,
+          width: '100%',
+          height: '100%',
+          allowtransparency: 'yes',
+          frameborder: 'no',
+          scrolling: 'no'
+        })
           .on('load', function() {
-            var test;
+            var test
 
             try {
               // 跨域测试
-              test = $iframe[0].contentWindow.frameElement;
+              test = $iframe[0].contentWindow.frameElement
             } catch (e) {}
 
             if (test) {
 
               if (!options.width) {
-                api.width($iframe.contents().width());
+                api.width($iframe.contents().width())
               }
 
               if (!options.height) {
-                api.height($iframe.contents().height());
+                api.height($iframe.contents().height())
               }
             }
 
             if (oniframeload) {
-              oniframeload.call(api);
+              oniframeload.call(api)
             }
 
-          });
+          })
 
         api.addEventListener('beforeremove', function() {
 
           // 重要！需要重置iframe地址，否则下次出现的对话框在IE6、7无法聚焦input
           // IE删除iframe后，iframe仍然会留在内存中出现上述问题，置换src是最容易解决的方法
-          $iframe.attr('src', 'about:blank').remove();
+          $iframe.attr('src', 'about:blank').remove()
 
 
-        }, false);
+        }, false)
 
-        api.content($iframe[0]);
+        api.content($iframe[0])
 
-        api.iframeNode = $iframe[0];
+        api.iframeNode = $iframe[0]
 
       }
 
@@ -1622,8 +1622,8 @@
       if (!(originalOptions instanceof Object)) {
 
         var un = function() {
-          api.close().remove();
-        };
+          api.close().remove()
+        }
 
         // 找到那个 iframe
         for (var i = 0; i < frames.length; i++) {
@@ -1631,8 +1631,8 @@
             if (originalOptions instanceof frames[i].Object) {
               // 让 iframe 刷新的时候也关闭对话框，
               // 防止要执行的对象被强制收回导致 IE 报错：“不能执行已释放 Script 的代码”
-              $(frames[i]).one('unload', un);
-              break;
+              $(frames[i]).one('unload', un)
+              break
             }
           } catch (e) {}
         }
@@ -1643,12 +1643,12 @@
       $(api.node).on(drag.types.start, '[i=title]', function(event) {
         // 排除气泡类型的对话框
         if (!api.follow) {
-          api.focus();
-          drag.create(api.node, event);
+          api.focus()
+          drag.create(api.node, event)
         }
-      });
+      })
 
-    };
+    }
 
 
 
@@ -1656,29 +1656,29 @@
 
       // 从 iframe 传入 window 对象
       if (id && id.frameElement) {
-        var iframe = id.frameElement;
-        var list = dialog.list;
-        var api;
+        var iframe = id.frameElement
+        var list = dialog.list
+        var api
         for (var i in list) {
-          api = list[i];
+          api = list[i]
           if (api.node.getElementsByTagName('iframe')[0] === iframe) {
-            return api;
+            return api
           }
         }
         // 直接传入 id 的情况
       } else if (id) {
-        return dialog.list[id];
+        return dialog.list[id]
       }
 
-    };
+    }
 
 
 
-    return dialog;
+    return dialog
 
-  });
+  })
 
 
-  window.dialog = require("dialog-plus");
+  window.dialog = require('dialog-plus')
 
-})();
+})()

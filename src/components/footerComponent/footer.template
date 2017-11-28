@@ -1,0 +1,6 @@
+<div class="m-footer">
+    <ul>
+        <li><img src="{{img_url}}" />&nbsp;<span>浙公网安备 33010902000631号 | 浙ICP备14026855号-4</span></li>
+        <li><span>&copy;&nbsp;传化集团版权所有</span></li>
+    </ul>
+</div>

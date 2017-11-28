@@ -1,21 +1,21 @@
 .hero-list {
-  width: 970px;
-  margin-left: 200px;
+    width: 970px;
+    margin-left: 200px;
 }
 
 .hero {
-  border: solid 1px #dddddd;
-  border-radius: 4px;
-  margin: 0.4em;
-  padding: 0.2em;
-  background-color: #F0F0F0;
+    border: solid 1px #dddddd;
+    border-radius: 4px;
+    margin: 0.4em;
+    padding: 0.2em;
+    background-color: #F0F0F0;
 }
 
 .my-tabs {
-  width: 970px;
-  margin-left: 200px;
+    width: 970px;
+    margin-left: 200px;
 }
 
 .my-tab-header {
-  height: 42px;
+    height: 42px;
 }

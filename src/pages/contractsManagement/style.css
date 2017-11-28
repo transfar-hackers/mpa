@@ -2,6 +2,151 @@ body {
   magin: 0.2em;
 }
 
-.contractEditor {
-  width: 300px;
+label {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.contract-editor {
+  width: 950px;
+  height: 700px;
+}
+
+.my-tabs {
+  padding: 1em;
+}
+
+.my-tab-header {
+    height: 42px;
+}
+
+.tab-content {
+  width: 950px;
+}
+
+.order-list {
+}
+
+.comp-lo-order {
+  margin: 10px 0;
+  border: solid 1px #dddddd;
+}
+
+.comp-lo-basic-info {
+  background-color: #F4F4F4F4;
+  height: 45px;
+  line-height: 45px;
+  padding-left: 2%;
+}
+
+.comp-lo-order-body {
+  display:  flex;
+  padding:  10px;
+}
+
+.content {
+  width: 970px;
+  margin-left: 220px;
+  background-color: white;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 14px;
+  padding: 20px 0px 10px 30px;
+}
+
+.hr {
+  border-top: 1px solid #EEEEEE;
+  margin: 10px 20px;
+}
+
+.list-header {
+  margin: 2%;
+  display: flex;
+}
+
+.list-title {
+  float: left;
+}
+
+.template-name {
+  min-width: 22%
+}
+
+.template-creator {
+  min-width: 22%
+}
+
+.upload-date {
+  min-width: 22%
+}
+
+.template-operations {
+  min-width: 22%
+}
+
+.order-number {
+  min-width: 15%;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.contract {
+  width: 15%;
+}
+
+.seller {
+  width: 15%;
+}
+
+.buyer {
+  width: 15%;
+}
+
+.contract-date {
+  width: 16%;
+}
+
+.effect-date {
+  min-width: 16%;
+}
+
+.contract-status {
+  width: 15%;
+}
+
+.stamp-status {
+  width: 12%;
+  color: red;
+}
+.operations {
+  width: 15%;
+  display: flex;
+}
+
+.btn-margin {
+  margin: 20px 0;
+}
+
+.btn-new-editor {
+  width: 120px;
+  height: 30px;
+  border: solid 1px #dddddd;
+  background-color: #4565F7;
+  border-radius: 3px;
+  color: #FFFFFF;
+}
+
+.template-record {
+  min-height: 80px;
+  padding: 2em;
+  background-color: #F4F4F4F4;
+  margin: 10px 0;
+  border: solid 1px #dddddd;
+}
+
+.modal-content {
+  width: 930px;
+  height: 500px;
 }

@@ -1,0 +1,7 @@
+{{#othersData}}
+ <div class="order-header">
+    <div class="td-width1">总应收账款：<span>{{totalAmountUnreceived}}</span>&nbsp元</div>
+    <div class="td-width1">未到账：<span>{{totalAmountReceivable}}</span>&nbsp元</div>
+    <div class="td-width1">已到账：<span>{{totalAmountReceived}}</span>&nbsp元</div>
+  </div>
+{{/othersData}}

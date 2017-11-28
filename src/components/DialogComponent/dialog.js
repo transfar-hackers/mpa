@@ -1,6 +1,6 @@
 /*global $, require, window*/
-require('./ui-dialog.css');
-require('./dialog-plus');
+require('./ui-dialog.css')
+require('./dialog-plus')
 
 module.exports = {
   alert: function(data) {
@@ -16,7 +16,7 @@ module.exports = {
       ok: true,
       okValue: '确定',
       onclose: data.callback || function() {}
-    }).showModal();
+    }).showModal()
   },
   confirm: function(data) {
     const defaults = {
@@ -32,8 +32,8 @@ module.exports = {
       okValue: '确定',
       cancel: function() {},
       cancelValue: '取消'
-    };
-    window.dialog($.extend(true, {}, defaults, data)).showModal();
+    }
+    window.dialog($.extend(true, {}, defaults, data)).showModal()
   },
   custom: function(data) {
     const defaults = {
@@ -50,7 +50,7 @@ module.exports = {
       cancel: function() {},
       cancelValue: '取消',
       onclose: function() {}
-    };
-    window.dialog($.extend(true, {}, defaults, data)).showModal();
+    }
+    window.dialog($.extend(true, {}, defaults, data)).showModal()
   }
-};
+}

@@ -8,11 +8,12 @@ const fs = require('fs')
 const _ = require('lodash')
 const colors = require('colors')
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const AppConfig = require('./app.config.js')
 const MyPath = require('../src/utilities/path.js')
+const args = require('yargs').argv
 
 module.exports = {
   plugins: [
@@ -25,18 +26,19 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       lodash: 'lodash',
-      jQuery: "jquery",
-      "window.jQuery": "jquery",
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
       Proper: ['proper.js', 'default'],
       $: 'jquery',
       moment: 'moment',
       handlebars: 'handlebars'
     }),
     new webpack.DefinePlugin({
-      appRoot: JSON.stringify(path.resolve(__dirname, '..'))
+      appRoot: JSON.stringify(path.resolve(__dirname, '..')),
+      bProd: args.env === 'production' ? true : false
     }),
     new ExtractTextPlugin({
-      filename: "[name]/[chunkhash][name].css",
+      filename: '[name]/[chunkhash][name].css',
       allChunks: true
     }),
     new AssetsFilterWebpackPlugin({ // custom plugin to filter irrelevant assets
@@ -46,7 +48,7 @@ module.exports = {
       options: null
     })
   ]
-};
+}
 
 /*
  * while generating assets(.js|.css files) and attach them to the html pages,
@@ -55,7 +57,7 @@ module.exports = {
  * we filter out the assets files which do not belong to the specific html file.
  * author: j-sparrow
  */
-function AssetsFilterWebpackPlugin(options) {}
+function AssetsFilterWebpackPlugin() {}
 AssetsFilterWebpackPlugin.prototype.apply = function(compiler) {
   compiler.plugin('compilation', function(compilation) {
     compilation.plugin('html-webpack-plugin-before-html-processing', function(htmlPluginData, callback) {
@@ -70,7 +72,7 @@ AssetsFilterWebpackPlugin.prototype.apply = function(compiler) {
       if (!isWindows) {
         htmlName = MyPath.removePostfix(htmlPluginData.outputName.split('/')[0])
       } else {
-        htmlName = MyPath.removePostfix(htmlPluginData.outputName.split(`\\`)[0])
+        htmlName = MyPath.removePostfix(htmlPluginData.outputName.split('\\')[0])
       }
 
       for (let i = 0; i < upperAssetsJS.length; i += 1) {
@@ -107,7 +109,7 @@ AssetsFilterWebpackPlugin.prototype.apply = function(compiler) {
  * here we need a cleaner whenever an incremental(partial) build is performed.
  * author: j-sparrow
  */
-function BuildCleanerWebpackPlugin(options) {}
+function BuildCleanerWebpackPlugin() {}
 BuildCleanerWebpackPlugin.prototype.apply = function(compiler) {
   compiler.plugin('done', function(compilation) {
     let existingFiles = MyPath.walkDirSyncFlat(path.resolve(__dirname, '../dist'))
@@ -118,7 +120,7 @@ BuildCleanerWebpackPlugin.prototype.apply = function(compiler) {
       var shortname = file.split('dist')[1].slice(1)
       var reg = /\.(woff|ttf|gif|svg|eot|html)$/ // (ignore .woff, .ttf, .gif, .svg, .eot files, they don't regrenerate)
         // console.log(`existing file: ${shortname}`)
-      if (newFiles.indexOf(shortname.replace(`\\`, `/`)) === -1 &&
+      if (newFiles.indexOf(shortname.replace('\\', '/')) === -1 &&
         (!reg.test(shortname))) {
         // file outdated, delete it
         fs.unlink(file, () => {

@@ -4,7 +4,6 @@
  * author: j-sparrow
  *
  */
-const path = require('path')
 const AppConfig = require('./app.config.js')
 const MyPath = require('../src/utilities/path.js')
 

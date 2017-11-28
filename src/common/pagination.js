@@ -10,48 +10,48 @@
  * @param isKeepShow {Boolean} 只有一页时，是否依然显示分页，默认为true
  * @version
  */
-;
+
 (function($) {
   var Pagination = transfar.Base.extend({
     initialize: function(options) {
 
-      this.$el = options.$el;
-      this.maxPage = parseInt(options.maxPage, 10) || 0;
-      this.currPage = parseInt(options.currPage, 10) || 1;
-      this.isSimplePagination = options.isSimplePagination || false;
-      this.isHasFastPageTurning = options.isHasFastPageTurning !== false && !this.isSimplePagination ? true : false;
-      this.isKeepShow = options.isKeepShow !== false ? true : false;
-      this.count = options.count || 5;
+      this.$el = options.$el
+      this.maxPage = parseInt(options.maxPage, 10) || 0
+      this.currPage = parseInt(options.currPage, 10) || 1
+      this.isSimplePagination = options.isSimplePagination || false
+      this.isHasFastPageTurning = options.isHasFastPageTurning !== false && !this.isSimplePagination ? true : false
+      this.isKeepShow = options.isKeepShow !== false ? true : false
+      this.count = options.count || 5
 
-      var template = this.getTemplate();
-      this.$el.html(template);
-      this.$first = this.$el.find('.tx_gotoFirst');
-      this.$last = this.$el.find('.tx_gotoLast');
-      this.$pre = this.$el.find('.tx_gotoPre');
-      this.$next = this.$el.find('.tx_gotoNext');
-      this.$input = this.$el.find('input');
+      var template = this.getTemplate()
+      this.$el.html(template)
+      this.$first = this.$el.find('.tx_gotoFirst')
+      this.$last = this.$el.find('.tx_gotoLast')
+      this.$pre = this.$el.find('.tx_gotoPre')
+      this.$next = this.$el.find('.tx_gotoNext')
+      this.$input = this.$el.find('input')
 
       if (!this.isHasFastPageTurning) {
         this.$el.find('.tx_fastPageTurning').css({
           display: 'none'
-        });
+        })
       }
 
       if (this.isSimplePagination) {
-        this.$el.children().addClass('simplePagination');
-        this.$el.find('li').addClass('hidden');
-        this.$pre.removeClass('hidden');
-        this.$next.removeClass('hidden');
+        this.$el.children().addClass('simplePagination')
+        this.$el.find('li').addClass('hidden')
+        this.$pre.removeClass('hidden')
+        this.$next.removeClass('hidden')
       }
 
-      this.render();
+      this.render()
 
-      var _this = this;
+      var _this = this
       this.bind('set-page', function(ops) {
-        _this.maxPage = parseInt(ops.maxPage, 10) || 0;
-        _this.currPage = parseInt(ops.currPage, 10) || 1;
-        _this.render();
-      });
+        _this.maxPage = parseInt(ops.maxPage, 10) || 0
+        _this.currPage = parseInt(ops.currPage, 10) || 1
+        _this.render()
+      })
 
 
 
@@ -73,9 +73,9 @@
      * @description 获取模板HTML代码
      */
     getTemplate: function() {
-      var i, li = '';
+      var i, li = ''
       for (i = 0; i < this.count; i++) {
-        li += '<li style="display:none;"><a href="javascript:void(0)" class="tx_gotoPage"></a></li>';
+        li += '<li style="display:none;"><a href="javascript:void(0)" class="tx_gotoPage"></a></li>'
       }
       return '<div class="pagination">\
               <ul>\
@@ -89,15 +89,15 @@
               	跳到<input type="number">页 \
               	<a class="numberSubmit tx_numberSubmit" href="javascript:void(0)">确定</a>\
               </div>\
-              </div>';
+              </div>'
     },
 
     pushData: function(centerPage, count) {
-      var i, data = [];
+      var i, data = []
       for (i = 0; i < count; i++) {
-        data.push(centerPage - parseInt(count / 2, 10) + i);
+        data.push(centerPage - parseInt(count / 2, 10) + i)
       }
-      return data;
+      return data
     },
 
     /**
@@ -105,63 +105,63 @@
      * @return {Object} {pages:[1,2,3,4,5], ...}
      */
     getData: function(currPage, count, maxPage) {
-      var data = {};
-      var parseCount = parseInt(count / 2);
+      var data = {}
+      var parseCount = parseInt(count / 2)
       if (maxPage < count) {
-        data.pages = this.pushData(parseInt(maxPage / 2, 10) + 1, maxPage);
+        data.pages = this.pushData(parseInt(maxPage / 2, 10) + 1, maxPage)
       } else if (currPage <= parseCount && maxPage > currPage + parseCount) {
-        data.pages = this.pushData(count % 2 === 0 ? parseCount : parseCount + 1, count);
+        data.pages = this.pushData(count % 2 === 0 ? parseCount : parseCount + 1, count)
       } else if (maxPage <= currPage + parseCount) {
-        data.pages = this.pushData(maxPage - parseCount, count);
+        data.pages = this.pushData(maxPage - parseCount, count)
       } else {
-        data.pages = this.pushData(currPage, count);
+        data.pages = this.pushData(currPage, count)
       }
-      return data;
+      return data
     },
 
     /**
      * @description 渲染模板
      */
     render: function() {
-      this.$el.find('li').removeClass('active');
-      var data = this.getData(this.currPage, this.count, this.maxPage);
-      var index = 0;
+      this.$el.find('li').removeClass('active')
+      var data = this.getData(this.currPage, this.count, this.maxPage)
+      var index = 0
 
       this.$el.find('.tx_gotoPage').each(function() {
         if (data.pages[index]) {
-          $(this).text(data.pages[index]).attr('page-value', data.pages[index]);
+          $(this).text(data.pages[index]).attr('page-value', data.pages[index])
           $(this).parent().css({
             display: ''
-          });
+          })
         } else {
           $(this).parent().css({
             display: 'none'
-          });
+          })
         }
-        index++;
-      });
+        index++
+      })
 
-      this.$el.find('[page-value="' + this.currPage + '"]').parent().addClass('active');
-      this.$pre.removeClass('disabled');
-      this.$next.removeClass('disabled');
-      this.$first.removeClass('disabled');
-      this.$last.removeClass('disabled');
+      this.$el.find('[page-value="' + this.currPage + '"]').parent().addClass('active')
+      this.$pre.removeClass('disabled')
+      this.$next.removeClass('disabled')
+      this.$first.removeClass('disabled')
+      this.$last.removeClass('disabled')
 
       if (this.currPage === 1) {
-        this.$pre.addClass('disabled');
-        this.$first.addClass('disabled');
+        this.$pre.addClass('disabled')
+        this.$first.addClass('disabled')
       }
       if (this.currPage === this.maxPage) {
-        this.$next.addClass('disabled');
-        this.$last.addClass('disabled');
+        this.$next.addClass('disabled')
+        this.$last.addClass('disabled')
       }
 
-      this.$input.attr('value', this.maxPage).attr('max', this.maxPage).attr('min', 1);
+      this.$input.attr('value', this.maxPage).attr('max', this.maxPage).attr('min', 1)
 
       if ((this.maxPage === 1 && !this.isKeepShow) || !this.maxPage) {
-        this.$el.css('display', 'none');
+        this.$el.css('display', 'none')
       } else {
-        this.$el.css('display', '');
+        this.$el.css('display', '')
       }
 
     },
@@ -170,42 +170,42 @@
      * @description 触发点击“上一页”事件
      */
     goToPre: function() {
-      var page = this.currPage - 1;
+      var page = this.currPage - 1
       if (page < 1) {
-        return;
+        return
       }
-      this.goToPage(null, page);
+      this.goToPage(null, page)
     },
 
     /**
      * @description 触发点击“下一页”事件
      */
     goToNext: function() {
-      var page = this.currPage + 1;
+      var page = this.currPage + 1
       if (page > this.maxPage) {
-        return;
+        return
       }
-      this.goToPage(null, page);
+      this.goToPage(null, page)
     },
 
     goToFirst: function() {
-      this.goToPage(null, 1);
+      this.goToPage(null, 1)
     },
 
     goToLast: function() {
-      this.goToPage(null, this.maxPage);
+      this.goToPage(null, this.maxPage)
     },
 
     /**
      * @description 触发点击“确认”事件
      */
     triggerNumberSubmit: function() {
-      var value = this.$input.val();
+      var value = this.$input.val()
       if (value < 1 || value > this.maxPage) {
-        this.$input.focus().select();
-        return;
+        this.$input.focus().select()
+        return
       }
-      this.goToPage(null, value);
+      this.goToPage(null, value)
     },
 
     /**
@@ -213,33 +213,33 @@
      * @param page {Num} 跳转的页码
      */
     goToPage: function(event, page) {
-      page = parseInt(page, 10) || parseInt($(event.currentTarget).text(), 10);
-      this.trigger('go-to-page', page);
-      this.currPage = page;
-      this.render();
+      page = parseInt(page, 10) || parseInt($(event.currentTarget).text(), 10)
+      this.trigger('go-to-page', page)
+      this.currPage = page
+      this.render()
     }
-  });
+  })
 
-  var paginations = {};
+  var paginations = {}
   $.fn.pagination = function(options) {
     $(this).each(function() {
       var newOptions = {},
-        key;
+        key
       for (key in options) {
-        newOptions[key] = options[key];
+        newOptions[key] = options[key]
       }
-      newOptions.$el = $(this);
+      newOptions.$el = $(this)
 
       if (!paginations[this.id]) {
-        paginations[this.id] = new Pagination(newOptions);
+        paginations[this.id] = new Pagination(newOptions)
       }
-      paginations[this.id].unbind('go-to-page');
+      paginations[this.id].unbind('go-to-page')
       paginations[this.id].bind('go-to-page', function(page) {
         if (options.callback && 'function' === typeof options.callback) {
-          options.callback(page);
+          options.callback(page)
         }
-      });
-      paginations[this.id].trigger('set-page', newOptions);
-    });
-  };
-})(jQuery);
+      })
+      paginations[this.id].trigger('set-page', newOptions)
+    })
+  }
+})(jQuery)

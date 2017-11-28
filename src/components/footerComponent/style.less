@@ -1,0 +1,25 @@
+.m-footer{
+    @height: 50px;
+    background: #2E3033;
+    width:100%;
+    height: @height;
+    font-size:12px;
+    text-align:center;
+    margin: 0 auto;
+    overflow: hidden;
+    ul{
+        display:inline-block;
+        margin-bottom:0px;
+    }
+    ul > li {
+        line-height: 46px;
+        float: left;
+        color: #fff;
+        + li {
+          margin-left: 25px;
+        }
+        span{
+          font-size: 12px;
+        }
+    }
+}

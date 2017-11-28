@@ -3,6 +3,6 @@
  * @param {*} arrays
  */
 module.exports = function(arrays) {
-  let length = arrays.length;
-  return 1/length * 100 + "%"
+  let length = arrays.length
+  return 1/length * 100 + '%'
 }

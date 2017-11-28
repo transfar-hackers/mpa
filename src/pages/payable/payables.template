@@ -1,0 +1,41 @@
+<div class="receivables-container">
+  {{#payablesData}}
+  <div class="order-header">
+    <div class="td-width1">总应付账款：<span>{{others.totalAmountPayable}}</span>&nbsp元</div>
+    <div class="td-width1">未付款：<span>{{others.totalAmountUnpaid}}</span>&nbsp元</div>
+    <div class="td-width1">已付账：<span>{{others.totalAmountPaid}}</span>&nbsp元</div>
+  </div>
+  <div class="order-title">
+    <div class="td-width2">供应商</div>
+    <div class="td-width3">订单总金额(元)</div>
+    <div class="td-width3">商品总金额(元)</div>
+    <div class="td-width2">运费(元)</div>
+    <div class="td-width2">应付款项(元)</div>
+    <div class="td-width3">未付款项(元)</div>
+    <div class="td-width2">已付款项(元)</div>
+    <div class="td-width3">操作</div>
+  </div>
+
+  <div class="orderManagementTable">
+    {{#data}}
+    <div class="order">
+      <div class="order-up">
+        <div>订单编号：{{this.treasureBillNo}}</div>
+        <div>下单时间：{{this.treasureBillInputDate}}</div>
+      </div>
+      <div class="order-down">
+        <div class="td-width2">{{this.remitteeEnterpriseName}}</div>
+        <div class="td-width3">{{this.totalPrice}}</div>
+        <div class="td-width3">{{this.goodsPrice}}</div>
+        <div class="td-width2">{{this.deliveryPrice}}</div>
+        <div class="td-width3">{{this.amountPayable}}</div>
+        <div class="td-width3">{{this.amountUnpaid}}</div>
+        <div class="td-width3" style="color: #ff2951;font-weight: bold">{{this.amountPaid}}<br>{{this.payChannel}}</div>
+        <div class="td-width3"><a href="../orderdetail/index.html?id={{treasureBillId}}">查看订单</a></div>
+      </div>
+    </div>
+    {{/data}}
+  </div>
+
+  {{/payablesData}}
+</div>

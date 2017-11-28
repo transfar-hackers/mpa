@@ -1,0 +1,67 @@
+{
+  "code": 0,
+  "message": "查询成功",
+  "data": [{
+    "treasureContractInstanceId": 1,
+    "treasureContractInstanceNo": "567964615_1511402709036",
+    "treasureBillInputDate": "2017-09-06 13:57:26",
+    "treasureBillId": 1126,
+    "sellerPartyId": 567964615,
+    "firstParty": "zhangsuyun",
+    "buyerPartyId": 111,
+    "secondParty": 222,
+    "contractInstanceName": "asdfa",
+    "contractInstanceUrl": "group1/M00/08/D0/CgcN7FoWLNSAI_OXAAAMFdRKWMY967.pdf",
+    "inputDate": "2017-11-23 10:05:08",
+    "status": "已创建"
+  }, {
+    "treasureContractInstanceId": 3,
+    "treasureContractInstanceNo": "567964615_1511402717701",
+    "treasureBillInputDate": "2017-09-06 13:57:26",
+    "treasureBillId": 1126,
+    "sellerPartyId": 567964615,
+    "firstParty": "zhangsuyun",
+    "buyerPartyId": 111,
+    "secondParty": 222,
+    "contractInstanceName": "asdfad",
+    "contractInstanceUrl": "group1/M00/08/D1/CgcN7FoWnq-AIf-zAAAMFdRKWMY644.pdf",
+    "inputDate": "2017-11-23 10:05:17",
+    "status": "已创建"
+  }, {
+    "treasureContractInstanceId": 7,
+    "treasureContractInstanceNo": "567964615_1511403124936",
+    "treasureBillInputDate": "2017-09-06 13:57:26",
+    "treasureBillId": 1126,
+    "sellerPartyId": 567964615,
+    "firstParty": "zhangsuyun",
+    "contractInstanceUrl": "group1/M00/08/CE/CgcN7VoWLnSAMhURAAAMFdRKWMY487.pdf",
+    "inputDate": "2017-11-23 10:12:04",
+    "status": "已创建"
+  }, {
+    "treasureContractInstanceId": 8,
+    "treasureContractInstanceNo": "567964615_1511437053217",
+    "treasureBillInputDate": "2017-11-21 11:51:19",
+    "treasureBillId": 1711,
+    "treasureBillNo": "20171121115119000156567311593204",
+    "sellerPartyId": 567964615,
+    "firstParty": "zhangsuyun",
+    "contractInstanceName": "3333",
+    "contractInstanceUrl": "group1/M00/08/D0/CgcN7VoXxDWAQkKZAAAMFdRKWMY883.pdf",
+    "inputDate": "2017-11-23 19:37:33",
+    "status": "已创建"
+  }, {
+    "treasureContractInstanceId": 10,
+    "treasureContractInstanceNo": "567964615_1511437060246",
+    "treasureBillInputDate": "2017-11-21 11:51:19",
+    "treasureBillId": 1711,
+    "treasureBillNo": "20171121115119000156567311593204",
+    "sellerPartyId": 567964615,
+    "firstParty": "zhangsuyun",
+    "contractInstanceName": "testContract",
+    "contractInstanceUrl": "group1/M00/08/D1/CgcN7FoWswSANznOAAAMFdRKWMY196.pdf",
+    "inputDate": "2017-11-23 19:37:40",
+    "status": "已创建"
+  }],
+  "others": {},
+  "totalCount": 6
+}

@@ -1,0 +1,18 @@
+<div class="o-order-detail-row o-top-bottom-border">
+    <div class="o-order-detail-col-title">商品</div>
+    <div class="o-order-detail-col-title">名称</div>
+    <div class="o-order-detail-col-title">规格</div>
+    <div class="o-order-detail-col-title">单价(元)</div>
+    <div class="o-order-detail-col-title">数量</div>
+    <div class="o-order-detail-col-title">商品小计（元）</div>
+</div>
+<div class="o-order-detail-row">
+    <div class="o-order-detail-col-content">
+        <img src="{{displayImagePath}}" />
+    </div>
+    <div class="o-order-detail-col-content">{{itemName}}</div>
+    <div class="o-order-detail-col-content">{{specifications}}</div>
+    <div class="o-order-detail-col-content">{{itemPrice}}</div>
+    <div class="o-order-detail-col-content">{{itemCount}}</div>
+    <div class="o-order-detail-col-content">{{totalPrice}}</div>
+</div>

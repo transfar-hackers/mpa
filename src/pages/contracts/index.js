@@ -1,6 +1,6 @@
 import 'babel-polyfill'
 import './style.css'
-import linkTemplate from '../../components/LinksComponent/index.js'
+// import linkTemplate from '../../components/LinksComponent/index.js'
 import contractEditor from '../../components/ContractComponent/index.js'
 
 $(function(host) {
@@ -17,6 +17,6 @@ $(function(host) {
   })
 
   let $linksElem = $('.links')
-  linkTemplate.render($linksElem)
+  // linkTemplate.render($linksElem)
 
 }(window))

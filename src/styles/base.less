@@ -1,0 +1,21 @@
+.fn-left {
+    float: left;
+}
+
+.fn-right {
+    float: right;
+}
+
+.clearfix(){
+  zoom: 1;
+  &:before,&:after{
+    display: table;
+    content: '';
+  }
+  &.after{
+    clear: both;
+  }
+}
+.f-clearfix{
+  .clearfix(){}
+}

@@ -1,0 +1,35 @@
+{{#> dialog}} {{#if logisticsList.data}}
+<div class='my-tabs'>
+  <ul class='nav nav-tabs my-tab-header'>
+    {{#each logisticsList.data}} {{#expressionHelper @index '===' 0}}
+    <li class="active">
+      {{else}}
+      <li>
+        {{/expressionHelper}}
+        <a data-toggle='tab' href='#contracts-management-{{@index}}'>发货单{{mathHelper @index '+' 1}}</a>
+      </li>
+      {{/each}}
+  </ul>
+  <div class='tab-content'>
+    {{#each logisticsList.data}} {{#expressionHelper @index '===' 0}}
+    <div id='contracts-management-{{@index}}' class='tab-pane fade in active'>
+      {{else}}
+      <div id='contracts-management-{{@index}}' class='tab-pane fade'>
+        {{/expressionHelper}} {{#each treasureLogisticsInfoVOs}}
+        <div class="o-time-logistics-record">
+          <div>{{logisticsDate}}</div>
+          <div>{{logisticsInfo}}</div>
+          {{#if hasLogisticsTrack}}
+          <div>
+            <i class='iconfont icon-wuliusonghuo'>看看物流到哪儿</i>
+          </div>
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{else}}
+  <div class="styleSize">暂无物流信息</div>
+  {{/if}} {{/dialog}}

@@ -1,4 +1,3 @@
-import path from 'path'
 import 'babel-polyfill'
 import './style.css'
 import 'bootstrap'
@@ -10,15 +9,20 @@ import 'common/base.js'
 import 'common/pagination.js'
 // end of imports for pagination component
 
-import 'components/LeftNavComponent/index.js'
+import LinksTemplate from 'components/LinksComponent/index.js'
+import Leftnav from 'components/LeftNavComponent/index.js'
 import basicInfoTemplate from 'components/BasicInfoComponent/index.js'
 import headerTemplate from 'components/HeaderComponent/index.js'
 import myDialogTemplate from './templates/mydialog.template'
 import herosTemplate from './templates/heros.template'
+import MessageTemplate from './templates/Message.template'
 
 const totalData = require('utilities/mock_data.js').page_data
 
-$((function(host) {
+$((function() {
+  // LinksTemplate.render($('.links'))
+
+  Leftnav.render($('.m-leftnav'))
   let $header = $('header')
   headerTemplate.rerender($header)
 
@@ -38,7 +42,14 @@ $((function(host) {
   $dialogElem.html(dialogHTML)
 
   $('#my-btn').on('click', function() {
-    console.log(`you clicked me!`)
+    console.log('you clicked me!')
+  })
+
+  $('#myDialog').on('hide.bs.modal', function(e) {
+    console.log(`I'm about to hide`)
+    e.stopImmediatePropagation()
+
+    console.log(e)
   })
 
   // end of dialog codes
@@ -46,27 +57,29 @@ $((function(host) {
   // pagination codes
   let $heroListElem = $('.hero-list')
   let pageSize = 10
-  let pageData = null
 
   function getPageDataByIndex(pageIndex) {
     let data = totalData.slice((pageIndex - 1) * pageSize, pageIndex * pageSize)
-    return data
+    return Promise.resolve(data)
   }
 
   let $paginationElem = $('.my-pagination')
 
   let options = {
-    maxPage: totalData.length / pageSize,
+    maxPage: totalData.length / pageSize + 1,
     currPage: 0,
     listElem: $heroListElem, // element to show the list
     listTemplate: herosTemplate, // template function
     callback: function(pageIndex) {
-      pageData = getPageDataByIndex(pageIndex)
-      let html = this.listTemplate({
-        heros: pageData
-      })
-
-      this.listElem.html(html)
+      getPageDataByIndex(pageIndex).then((pageData) => {
+          let html = this.listTemplate({
+            heros: pageData
+          })
+          this.listElem.html(html)
+        },
+        function(error) {
+          console.log(error)
+        })
     }
   }
 
@@ -75,4 +88,6 @@ $((function(host) {
 
   // end of pagination codes
 
+  let messageHTML = MessageTemplate()
+  $('.message').html(messageHTML)
 })(window))

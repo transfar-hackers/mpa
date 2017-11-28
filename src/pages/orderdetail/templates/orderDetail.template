@@ -1,0 +1,53 @@
+<div class="o-right-title">
+    订单信息
+</div>
+<div class="o-right-order-detail">
+    <div class="o-right-order-detail-title">订单编号：</div>
+    <div class="o-right-order-detail-content">{{treasureBillNo}}</div>
+</div>
+<div class="o-right-order-detail">
+    <div class="o-right-order-detail-title">收货地址：</div>
+    <div class="o-right-order-detail-content">{{buyerDeliveryName}}&nbsp;{{buyerDeliveryMobile}}</div>
+</div>
+<div class="o-right-order-detail">
+    <div class="o-right-order-detail-title"></div>
+    <div class="o-right-order-detail-address">{{buyerDeliveryProvince}}{{buyerDeliveryCity}}{{buyerDeliveryCity}}{{buyerDeliveryRegion}}{{buyerDeliveryAddress}}</div>
+</div>
+<div class="o-right-order-detail">
+    <div class="o-right-order-detail-title">供应商：</div>
+    <div class="o-right-order-detail-content">{{enterpriseName}}</div>
+</div>
+<div class="o-right-title">
+    物流信息
+</div>
+<div class="o-right-order-detail o-line-30">
+    <div class="o-right-order-detail-title">配送方式：</div>
+    <div class="o-right-order-detail-content">{{deliveryType}}</div>
+</div>
+<div class="o-right-order-detail">
+    <div class="o-right-order-detail-title">配送日期：</div>
+    <div class="o-right-order-detail-content">{{deliveryDate}}</div>
+</div>
+<div class="o-right-title">
+    发票信息
+</div>
+<div class="o-right-order-detail o-line-30">
+    <div class="o-right-order-detail-title">发票类型：</div>
+    <div class="o-right-order-detail-content">增值税专用发票</div>
+</div>
+<div class="o-right-order-detail o-line-30">
+    <div class="o-right-order-detail-title">公司抬头：</div>
+    <div class="o-right-order-detail-content">{{invoiceEnterpriseName}}</div>
+</div>
+<div class="o-right-order-detail o-line-30">
+    <div class="o-right-order-detail-title">开户行：</div>
+    <div class="o-right-order-detail-content">{{bankName}}</div>
+</div>
+<div class="o-right-order-detail o-line-30">
+    <div class="o-right-order-detail-title">纳税人识别号：</div>
+    <div class="o-right-order-detail-content">{{taxNum}}</div>
+</div>
+<!-- <div class="o-right-order-detail o-line-30">
+    <div class="o-right-order-detail-title">发票内容：</div>
+    <div class="o-right-order-detail-content">明细</div>
+</div> -->

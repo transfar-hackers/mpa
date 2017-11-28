@@ -1,6 +1,6 @@
 <div class='list-header'>
-  <span class='list-title statistic'>全部({{statusAll}})</span>
-  <span class='list-title statistic'>待受理({{status1}})</span>
-  <span class='list-title statistic'>配送中({{status2}})</span>
-  <span class='list-title statistic'>已签收({{status3}})</span>
+  <span class='list-title statistic statusSelect current'>全部</span>
+  <span class='list-title statistic statusSelect'>待受理</span>&nbsp&nbsp<span class="red">{{status1}}</span>
+  <span class='list-title statistic statusSelect'>配送中</span>&nbsp&nbsp<span class="red">{{status2}}</span>
+  <span class='list-title statistic statusSelect'>已签收</span>&nbsp&nbsp<span class="red">{{status3}}</span>
 </div>

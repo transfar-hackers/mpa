@@ -7,7 +7,7 @@
 <!-- dialog footer -->
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" data-dismiss="modal">{{negative}}</button>
-  <button type="button" class="btn btn-primary">{{positive}}</button>
+  <button type="button" class="btn btn-primary" data-dismiss="modal">{{positive}}</button>
 </div>
 <!-- end of dialog footer-->
 {{/dialog}}

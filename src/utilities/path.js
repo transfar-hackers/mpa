@@ -40,10 +40,9 @@ function generatePlugins(config) {
     plugins = []
 
   for (i = 0; i < len; i += 1) {
-    let template = config.entryJS[i]
     let pageName = config.entryHTMLs[i]
-    let len = template.length
     plugins.push(new HtmlWebpackPlugin({
+      // favicon: path.resolve(__dirname, '../styles/images/favicon.ico'),
       template: path.resolve(__dirname, `../pages/${pageName}/index.html`),
       filename: path.resolve(__dirname, `../../dist/${pageName}/index.html`)
     }))
@@ -61,7 +60,7 @@ function removePostfix(fullname) {
 function walkDirSync(dir) {
   return fs.lstatSync(dir).isDirectory() ?
     fs.readdirSync(dir).map(file => walkDirSync(path.join(dir, file))) :
-    dir;
+    dir
 }
 
 // return in flat array

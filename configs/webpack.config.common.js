@@ -1,8 +1,5 @@
 const path = require('path')
-const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const AppConfig = require('./app.config.js')
-const debug = require('debug')('webpack.config.common')
 
 module.exports = {
   output: {
@@ -55,7 +52,7 @@ module.exports = {
       test: /\.xml$/,
       use: ['xml-loader']
     }, {
-      test: /\.(png|svg|jpg|gif)$/,
+      test: /\.(png|svg|jpg|gif|ico)$/,
       use: [{
         loader: 'file-loader',
         options: {
@@ -85,4 +82,4 @@ module.exports = {
   node: {
     fs: 'empty'
   }
-};
+}

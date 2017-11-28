@@ -7,7 +7,7 @@
             <ul>
                 {{#each subList}}
                     {{#if goodsAdminList}}
-                        <li class="btn"><a href="javascript:void(0);">{{this.linksName}}</a><span class="f-float-right arrow"></span>
+                        <li class="goodsAdminBtn"><a href="javascript:void(0);">{{this.linksName}}</a><span class="f-float-right arrow"></span>
                             <ul class="subnav">
                                 {{#each goodsAdminList}}
                                     <li><a href={{this.links}}>{{this.linksName}}</a></li>

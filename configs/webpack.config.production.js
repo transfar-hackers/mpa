@@ -2,15 +2,13 @@
  * filename: webpack.config.production.js
  * purpose: merge entry, output, module, and plugins with for production
  */
-const path = require('path');
-const merge = require('webpack-merge');
-const common = require('./webpack.config.common.js');
-const webpack = require('webpack')
+const merge = require('webpack-merge')
+const common = require('./webpack.config.common.js')
 const entry = require('./webpack.entry.js')
 const modules = require('./webpack.module.js')
 const output = require('./webpack.output.js')
 const plugin = require('./webpack.plugin.js')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const prodConfig = {
   plugins: [
     new UglifyJSPlugin(),

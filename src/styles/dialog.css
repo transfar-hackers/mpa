@@ -1,0 +1,35 @@
+.modal-header h5 {
+    text-align: center;
+    font-size: 14px;
+    color: #333333;
+    font-family: MicrosoftYaHei;
+}
+
+.modal-footer {
+    border: none;
+    text-align: center;
+}
+
+.sure-btn:hover {
+    padding: 0px 46px;
+    height: 36px;
+    line-height: 36px;
+    background-color: #e93938;
+    border: none;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.close-btn:hover {
+    padding: 0px 46px;
+    height: 36px;
+    line-height: 36px;
+    background-color: #fff;
+    color: #999;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    border: 2px solid #ccc;
+}

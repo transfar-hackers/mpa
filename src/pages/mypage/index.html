@@ -1,21 +1,21 @@
 <!doctype html>
 <html class="no-js" lang="zh">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>传化商城 - 全供应链式服务的B2B商城</title>
-    <meta name="description" content="传化商城是一个致力于打造信息流、商流、资金流、物流四流合一的电商综合服务平台，为采购商和供应商提供全供应链式服务，实现无门槛的线上交易。" />
-    <meta name="description" content="handlebars webpack webpack3.x es6 jquery j-sparrow">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="apple-touch-icon" href="icon.png">
-  </head>
-  <body>
-    <div><span id='mypage'></span></div>
-    <a href="../index/index.html">Go to home page</a><br>
-    <a href='../contracts/index.html'>Go to contract editor page</a><br>
-    <a href="../logisticOrders/index.html">Go to logistic orders page</a><br>
-    <div class="m-leftnav"></div>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>传化商城 - 全供应链式服务的B2B商城</title>
+  <meta name="description" content="传化商城是一个致力于打造信息流、商流、资金流、物流四流合一的电商综合服务平台，为采购商和供应商提供全供应链式服务，实现无门槛的线上交易。" />
+  <meta name="description" content="handlebars webpack webpack3.x es6 jquery j-sparrow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+</head>
+
+<body>
+  <div><span id='mypage'></span></div>
+  <div class='links'></div>
+  <div class="m-leftnav"></div>
   <header></header>
   <!-- Button to trigger modal dialog -->
   <button type="button" data-target="#myDialog" class="btn btn-primary" data-toggle="modal" data-backdrop='static'>
@@ -29,26 +29,28 @@
   <!-- end of pagination code -->
   <!-- bootstraps tabs code -->
   <div class='my-tabs'>
-  <ul class='nav nav-tabs my-tab-header'>
-    <li><a data-toggle='tab' href='#contracts-management'>Contracts Management</a></li>
-    <li class='active'><a data-toggle='tab' href='#contract-templates-management'>Contract Templates Management</a></li>
-    <li><a data-toggle='tab' href='#other-contents'>Some other contents</a></li>
-  </ul>
-  <div class='tab-content'>
-    <div id='contracts-management' class='tab-pane fade'>
-      <span>I'm Jack Sparrow</span><br>
-      <span>I'm managing your CONTRACTS!</span>
+    <ul class='nav nav-tabs my-tab-header'>
+      <li><a data-toggle='tab' href='#contracts-management'>Contracts Management</a></li>
+      <li class='active'><a data-toggle='tab' href='#contract-templates-management'>Contract Templates Management</a></li>
+      <li><a data-toggle='tab' href='#other-contents'>Some other contents</a></li>
+    </ul>
+    <div class='tab-content'>
+      <div id='contracts-management' class='tab-pane fade'>
+        <span>I'm Jack Sparrow</span><br>
+        <span>I'm managing your CONTRACTS!</span>
+      </div>
+      <div id='contract-templates-management' class='tab-pane fade in active'>
+        <span>I'm Jack Sparrow</span><br>
+        <span>I'm managing your contract TEMPLATES!</span>
+      </div>
+      <div id='other-contents' class='tab-pane fade'>
+        <span>I'm Jack Sparrow</span><br>
+        <span>Here are some other contents for you!</span>
+      </div>
     </div>
-    <div id='contract-templates-management' class='tab-pane fade in active'>
-      <span>I'm Jack Sparrow</span><br>
-      <span>I'm managing your contract TEMPLATES!</span>
-    </div>
-    <div id='other-contents' class='tab-pane fade'>
-      <span>I'm Jack Sparrow</span><br>
-      <span>Here are some other contents for you!</span>
-    </div>
-  </div>
   </div>
   <!--end of bootstraps tabs code -->
+  <div class='message'></div>
 </body>
+
 </html>

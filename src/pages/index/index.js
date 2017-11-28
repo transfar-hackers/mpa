@@ -1,15 +1,21 @@
 import 'babel-polyfill'
 import './style.css'
+import $ from 'jquery'
 
+const favicon = require('styles/images/favicon.ico')
 const messageTemplate = require('./Index.template')
-const BasicInfo = require('../../components/BasicInfoComponent/index.js')
-import Links from '../../components/LinksComponent/index';
+import Links from '../../components/LinksComponent/index'
 
-$((function(host) {
+$((function () {
+  // add favicon --> didn't use webpack-html-plugin to generate favicon
+  let $faviconElem = $(`<link rel="shortcut icon" href=${favicon}>`)
+  $('head').append($faviconElem)
+  // end of add favicon
+
   const html = messageTemplate({
     author: 'Jack Sparrow!!!'
   })
 
   $('#message').html(html)
-  Links.render($("#links"))
-})(window))
+  Links.render($('#links'))
+})())
