@@ -22,7 +22,15 @@
   </div>
   <div class='comp-lo-order-body'>
     <div class='name'>
-      <span>{{itemName}}</span>
+      {{#if purchaseFlag}}
+        <span>
+          <a href='/purchase/jicaiItem.html?itemId={{itemId}}&purchaseInfoId={{treasurePurchaseInfoId}}'>{{itemName}}</a>
+        </span>
+      {{else}}
+        <span>
+          <a href='/item.html?itemId={{itemId}}'>{{itemName}}</a>
+        </span>
+      {{/if}}
       <!-- <span>{{order.buyer.address}}</span> -->
     </div>
     <div class='price'>
@@ -35,15 +43,18 @@
       <span>{{totalPrice}}</span>
     </div>
     <div class="freight">
+      <!-- 自提订单、修改过运费、订单确认后，确认收款后，核销后不能修改运费 -->
       <span>{{deliveryType}}</span>
       {{#statusHelper deliveryType '配送'}}
-      <br>
-      <span>{{deliveryPrice}}&nbsp;
-      {{#statusHelper status '待确认'}}
-      {{#expressionHelper deliveryPrice '<=' 0}}
-      <i class="iconfont icon-bianji order-edit-wuliu"></i></span>
-      {{/expressionHelper}}
-      {{/statusHelper}}
+        <br>
+        <span>{{deliveryPrice}}&nbsp;
+        {{#statusHelper status '待确认'}}
+          {{#expressionHelper deliveryPrice '<=' 0}}
+            {{#statusHelper payStatus '待支付'}}
+            <i class="iconfont icon-bianji order-edit-wuliu"></i></span>
+            {{/statusHelper}}
+          {{/expressionHelper}}
+        {{/statusHelper}}
       {{/statusHelper}}
     </div>
     <div class='paytype'>
@@ -57,129 +68,215 @@
     </div>
     <div class='suppler address'>
       <span>{{buyerPartyName}}</span><br>
-      <span>{{buyerDeliveryName}}&nbsp;{{buyerContact}}</span><br>
-      <span>{{buyerDeliveryProvince}}{{buyerDeliveryCity}}{{buyerDeliveryRegion}}</span><br>
+      <span>{{buyerDeliveryName}}&nbsp;{{buyerDeliveryMobile}}</span><br>
+      <span>{{buyerDeliveryProvince}}{{buyerDeliveryCity}}{{buyerDeliveryRegion}}{{buyerDeliveryAddress}}</span><br>
     </div>
     <div class='orderstatus'>
       <span class="red">
       {{#if purchaseFlag}}
-      {{purchaseStatus}}
+        {{#statusHelper purchaseStatus '集采成功'}}
+          {{status}}
+        {{else}}
+        {{purchaseStatus}}
+        {{/statusHelper}}
       {{else}}
       {{status}}
       {{/if}}
-      </span> 
+      </span>
     </div>
       {{#if purchaseFlag}}
-      {{#statusHelper purchaseStatus '集采成功'}}
+        <!-- 集采订单 -->
+        {{#statusHelper purchaseStatus '集采成功'}}
+        <div class='operations'>
+          <!-- 待确认 -->
+          {{#statusHelper status '待确认'}}
+          <button type="button" class="order-operation-btn  btn-bg-blue order-confirm" data-id={{treasureBillId}}>订单确认</button>
+            {{#if salesMan}}
+            {{else}}
+            <button type="button" class="order-operation-btn order-fenpei" data-id={{treasureBillId}}>分配业务员</button>
+            {{/if}}
+            {{#statusHelper payStatus '待支付'}}
+            <a class="open-order-receipt-confirm" data-id={{treasureBillId}}  href='#'>确认收款</a>
+            <br>
+            {{/statusHelper}}
+          <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+          <br>
+          <a class="closeOrder" data-toggle="modal" data-id={{treasureBillId}}>取消订单</a>
+          {{/statusHelper}}
+          <!-- 待发货 -->
+          {{#statusHelper status '待发货'}}
+          <button type="button" class="order-operation-btn btn-default-width  send-bill-to-oms" data-id={{treasureBillId}}>安排发货</button>
+            {{#statusHelper payStatus '待支付'}}
+            <a class="open-order-receipt-confirm" data-id={{treasureBillId}}  href='#'>确认收款</a>
+            <br>
+            {{/statusHelper}}
+          <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+          {{/statusHelper}}
+          <!-- 已发货 -->
+          {{#statusHelper status '已发货'}}
+            {{#statusHelper deliveryType '配送'}}
+            <a class="logisticTrack" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}}>物流跟踪</a>
+            <br>
+            {{/statusHelper}}
+            {{#statusHelper payStatus '待支付'}}
+            <a class="open-order-receipt-confirm" data-id={{treasureBillId}}  href='#'>确认收款</a>
+            <br>
+            {{/statusHelper}}
+          <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+          {{/statusHelper}}
+          <!-- 待提货 -->
+          {{#statusHelper status '待提货'}}
+          <button type="button" class="order-operation-btn btn-default-width pick-up-goods" data-id={{treasureBillId}}>买家已提货</button><br>
+            {{#statusHelper payStatuss '待支付'}}
+            <a class="open-order-receipt-confirm" data-id={{treasureBillId}}  href='#'>确认收款</a>
+            <br>
+            {{/statusHelper}}
+          <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+          {{/statusHelper}}
+          <!-- 待确认收货 -->
+          {{#statusHelper status '待确认收货'}}
+            {{#statusHelper deliveryType '配送'}}
+            <a class="logisticTrack" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}}>物流跟踪</a>
+            <br>
+            {{/statusHelper}}
+            {{#statusHelper payStatus '待支付'}}
+            <a class="open-order-receipt-confirm" data-id={{treasureBillId}}  href='#'>确认收款</a>
+            <br>
+            {{/statusHelper}}
+          <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+          {{/statusHelper}}
+          <!-- 交易完成 -->
+          {{#statusHelper status '交易完成'}}
+            {{#statusHelper deliveryType '配送'}}
+            <a class="logisticTrack" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}}>物流跟踪</a>
+            <br>
+            {{/statusHelper}}
+          <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+          {{/statusHelper}}
+          {{#statusHelper status '交易关闭'}}
+          <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+          {{/statusHelper}}
+        </div>
+        {{else}}
+        <div class='operations'>
+          <!-- <a href='#'>查看集采进度</a> -->
+        </div>
+        {{/statusHelper}}
+        <!-- 集采订单 -->
+
+      {{else}}
+
+      <!-- 非集采订单 -->
       <div class='operations'>
         <!-- 待确认 -->
         {{#statusHelper status '待确认'}}
         <button type="button" class="order-operation-btn  btn-bg-blue order-confirm" data-id={{treasureBillId}}>订单确认</button>
-        {{#if salesMan}}  
-        {{else}}
-        <button type="button" class="order-operation-btn order-fenpei" data-id={{treasureBillId}}>分配业务员</button>
-        {{/if}}  
-        {{#statusHelper payStatus '待支付'}}
-        <a class="order-confirm-receipt" data-id={{treasureBillId}}  href='#'>确认收款</a>
-        <br>
-        {{/statusHelper}}
-        <a  href="/mpa/orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+          {{#if salesMan}}
+          {{else}}
+          <button type="button" class="order-operation-btn order-fenpei" data-id={{treasureBillId}}>分配业务员</button>
+          {{/if}}
+          {{#statusHelper payStatus '待支付'}}
+          <a class="open-order-receipt-confirm" data-id={{treasureBillId}}  href='#'>确认收款</a>
+          <br>
+          {{/statusHelper}}
+        <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
         <br>
         <a class="closeOrder" data-toggle="modal" data-id={{treasureBillId}}>取消订单</a>
-        {{/statusHelper}} 
+        {{/statusHelper}}
         <!-- 待发货 -->
         {{#statusHelper status '待发货'}}
         <button type="button" class="order-operation-btn btn-default-width  send-bill-to-oms" data-id={{treasureBillId}}>安排发货</button>
-        <a  href="/mpa/orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+          {{#statusHelper payStatus '待支付'}}
+          <a class="open-order-receipt-confirm" data-id={{treasureBillId}}  href='#'>确认收款</a>
+          <br>
+          {{/statusHelper}}
+        <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+        {{/statusHelper}}
+        <!-- 已发货 -->
+        {{#statusHelper status '已发货'}}
+          {{#statusHelper deliveryType '配送'}}
+          <a class="logisticTrack" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}}>物流跟踪</a>
+          <br>
+          {{/statusHelper}}
+          {{#statusHelper payStatus '待支付'}}
+          <a class="open-order-receipt-confirm" data-id={{treasureBillId}}  href='#'>确认收款</a>
+          <br>
+          {{/statusHelper}}
+        <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
         {{/statusHelper}}
         <!-- 待提货 -->
         {{#statusHelper status '待提货'}}
         <button type="button" class="order-operation-btn btn-default-width pick-up-goods" data-id={{treasureBillId}}>买家已提货</button><br>
-        <a  href="/mpa/orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
-        {{/statusHelper}} 
+          {{#statusHelper payStatus '待支付'}}
+          <a class="open-order-receipt-confirm" data-id={{treasureBillId}}  href='#'>确认收款</a>
+          <br>
+          {{/statusHelper}}
+        <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+        {{/statusHelper}}
         <!-- 待确认收货 -->
         {{#statusHelper status '待确认收货'}}
-        {{#statusHelper deliveryType '配送'}}
-        <a class="logisticTrack" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}}>物流跟踪</a>
-        <br>
-        {{/statusHelper}}
-        <a  href="/mpa/orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+          {{#statusHelper deliveryType '配送'}}
+          <a class="logisticTrack" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}}>物流跟踪</a>
+          <br>
+          {{/statusHelper}}
+          {{#statusHelper payStatus '待支付'}}
+          <a class="open-order-receipt-confirm" data-id={{treasureBillId}}  href='#'>确认收款</a>
+          <br>
+          {{/statusHelper}}
+        <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
         {{/statusHelper}}
         <!-- 交易完成 -->
         {{#statusHelper status '交易完成'}}
-        {{#statusHelper deliveryType '配送'}}
-        <a class="logisticTrack" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}}>物流跟踪</a>
-        <br>
-        {{/statusHelper}}    
-        <a  href="/mpa/orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+          {{#statusHelper deliveryType '配送'}}
+          <a class="logisticTrack" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}}>物流跟踪</a>
+          <br>
+          {{/statusHelper}}
+        <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
+        {{/statusHelper}}
+        {{#statusHelper status '交易关闭'}}
+        <a  href="../orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
         {{/statusHelper}}
       </div>
-      {{else}}
-      <div class='operations'>
-        <!-- <a href='#'>查看集采进度</a> -->
-      </div>
-      {{/statusHelper}}
-      {{else}}
-      <div class='operations'>
-        <!-- 待确认 -->
-        {{#statusHelper status '待确认'}}
-        <button type="button" class="order-operation-btn  btn-bg-blue order-confirm" data-id={{treasureBillId}}>订单确认</button>
-        {{#if salesMan}}  
-        {{else}}
-        <button type="button" class="order-operation-btn order-fenpei" data-id={{treasureBillId}}>分配业务员</button>
-        {{/if}}  
-        {{#statusHelper payStatus '待支付'}}
-        <a class="order-confirm-receipt" data-id={{treasureBillId}}  href='#'>确认收款</a>
-        <br>
-        {{/statusHelper}}
-        <a  href="/mpa/orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
-        <br>
-        <a class="closeOrder" data-toggle="modal" data-id={{treasureBillId}}>取消订单</a>
-        {{/statusHelper}} 
-        <!-- 待发货 -->
-        {{#statusHelper status '待发货'}}
-        <button type="button" class="order-operation-btn btn-default-width  send-bill-to-oms" data-id={{treasureBillId}}>安排发货</button>
-        <a  href="/mpa/orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
-        {{/statusHelper}}
-        <!-- 待提货 -->
-        {{#statusHelper status '待提货'}}
-        <button type="button" class="order-operation-btn btn-default-width pick-up-goods" data-id={{treasureBillId}}>买家已提货</button><br>
-        <a  href="/mpa/orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
-        {{/statusHelper}} 
-        <!-- 待确认收货 -->
-        {{#statusHelper status '待确认收货'}}
-        {{#statusHelper deliveryType '配送'}}
-        <a class="logisticTrack" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}}>物流跟踪</a>
-        <br>
-        {{/statusHelper}}
-        <a  href="/mpa/orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
-        {{/statusHelper}}
-        <!-- 交易完成 -->
-        {{#statusHelper status '交易完成'}}
-        {{#statusHelper deliveryType '配送'}}
-        <a class="logisticTrack" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}}>物流跟踪</a>
-        <br>
-        {{/statusHelper}}    
-        <a  href="/mpa/orderdetail/index.html?id={{treasureBillId}}" target="_blank">查看订单</a>
-        {{/statusHelper}}
-      </div>
+      <!-- 非集采订单 -->
+
     {{/if}}
     <div class='elecontract'>
       {{#if purchaseFlag}}
-      {{else}}
-      {{#statusHelper status '待确认'}}
-      {{#if treasureContractInstanceId}}
-        {{#statusHelper treasureContractInstanceStatus '已创建'}}
-        <button type="button" class="order-operation-btn set-contract-template" style="width: 90px" data-id={{treasureBillId}}>合同签章</button> 
+        {{#statusHelper purchaseStatus '集采成功'}}
+          {{#statusHelper status '待确认'}}
+          {{#if treasureContractInstanceId}}
+            {{#statusHelper treasureContractInstanceStatus '已创建'}}
+            <button type="button" class="order-operation-btn open-contract-salesign-notice" style="width: 90px" data-id={{treasureContractInstanceId}}>在线签章</button>
+            {{/statusHelper}}
+            {{#statusHelper treasureContractInstanceStatus '已生效'}}
+            <a class="check-contract-content" data-id={{treasureContractInstanceId}}>查看合同</a>
+            {{/statusHelper}}
+          {{else}}
+            <button type="button" class="order-operation-btn set-contract-template" style="width: 90px" data-id={{treasureBillId}}>选择合同模板</button>
+          {{/if}}
+          {{else}}
+            {{#statusHelper treasureContractInstanceStatus '已生效'}}
+            <a class="check-contract-content" data-id={{treasureContractInstanceId}}>查看合同</a>
+            {{/statusHelper}}
+          {{/statusHelper}}
         {{/statusHelper}}
       {{else}}
-      <button type="button" class="order-operation-btn set-contract-template" style="width: 90px" data-id={{treasureBillId}}>设置合同模板</button>      
-      {{/if}}
-      {{else}}
-        {{#statusHelper treasureContractInstanceStatus '已生效'}}
-        <a href='#'>查看合同</a>
+        {{#statusHelper status '待确认'}}
+          {{#if treasureContractInstanceId}}
+            {{#statusHelper treasureContractInstanceStatus '已创建'}}
+            <button type="button" class="order-operation-btn open-contract-salesign-notice" style="width: 90px" data-id={{treasureContractInstanceId}}>在线签章</button>
+            {{/statusHelper}}
+            {{#statusHelper treasureContractInstanceStatus '已生效'}}
+            <a class="check-contract-content" data-id={{treasureContractInstanceId}}>查看合同</a>
+            {{/statusHelper}}
+          {{else}}
+            <button type="button" class="order-operation-btn set-contract-template" style="width: 90px" data-id={{treasureBillId}}>选择合同模板</button>
+          {{/if}}
+        {{else}}
+          {{#statusHelper treasureContractInstanceStatus '已生效'}}
+          <a class="check-contract-content" data-id={{treasureContractInstanceId}}>查看合同</a>
+          {{/statusHelper}}
         {{/statusHelper}}
-      {{/statusHelper}}
       {{/if}}
     </div>
   </div>
@@ -188,7 +285,7 @@
       <span>运费：</span>
       <input class="delivery-price" value=""/>
       <span>元</span>
-      <button type="button" class="operation-btn btn-width btn-bg-blue confirm-edit-wuliu" style="margin-left: 38px" 
+      <button type="button" class="operation-btn btn-width btn-bg-blue confirm-edit-wuliu" style="margin-left: 38px"
         data-backdrop="static" data-id={{treasureBillId}}>确认</button>
       <button type="button" class="operation-btn btn-width cancel-edit-wuliu">取消</button>
     </div>

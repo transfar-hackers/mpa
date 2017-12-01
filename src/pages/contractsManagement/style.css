@@ -43,7 +43,10 @@ label {
   display:  flex;
   padding:  10px;
 }
-
+.comp-lo-order-body div span{
+  word-wrap: break-word;
+  word-break: normal;
+}
 .content {
   width: 970px;
   margin-left: 220px;
@@ -62,7 +65,7 @@ label {
 }
 
 .list-header {
-  margin: 2%;
+  margin: 1%;
   display: flex;
 }
 
@@ -71,33 +74,41 @@ label {
 }
 
 .template-name {
-  min-width: 22%
+  width: 25%;
 }
 
 .template-creator {
-  min-width: 22%
+  width: 25%;
 }
 
 .upload-date {
-  min-width: 22%
+  width: 25%;
 }
 
 .template-operations {
-  min-width: 22%
+  width: 22%;
+  display: inline-flex;
 }
 
 .order-number {
   min-width: 15%;
   font-size: 14px;
   font-weight: normal;
+  margin-right: 30px;
 }
 
 .contract {
   width: 15%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .seller {
   width: 15%;
+  margin-left: 0.5em;
 }
 
 .buyer {
@@ -146,7 +157,44 @@ label {
   border: solid 1px #dddddd;
 }
 
+.template-view {
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+.template-view, .template-edit, .template-delete {
+    margin: 0 0.2em;
+}
+
 .modal-content {
   width: 930px;
   height: 500px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
+
+#tbx-name {
+  display: inline-block;
+  min-width: 200px;
+  height: 30px;
+  border: solid 1px #dddddd;
+  margin-bottom: 10px;
+}
+
+.list-header label{
+  padding-left: 15px;
+}
+
+.list-header span{
+  padding-left: 15px;
+}
+
+#contract-list-pagination {
+  text-align: right;
+}
+
+

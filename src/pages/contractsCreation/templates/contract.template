@@ -1,0 +1,43 @@
+<!--a handlebars template for a logistic order-->
+<div class='comp-lo-order'>
+  <div class='comp-lo-order-header'>
+    <div class='comp-lo-basic-info'>
+      <label class='order-number'>
+        <span >订单号：</span>
+        <span class='contract-view'>{{treasureBillId}}</span>
+      </label>
+      <label class='order-number'>
+        <span >下单时间：</span>
+        <span>{{orderDate}}</span>
+      </label>
+    </div>
+  </div>
+  <div class='comp-lo-order-body'>
+    <div class='contract'>
+      <a>{{contractInstanceName}}</a>
+    </div >
+    <div class='seller'>
+      <span>{{firstParty}}</span>
+    </div>
+    <div class='buyer'>
+      <span>{{secondParty}}</span>
+    </div>
+    <div class='contract-date'>
+      <span>{{inputDate}}</span>
+    </div>
+    <div class='effect-date'>
+      <span>{{takeEffectDate}}</span>
+    </div>
+    <div class='stamp-status'>
+      <span>{{status}}</span>
+    </div>
+    <label class='operations' x-contractId={{treasureContractInstanceId}}>
+      <a href='#' class='contract-view'>查看&nbsp;</a><br>
+      {{#amongHelper status "已创建, 未签章"}}
+        <a href='#' class='contract-edit'>编辑&nbsp;</a><br>
+        <a href='#' class='contract-delete'>删除&nbsp; </a><br>
+      {{/amongHelper}}
+      <!-- <a href='#' class='contract-download'>下载&nbsp;</a> -->
+    </label>
+  </div>
+</div>

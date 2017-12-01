@@ -1,0 +1,14 @@
+{{#> dialog}}
+<div class="contant">
+    <span>请确保贵公司已完成“法人手持身份证照片”，“法人身份证”，以及“企业三级认证”，并点击以下链接，在页面上点击“使用电子合同”按钮，开通电子签章功能。
+    </span>
+    <br>
+    <div style="padding-left: 20px; padding-top: 20px">  
+        <a href='http://www.tf56.com/v2/pages/member/logisticsAssistant/assistant.html'>去开通</a>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary {{confirmClass}} sure-btn" style="width:250px" data-id={{contractId}}>我已开通”电子签章“功能</button>
+    <button type="button" class="btn btn-secondary tips-close-btn close-btn" style="width:250px" data-dismiss="modal">暂不使用</button>
+</div>
+{{/dialog}}

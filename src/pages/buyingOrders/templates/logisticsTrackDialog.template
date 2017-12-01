@@ -21,7 +21,7 @@
           <div>{{logisticsInfo}}</div>
           {{#if hasLogisticsTrack}}
           <div>
-            <i class='iconfont icon-wuliusonghuo'>看看物流到哪儿</i>
+            <i class='iconfont icon-wuliusonghuo whereGo' data-no={{deliveryBillNo}}>看看物流到哪儿</i>
           </div>
           {{/if}}
         </div>

@@ -86,5 +86,5 @@ module.exports = {
   generatePlugins: generatePlugins,
   removePostfix: removePostfix,
   walkDirSync: walkDirSync,
-  walkDirSyncFlat: walkDirSyncFlat
+  walkDirSyncFlat: walkDirSyncFlat,
 }

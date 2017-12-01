@@ -22,7 +22,15 @@
   </div>
   <div class='comp-lo-order-body'>
     <div class='name'>
-      <span>{{itemName}}</span>
+      {{#if purchaseFlag}}
+      <span>
+        <a href='/purchase/jicaiItem.html?itemId={{itemId}}&purchaseInfoId={{treasurePurchaseInfoId}}' class="itemName">{{itemName}}</a>
+      </span>
+      {{else}}
+      <span>
+        <a href='/item.html?itemId={{itemId}}' class="itemName">{{itemName}}</a>
+      </span>
+      {{/if}}
     </div>
     <div class='price'>
       <span>{{itemPrice}}</span>
@@ -33,11 +41,12 @@
     <div class='totalprice'>
       <span>{{totalPrice}}</span>
       <br>
-      <span>(含运费: {{#if deliveryPrice}}
-        <span class="red">计算中</span>
-        {{else}}
+      <span>
+        {{#purcaseStatusHelper deliveryType '配送'}} (含运费: {{#if deliveryPrice}}
         <span class="red">{{deliveryPrice}}</span>
-        {{/if}} )
+        {{else}}
+        <span class="red">计算中</span>
+        {{/if}} ) {{/purcaseStatusHelper}}
       </span>
     </div>
     <div class='paytype'>
@@ -50,61 +59,71 @@
     </div>
     <div class='orderstatus'>
       {{#if purchaseFlag}} {{#purcaseStatusHelper purchaseStatus '集采成功'}}
-      <span class="red">待确认</span>
+      <span class="red">{{status}}</span>
       {{else}}
       <span class="red">{{purchaseStatus}}</span>
       {{/purcaseStatusHelper}}
-
       <br> {{#purcaseStatusHelper status '交易关闭'}}
       <span>集采未达标</span>
       {{/purcaseStatusHelper}} {{else}}
       <span class="red">{{status}}</span>
       {{/if}}
     </div>
-    {{#if purchaseFlag}} {{#purcaseStatusHelper purchaseStatus '集采成功'}}
+    {{#if purchaseFlag}} {{else}} {{#purcaseStatusHelper status '待确认'}}
     <div class='operations'>
-      <a href='../orderdetail/index.html?id={{treasureBillId}}'>查看订单</a>
+      <a href='../orderdetail/index.html?id={{treasureBillId}}' target="_blank">查看订单</a>
       <br>
       <a href='#closeOrder' class="closeOrder" data-toggle="modal" data-id={{treasureBillId}} data-backdrop='static'>取消订单</a>
     </div>
-    {{/purcaseStatusHelper}} {{else}} {{#purcaseStatusHelper status '待确认'}}
+    {{/purcaseStatusHelper}} {{/if}} {{#purcaseStatusHelper status '待发货'}}
     <div class='operations'>
-      <a href='../orderdetail/index.html?id={{treasureBillId}}'>查看订单</a>
-      <br>
-      <a href='#closeOrder' class="closeOrder" data-toggle="modal" data-id={{treasureBillId}} data-backdrop='static'>取消订单</a>
-    </div>
-    {{/purcaseStatusHelper}}{{/if}} {{#purcaseStatusHelper status '待发货'}}
-    <div class='operations'>
-      <a href='../orderdetail/index.html?id={{treasureBillId}}'>查看订单</a>
+      <a href='../orderdetail/index.html?id={{treasureBillId}}' target="_blank">查看订单</a>
     </div>
     {{/purcaseStatusHelper}} {{#purcaseStatusHelper status '待提货'}}
     <div class='operations'>
-      <a href='../orderdetail/index.html?id={{treasureBillId}}'>查看订单</a>
+      <a href='../orderdetail/index.html?id={{treasureBillId}}' target="_blank">查看订单</a>
+    </div>
+    {{/purcaseStatusHelper}} {{#purcaseStatusHelper status '已发货'}}
+    <div class='operations'>
+      <a href='../orderdetail/index.html?id={{treasureBillId}}' target="_blank">查看订单</a>
+      <br> {{#purcaseStatusHelper deliveryType '配送'}}
+      <a class="logisticTrack" data-toggle="modal" data-id={{treasureBillId}} data-target="#logisticTrack" data-companyid={{treasureEnterpriseId}}
+        data-backdrop='static'>物流跟踪</a>
+      {{/purcaseStatusHelper}}
     </div>
     {{/purcaseStatusHelper}} {{#purcaseStatusHelper status '待确认收货'}}
     <div class='operations'>
       <button type="button" class="operation-btn checkBtn" data-toggle="modal" data-target="#checkOrder" data-backdrop="static"
         data-id={{treasureBillId}} data-index={{@key}} data-backdrop='static'>确认收货</button>
       <br>
-      <a href='../orderdetail/index.html?id={{treasureBillId}}'>查看订单</a>
-      <br>
+      <a href='../orderdetail/index.html?id={{treasureBillId}}' target="_blank">查看订单</a>
+      <br> {{#purcaseStatusHelper deliveryType '配送'}}
       <a class="logisticTrack" data-toggle="modal" data-id={{treasureBillId}} data-target="#logisticTrack" data-companyid={{treasureEnterpriseId}}
         data-backdrop='static'>物流跟踪</a>
+      {{/purcaseStatusHelper}}
     </div>
     {{/purcaseStatusHelper}} {{#purcaseStatusHelper status '交易完成'}}
     <div class='operations'>
-      <a href='../orderdetail/index.html?id={{treasureBillId}}'>查看订单</a>
-      <br>
+      <a href='../orderdetail/index.html?id={{treasureBillId}}' target="_blank">查看订单</a>
+      <br> {{#purcaseStatusHelper deliveryType '配送'}}
       <a class="logisticTrack" data-toggle="modal" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}}
         data-backdrop='static'>物流跟踪</a>
+      {{/purcaseStatusHelper}}
+    </div>
+    {{/purcaseStatusHelper}} {{#purcaseStatusHelper status '交易关闭'}}
+    <div class='operations'>
+      <a href='../orderdetail/index.html?id={{treasureBillId}}' target="_blank">查看订单</a>
     </div>
     {{/purcaseStatusHelper}}
     <div class='elecontract'>
-      {{#purcaseStatusHelper treasureContractInstanceStatus '待签章'}}
-      <button type="button" class="operation-btn" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-id={{id}}
-        data-index={{@key}}>在线签章</button>
-      {{/purcaseStatusHelper}} {{#purcaseStatusHelper treasureContractInstanceStatus '已生效'}}
-      <a href='#'>查看合同</a>
+      <!--10:01-->
+      {{#purcaseStatusHelper status '待确认'}}
+        {{#purcaseStatusHelper treasureContractInstanceStatus '待签章'}}
+        <button type="button" class="operation-btn open-contract-salesign-notice" data-toggle="modal" data-target="#exampleModal"
+          data-backdrop="static" data-id={{treasureContractInstanceId}} data-index={{@key}}>在线签章</button>
+        {{/purcaseStatusHelper}}
+      {{/purcaseStatusHelper}}{{#purcaseStatusHelper treasureContractInstanceStatus '已生效'}}
+      <a class="check-contract-content" data-id={{treasureContractInstanceId}} >查看合同</a>
       {{/purcaseStatusHelper}}
     </div>
   </div>

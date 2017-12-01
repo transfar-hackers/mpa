@@ -4,10 +4,10 @@ module.exports = [{
   'iconfont': 'icon-user',
   'subList': [{
     linksName: '基本信息',
-    links: bProd ? '/mpa/user/membermsg.html' : '/user/membermsg.html',
+    links: '/user/membermsg.html',
     isNewPage: false
   }, {
-    linksName: '收获地址',
+    linksName: '收货地址',
     links: '/user/address.html',
     isNewPage: false
   }, {
@@ -48,7 +48,7 @@ module.exports = [{
     linksName: '我发布的需求',
     links: '/user/release.html',
     isNewPage: false
-  }, ]
+  }]
 }, {
   'roleType': 'supplier',
   'listName': '供应管理',
@@ -61,7 +61,13 @@ module.exports = [{
     linksName: '销售订单',
     links: bProd ? '/mpa/sellOrders/index.html' : '/sellOrders/index.html',
     isNewPage: true
-  }, {
+  },
+  {
+    linksName: '电子合同管理',
+    links: bProd ? '/mpa/contractsManagement/index.html' : '/contractsManagement/index.html',
+    isNewPage: true
+  },
+  {
     linksName: '商品管理',
     goodsAdminList: [{
       linksName: '添加商品',
@@ -79,7 +85,7 @@ module.exports = [{
       linksName: '集采商品列表',
       links: '/seller/jicaiGoodsList.html',
       isNewPage: false
-    }]
+    },]
   }]
 }, {
   'roleType': 'supplier',
@@ -91,14 +97,6 @@ module.exports = [{
     isNewPage: true
   }]
 }, {
-  'roleType': 'supplier',
-  'listName': '金融服务',
-  'iconfont': 'icon-jinrong',
-  'subList': [{
-    linksName: '',
-    links: ''
-  }]
-}, {
   'roleType': 'operators',
   'listName': '平台管理',
   'iconfont': 'icon-transaction',
@@ -106,8 +104,6 @@ module.exports = [{
     linksName: '需求管理',
     links: '/seller/requirement.html',
     isNewPage: false
-  }, {
-    linksName: '服务提供商管理',
-    links: ''
-  }, ]
-}, ]
+  },]
+},]
+

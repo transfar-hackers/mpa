@@ -1,0 +1,8 @@
+{{#> dialog}}
+<div id="contract-content" class="contract-content">合同</div>
+<span class="errorMsg"></span>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary confirm-contract-salesign sure-btn" data-id={{treasureContractInstanceId}}>合同签章</button>
+    <button type="button" class="btn btn-primary close-btn" data-dismiss="modal">取消</button>
+  </div>
+{{/dialog}}

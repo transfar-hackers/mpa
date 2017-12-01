@@ -1,9 +1,9 @@
 <div class="receivables-container">
   {{#payablesData}}
   <div class="order-header">
-    <div class="td-width1">总应付账款：<span>{{others.totalAmountPayable}}</span>&nbsp元</div>
-    <div class="td-width1">未付款：<span>{{others.totalAmountUnpaid}}</span>&nbsp元</div>
-    <div class="td-width1">已付账：<span>{{others.totalAmountPaid}}</span>&nbsp元</div>
+    <div class="td-width1">总应付账款：<span>{{defaultValHelper others.totalAmountPayable 0}}</span>&nbsp元</div>
+    <div class="td-width1">未付款：<span>{{defaultValHelper others.totalAmountUnpaid 0}}</span>&nbsp元</div>
+    <div class="td-width1">已付账：<span>{{defaultValHelper others.totalAmountPaid 0}}</span>&nbsp元</div>
   </div>
   <div class="order-title">
     <div class="td-width2">供应商</div>

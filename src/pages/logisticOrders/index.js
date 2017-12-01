@@ -19,7 +19,7 @@ import BannerTemplate from 'components/BannerComponent/index.js'
 import OrderSorterTemplate from './templates/sorter.template'
 import LeftnavTemplate from 'components/LeftNavComponent/index.js'
 import logisticsTrackDialogTemplate from './templates/logisticsTrackDialog.template'
-// import LinksTemplate from 'components/LinksComponent/index.js'
+import tipDialog from './templates/tipDialog.template'
 
 $((function () {
   let pageSize = 10
@@ -76,7 +76,7 @@ $((function () {
     let billId = $this.attr('data-id')
     let companyId = $this.attr('data-companyid')
     $('.comp-dialog-logisticTrack').html('')
-    logisticsOrder(billId, companyId).then(function(data) {
+    logisticsOrder(billId, companyId).then(function (data) {
       if (!data && !data[0]) {
         return
       }
@@ -90,9 +90,42 @@ $((function () {
         })
         $('.comp-dialog-logisticTrack').html(logisticTrackHTMLAgain)
         $('#logisticTrack').modal()
+      } else {
+        alertWithMessage(data.message)
       }
+    }, (data) => {
+      alertWithMessage(data.message)
     })
   })
+
+
+  // 看看物流到哪儿
+  $(document).on('click', '.whereGo', function () {
+    let deliveryBillNo = $(this).attr('data-on')
+    transportPath(deliveryBillNo).then((data) => {
+      if (!data && !data[0]) {
+        return
+      }
+      data = data[0]
+      if (data.code === 0 && data.data) {
+        let urlData = data.data
+        window.open(urlData)
+      } else {
+        alertWithMessage(data.message)
+      }
+    }, (data) => {
+      alertWithMessage(data.message)
+    })
+  })
+  // 物流轨迹接口
+  function transportPath(no) {
+    return http.ajax({
+      url: '/treasureBill/transportPathTrack.do',
+      data: {
+        deliveryNo: no
+      }
+    })
+  }
 
   // 列表
   listData(1)
@@ -113,8 +146,12 @@ $((function () {
           maxPage: totalDataCount,
           currPage: pageNo
         })
+      } else {
+        alertWithMessage(data.message)
       }
-    }, () => { })
+    }, (data) => {
+      alertWithMessage(data.message)
+    })
   }
 
   // 翻页
@@ -156,5 +193,16 @@ $((function () {
     return http.ajax({
       url: '/treasureWeb/treasureBillSaleMan/getTransferBillListCount.do'
     })
+  }
+
+  // 提示框
+  function alertWithMessage(message) {
+    let dialogHTML = tipDialog({
+      message: message,
+      title: '信息提示',
+      id: 'tip'
+    })
+    $('.error-dialog').html(dialogHTML)
+    $('#tip').modal()
   }
 })())

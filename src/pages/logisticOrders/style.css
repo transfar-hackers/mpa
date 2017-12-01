@@ -115,13 +115,17 @@ margin-right: 10px;
 }
 
 .o-time-logistics-record {
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: row; */
   color: #999999;
   line-height: 30px;
   font-size: 12px;
   margin-top: 12px;
 }
 .o-time-logistics-record div{
-margin-right: 5px;
+  margin-right: 5px;
+}
+
+.logisticTrack{
+  cursor: pointer;
 }

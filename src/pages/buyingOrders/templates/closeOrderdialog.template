@@ -1,6 +1,7 @@
 {{#> dialog}}
 <div class="contant">
-  <span >说明：</span><textarea class="style-set explain"></textarea><br>
+  <span >说明：</span><textarea class="style-set explain" maxlength="350"></textarea><br>
+  <span class="red fm-left">最多输入350个字</span><br>
   <span class="errorMsg">{{message}}</span>
 </div>
 <div class="modal-footer">

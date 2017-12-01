@@ -7,7 +7,7 @@ import Handlebars from 'handlebars'
  */
 module.exports = function (val, defaultVal) {
   if (val) {
-    return val 
+    return new Handlebars.SafeString(val) 
   }
   return new Handlebars.SafeString(defaultVal)
 }

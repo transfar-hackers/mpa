@@ -8,7 +8,11 @@
 </div>
 <div class="o-order-detail-row">
     <div class="o-order-detail-col-content">
-        <img src="{{displayImagePath}}" />
+      {{#if purchaseFlag}}
+        <a href="/purchase/jicaiItem.html?itemId={{itemId}}&purchaseInfoId={{treasurePurchaseInfoId}}"><img src="{{displayImagePath}}" /></a>
+      {{else}}
+         <a href='/item.html?itemId={{itemId}}'><img src="{{displayImagePath}}" /></a>
+      {{/if}}
     </div>
     <div class="o-order-detail-col-content">{{itemName}}</div>
     <div class="o-order-detail-col-content">{{specifications}}</div>

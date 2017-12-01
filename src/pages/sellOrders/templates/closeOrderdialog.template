@@ -1,10 +1,11 @@
 {{#> dialog}}
 <div class="contant">
-  <span >说明：</span><textarea class="style-set explain"></textarea><br>
+  <span >说明：</span><textarea maxlength="350" class="style-set explain"></textarea><br>
+  <span class="red fm-left">最多输入400个字</span><br>
   <span class="errorMsg">{{message}}</span>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary close-sure-btn" data-id={{orderId}}>{{positive}}</button>
+    <button type="button" class="btn btn-primary sure-btn close-sure-btn" data-id={{orderId}}>{{positive}}</button>
     <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">{{negative}}</button>
 </div>
 {{/dialog}}

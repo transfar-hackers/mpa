@@ -1,7 +1,7 @@
 <div class='step-comp-wrap'>
   <ul class='step-comp-ul'>
     {{#each steps}}
-    {{#if content}}
+    {{#if inputDate}}
     <li class='step-comp-li active' style='width:{{countWidthHelper ../steps}}'>
     {{else}}
     <li class='step-comp-li' style='width:{{countWidthHelper ../steps}}'>
@@ -15,7 +15,7 @@
       </div>
       <div class='step-comp-title'>{{defaultValHelper content '&nbsp;'}}</div>
       <div class='step-comp-time'>{{defaultValHelper inputDate '&nbsp;'}}</div>
-      <div class='step-comp-time'>{{defaultValHelper treasureBillNo '&nbsp;'}}</div>
+      <!--<div class='step-comp-time'>{{defaultValHelper treasureBillNo '&nbsp;'}}</div>-->
     </li>
     {{/each}}
   </ul>

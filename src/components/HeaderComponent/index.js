@@ -50,9 +50,9 @@ function getUserRole(loginInfoData) {
 
     if (data && data.code === 0) {
       let rolePriorities = ['visitor', '采购商', '供应商', '运营商']
-      let roleDefaultPage = ['mpa/buyingOrders/index.html', 'mpa/buyingOrders/index.html', 'mpa/sellOrders/index.html', '/seller/requirement.html']
+      let roleDefaultPage = [bProd ? 'www.tf56.com/login.html' : 'http://yunbao.test.tf56.com/login.html', '/mpa/buyingOrders/index.html', '/mpa/sellOrders/index.html', '/seller/requirement.html']
       let roleLevel = -1
-      // loop through all roles of a user
+        // loop through all roles of a user
       $(data.data).each(function(index, item) {
         if (item.roleType === '运营商') {
           role = '运营商'
@@ -109,7 +109,7 @@ module.exports = {
     // feedback plugin
     var fkHtml = '<script id="tfFeedBackScriptId" src=\'https://hivetest.tf56.com/hiveService/js/views/feedback/feedback.js\' product="B2B" productVersion="V1.1.1"></script>'
     $('body').append(fkHtml)
-    // end feedback plugin
+      // end feedback plugin
 
     $(document).on('click', '#logOut', function() {
       http.ajax({

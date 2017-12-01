@@ -19,23 +19,24 @@
       <span>{{carriersCompany}}</span>
     </div>
     <div class='sender'>
-      <span>{{senderOrganization}}</span>
+      <span>{{senderName}}</span>
     </div>
     <div class='status'>
       <span class="red">{{status}}</span>
     </div>
+  <!--13:53-->
     <div class="operations">
+      <a href='../orderdetail/index.html?id={{treasureBillId}}'  target="_blank">查看订单</a><br>
       {{#purcaseStatusHelper status '待受理'}}
-      <a href='../orderdetail/index.html?id={{treasureBillId}}'>查看订单</a>
-      {{/purcaseStatusHelper}}
-      {{#purcaseStatusHelper status '配送中'}}
-      <a href='../orderdetail/index.html?id={{treasureBillId}}'>查看订单</a><br>
-      <a class="logisticTrack" data-toggle="modal" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}} data-backdrop='static'>物流跟踪</a>
-      {{/purcaseStatusHelper}}
-      {{#purcaseStatusHelper status '已签收'}}
-      <a href='../orderdetail/index.html?id={{treasureBillId}}'>查看订单</a><br>
-      <a class="logisticTrack" data-toggle="modal" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}} data-backdrop='static'>物流跟踪</a>
-      {{/purcaseStatusHelper}}
+      {{else}}
+        {{#purcaseStatusHelper status '已取消'}}
+        {{else}}
+          {{#purcaseStatusHelper status '已拒绝'}}
+          {{else}}
+          <a class="logisticTrack" data-toggle="modal" data-target="#logisticTrack" data-id={{treasureBillId}} data-companyid={{treasureEnterpriseId}} data-backdrop='static'>物流跟踪</a>
+          {{/purcaseStatusHelper}}
+        {{/purcaseStatusHelper}}
+     {{/purcaseStatusHelper}}
     </div>
   </div>
 </div>

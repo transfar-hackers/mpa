@@ -1,11 +1,10 @@
 <div class='template-record'>
-  <label class='template-name'><a href='#'>{{contractName}}</a></label>
+  <label class='template-name' x-templateId={{treasureContractId}}><a href='#' class='template-view'>{{contractName}}</a></label>
   <label class='template-creator'>{{inputMan}}</label>
   <label class='upload-date'>{{inputDate}}</label>
   <label class='template-operations' x-templateId={{treasureContractId}}>
     <a href='#' class='template-view'>查看</a>
     <a href='#' class='template-edit'>编辑</a>
     <a href='#' class='template-delete'>删除</a>
-    <a href='#' class='template-download'>下载</a>
   </label>
 </div>

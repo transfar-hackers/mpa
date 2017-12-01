@@ -5,18 +5,25 @@
  * date: 2017-11-23
  */
 import http from 'common/http.js'
+import {
+  isRequestSuccessful
+} from 'utilities/helper.js'
+
 // imports for pagination component
 import 'styles/pagination.less'
 import 'common/base.js'
 import 'common/pagination.js'
 // end of imports for pagination component
-
+import ContractEditorComponent from 'components/ContractComponent'
+import ContractEditorTemplate from './templates/ContractEditor.template'
 // imports mock data
 import CONTRACTS from 'utilities/mock_data/contractList.json'
 import TEMPLATES from 'utilities/mock_data/templateList.json'
 // end of imports mock data
 
 module.exports = {
+  // the rich text editor
+  editor: null,
   /*
   param: {
     "contractName": "test contract",
@@ -98,7 +105,7 @@ module.exports = {
     return http.ajax({
       url: '/treasureWeb/contract/delete.do',
       data: {
-        "treasureContractId": "5"
+        "treasureContractId": id
       }
     })
   },
@@ -109,7 +116,7 @@ module.exports = {
     return http.ajax({
       url: '/treasureWeb/contractInstance/delete.do',
       data: {
-        "treasureContractInstanceId": "5"
+        "treasureContractInstanceId": id
       }
     })
   },
@@ -126,23 +133,12 @@ module.exports = {
         "pageNo": 1,
         "pageSize": pageSize
       }).then((res) => {
-        let bSuccess = false,
-          pageCount = -1
-
-        if (res[0] && res[0].code === 0 && res[0].message === '查询成功') {
-          bSuccess = true
-          pageCount = res[0].totalCount / pageSize + 1
-        } else if (res.code === 0 && res.message === '查询成功') {
-          bSuccess = true
-        }
-
+        let bSuccess = isRequestSuccessful(res)
         if (bSuccess) {
           // construct pagination options
-          let options = {
-            maxPage: pageCount,
+          this.templatePaginator = {
+            maxPage: res[0].totalCount / pageSize + 1,
             currPage: 0,
-            listElem: $lElem,
-            listTemplate: template,
             callback: (pageIndex) => {
               this.getTemplates({
                 "pageNo": pageIndex,
@@ -150,67 +146,41 @@ module.exports = {
               }).then((res) => {
                 let templates = res[0].data
                 let html = template({
-                  templateList: res[0].data
+                  templateList: templates
                 })
                 $lElem.html(html)
 
                 $('.template-view').on('click', (e) => {
-                  this.viewTemplate.call(this, e, templates)
+                  console.log(templates)
+                  this.viewTemplate(e, templates)
                 })
 
-                $('.template-view').on('edit', (e) => {
-                  this.editTemplate.call(this, e, data || {})
+                $('.template-edit').on('click', (e) => {
+                  this.viewTemplate(e, templates)
+                  console.log(`go to page: ${pageIndex}`)
                 })
 
                 $('.template-delete').on('click', (e) => {
-                  this.deleteTemplate.call(this, e, templates)
+                  let goAhead = confirm('确定要删除该模板么？')
+                  if (goAhead) {
+                    let templateId = $(event.target).closest('label').attr('x-templateId')
+                    this.deleteTemplate(templateId).then(res => {
+                      alert('deletion succeeded')
+                      this.templatePaginator.callback(pageIndex)
+                    }, err => {})
+                  }
                 })
-
+                this.templatePaginator.currentPageNo = pageIndex
               }, (err) => {})
             }
           }
 
           // render pagination UI
-          $pElem.pagination(options)
-          options.callback(1) // display page 1 by default
+          $pElem.pagination(this.templatePaginator)
+          this.templatePaginator.currentPageNo = 1
+          this.templatePaginator.callback(this.templatePaginator.currentPageNo) // display page 1 by default
         }
-      }, (err) => {
-        // console.log(err.toString() + 'template list: using mock data instead, REMOVE when publishing to testing / production')
-        // construct pagination options
-        let totalData = TEMPLATES
-        let pageSize = 10
-        let options = {
-          maxPage: TEMPLATES / pageSize,
-          currPage: 0,
-          listElem: $lElem,
-          listTemplate: template,
-          callback: (pageIndex) => {
-            this.pagination.getTemplatesByIndex(pageIndex).then(res => {
-              let html = template({
-                templateList: res
-              })
-
-              $lElem.html(html)
-
-              $('.template-view').on('click', (e) => {
-                this.viewTemplate.call(this, e, contracts)
-              })
-
-              $('.template-edit').on('click', (e) => {
-                this.editTemplate.call(this, e, contracts)
-              })
-
-              $('.template-delete').on('click', (e) => {
-                this.deleteTemplate.call(this, e, contracts)
-              })
-            })
-          }
-        }
-
-        // render pagination UI
-        $pElem.pagination(options)
-        options.callback(1) // display page 1 by default
-      })
+      }, (err) => {})
     },
     /*
      * $pElem: jQuery element for pagination
@@ -222,18 +192,10 @@ module.exports = {
         "pageNo": 1,
         "pageSize": pageSize
       }).then((res) => {
-        let bSuccess = false,
-          pageCount = -1
-        if (res[0] && res[0].code === 0 && res[0].message === '查询成功') {
-          bSuccess = true
-          pageCount = res[0].totalCount / pageSize + 1
-        } else if (res.code === 0 && res.message === '查询成功') {
-          bSuccess = true
-        }
-
+        let bSuccess = isRequestSuccessful(res)
         if (bSuccess) {
           // construct pagination options
-          let options = {
+          this.contractPaginator = {
             maxPage: res[0].totalCount / pageSize + 1,
             currPage: 0,
             listElem: $lElem,
@@ -254,48 +216,45 @@ module.exports = {
                 })
 
                 $('.contract-edit').on('click', (e) => {
-                  // this.editContract.call(this, e, data || {})
+                  this.editCurrentContract.call(this, e, contracts)
+                  this.contractPaginator.callback(pageIndex)
                 })
 
                 $('.contract-delete').on('click', (e) => {
-                  this.deleteContract.call(this, e, contracts)
+                  let goAhead = confirm('确定要删除该合同么？')
+                  if (goAhead) {
+                    let contractId = $(event.target).closest('label').attr('x-contractId')
+                    this.deleteContract(contractId).then(res => {
+                      console.log(res)
+                      console.log(`I'm deleting this contract: ${contractId}`)
+                      if (res[0].code == 0) {
+                        this.contractPaginator.callback(pageIndex)
+                        alert(`deletion succeeded`)
+                      } else {
+                        alert(`deletion failed: ${res[0].message}`)
+                      }
+                    }, err => {})
+                  }
                 })
               }, (err) => {})
             }
           }
 
           // render pagination UI
-          $pElem.pagination(options)
-          options.callback(1) // display page 1 by default
+          $pElem.pagination(this.contractPaginator)
+          this.contractPaginator.currentPageNo = 1
+          this.contractPaginator.callback(this.contractPaginator.currentPageNo) // display page 1 by default
         }
-      }, (err) => {
-        // console.log(err.toString() + 'contract list: using mock data instead, REMOVE when publishing to testing / production')
-        let options = {
-          maxPage: CONTRACTS / pageSize + 1,
-          currPage: 0,
-          listElem: $lElem,
-          listTemplate: template,
-          callback: (pageIndex) => {
-            this.pagination.getContractsByIndex(pageIndex).then(res => {
-              let html = template({
-                contracts: res.data
-              })
-              $lElem.html(html)
-            })
-          }
-        }
-
-        // render pagination UI
-        $pElem.pagination(options)
-        options.callback(1) // display page 1 by default
-      })
+      }, (err) => {})
     },
+
     getTemplatesByIndex: function(pageIndex) {
       let pageSize = 10
       let data = TEMPLATES.data.slice((pageIndex - 1) * pageSize, pageIndex * pageSize)
 
       return Promise.resolve(data)
     },
+
     getContractsByIndex: function(pageIndex) {
       let pageSize = 10
       let data = CONTRACTS.data.slice((pageIndex - 1) * pageSize, pageIndex * pageSize)
@@ -303,28 +262,37 @@ module.exports = {
       return Promise.resolve(data)
     }
   },
+
   viewContract: function(event, contracts) {
-    let contractId = $(event.target).closest('div').attr('x-contractId')
+    let contractId = $(event.target).closest('label').attr('x-contractId')
     let contract = this.getContractById(contracts, contractId)
 
-    console.log(`I'm viewing this contract: `)
-    console.log(contract)
+    window.open(contract.contractInstanceUrl)
   },
+
   viewTemplate: function(event, templates) {
     let templateId = $(event.target).closest('label').attr('x-templateId')
-    let template = this.getTemplateById(templates, templateId)
 
-    console.log(`I'm viewing this template: `)
-    console.log(template)
+    console.log(`viewing this template: `)
+    console.log(this.getTemplateById(templates, templateId))
+
+    console.log(`before asigining: `)
+    this.currentTemplate = this.getTemplateById(templates, templateId)
+    this.currentContract = null
+    this.popupEditor(event, 'new-editor')
   },
-  getContractById: function(contracts, id) {
-    let contract = null
-    for (let i = 0; i < contracts.length; i += 1) {
-      if (contracts[i].treasureContractInstanceId == id) {
-        return contracts[i]
-      }
-    }
+
+  editCurrentContract: function(event, contracts) {
+    let contractId = $(event.target).closest('label').attr('x-contractId')
+    this.currentTemplate = null
+    this.currentContract = this.getContractById(contracts, contractId)
+
+    console.log(`I'm editing this contract: `)
+    console.log(this.currentContract)
+
+    this.popupEditor(event, 'new-editor')
   },
+
   getTemplateById: function(templates, id) {
     let template = null
     for (let i = 0; i < templates.length; i += 1) {
@@ -333,28 +301,127 @@ module.exports = {
       }
     }
   },
-  CreateContractEditor: function(selector = '.contract-editor') {
-    let editor =
-      ContractEditorComponent.init({
-        branding: false,
-        // selector: '.contract-editor',
-        selector: selector,
-        skin: false,
-        width: 900,
-        height: 600,
-        images_upload_url: '/treasureWeb/fileUpload/uploadPicture.do',
-        plugins: 'advlist autolink link image imagetools lists charmap preview save autoresize',
-        toolbar: 'undo redo | styleselect | bold italic | link image',
-        theme_advanced_resizing: true,
-        theme_advanced_resizing_use_cookie: false,
-        setup: function(editor) {}
-      })
-    return editor
-  },
-  popupEditor: function(selector = 'new-editor') {
-    this.CreateContractEditor()
 
-    // $(`#new-editor`).modal()
+  getContractById: function(contracts, id) {
+    let contract = null
+    for (let i = 0; i < contracts.length; i += 1) {
+      if (contracts[i].treasureContractInstanceId == id) {
+        return contracts[i]
+      }
+    }
+  },
+
+  CreateContractEditor: function(selector = '.contract-editor', content = '<div>Testing Conent</div>') {
+    ContractEditorComponent.init({
+      branding: false,
+      selector: selector,
+      skin: false,
+      width: 900,
+      height: 600,
+      // images_upload_url: '/treasureWeb/fileUpload/uploadPicture.do',
+      // plugins: 'advlist autolink link image imagetools lists charmap preview save autoresize',
+      plugins: 'advlist autolink link lists charmap preview save autoresize',
+      // toolbar: 'undo redo | styleselect | bold italic | link image',
+      toolbar: 'undo redo | styleselect | bold italic',
+      theme_advanced_resizing: true,
+      theme_advanced_resizing_use_cookie: false,
+      setup: function(editor) {}
+    })
+
+    return ContractEditorComponent
+  },
+
+  popupEditor: function(event, selector = 'new-editor') {
+    if (this.editor === null) {
+      // avoid initializing multiple dialogs
+      this.editor = this.CreateContractEditor()
+    }
+
+    let $tbxName = $('#tbx-name')
+
+    if (this.currentTemplate) {
+      this.editor.get('contract-content').setContent(this.currentTemplate.template)
+      $tbxName.val(this.currentTemplate.contractName)
+      console.log(`updating existing template: ${this.currentTemplate.contractName}`)
+    } else if (this.currentContract) {
+      this.editor.get('contract-content').setContent(this.currentContract.contractInstanceHTML)
+      $tbxName.val(this.currentContract.contractInstanceName)
+      console.log(`working on existing contract: ${this.currentContract.contractInstanceName}`)
+    } else {
+      console.log(`creating new template`)
+      this.editor.get('contract-content').setContent('')
+      $tbxName.val('')
+    }
+
     $('#' + selector).modal()
-  }
+  },
+
+  saveEditor: function(event) {
+    // envent handler: click 'Save' button
+    let elem = event.target,
+      newContent = this.editor.get('contract-content').getContent(),
+      $tbxName = $('#tbx-name'),
+      that = this
+
+    console.log(`new content: ${newContent}`)
+
+    if (this.currentTemplate) {
+      console.log(`updating template, with new name: ${$tbxName.val()}`)
+      this.editTemplate({
+        treasureContractId: this.currentTemplate.treasureContractId,
+        contractName: $tbxName.val(), //this.currentTemplate.contractName,
+        template: newContent
+      }).then((res) => {
+        alert(res[0].message)
+        console.log(that.currentTemplate)
+        that.currentTemplate.template = newContent
+
+        console.log(`going to page: ${that.templatePaginator.currentPageNo}`)
+        that.templatePaginator.callback(that.templatePaginator.currentPageNo)
+        this.cancelEditor() // reset current template and current contract
+      }, err => {
+        alert(`error: ${res[0].message}`)
+      })
+    } else if (this.currentContract) {
+      console.log(`editing contract, with new name: ${$tbxName.val()}`)
+
+      this.editContract({
+        treasureContractInstanceId: this.currentContract.treasureContractInstanceId,
+        contractInstanceName: $tbxName.val(), // this.currentContract.contractInstanceName,
+        contractInstanceUrl: this.currentContract.contractInstanceUrl,
+        contractInstanceHTML: newContent
+      }).then(res => {
+        alert(res[0].message)
+        that.contractPaginator.callback(this.contractPaginator.currentPageNo)
+        that.currentContract.contractInstanceHTML = newContent
+        this.cancelEditor() // reset current template and current contract
+      }, err => {
+        alert(`error: ${res[0].message}`)
+      })
+    } else {
+      console.log(`creating template, with new name: ${$tbxName.val()}`)
+      this.createTemplate({
+        contractName: $tbxName.val(), //"新建模板 " + new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString(),
+        template: this.editor.get('contract-content').getContent()
+      }).then(res => {
+        alert(res[0].message)
+        this.templatePaginator.callback(this.templatePaginator.currentPageNo)
+        this.cancelEditor() // reset current template and current contract
+      }, err => {
+        alert(`error: ${res[0].message}`)
+      })
+    }
+  },
+
+  // function used to handle click event of the Cancel button on Editor,
+  // and reset current template / current contract to null
+  cancelEditor: function(event) {
+    this.currentTemplate = null
+    this.currentContract = null
+  },
+
+  currentTemplate: null, // the current template object the editor is working on
+  currentContract: null, // the current contract object the editor is working on
+  templatePaginator: null, // paginator for template list
+  contractPaginator: null // paginator for contract list
 }

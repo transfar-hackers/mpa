@@ -17,14 +17,14 @@ import OrderListTemplate from './templates/orderlist.template'
 import OrderSorterTemplate from './templates/sorter.template'
 import HeaderTemplate from 'components/HeaderComponent'
 import BannerTemplate from 'components/BannerComponent'
-// import Links from 'components/LinksComponent/index.js'
 import Leftnav from 'components/LeftNavComponent'
 import checkDialogTemplate from './templates/checkdialog.template'
 import closeOrderDialogTemplate from './templates/closeOrderdialog.template'
 import logisticsTrackDialogTemplate from './templates/logisticsTrackDialog.template'
 import tipDialog from './templates/tipDialog.template'
-
-// import LinksTemplate from '../../components/LinksComponent/index.js'
+import contractSaleSignDialogTemplate from './templates/contractSaleSignDialog.template'
+import stampTemplate from './templates/stamp.template'
+import contractSignNoticeDialog from './templates/contractSignNoticeDialog.template'
 $((function (host) {
   let orderList = ''
   let payStatus = ''
@@ -93,7 +93,7 @@ $((function (host) {
         $('.errorMsg').css('display', 'block')
         $('.errorMsg').html(data.message)
       }
-    }, () => { })
+    }, (data) => { alertWithMessage(data.message) })
   })
 
 
@@ -140,6 +140,8 @@ $((function (host) {
         $('.errorMsg').css('display', 'block')
         $('.errorMsg').html(data.message)
       }
+    }, (data) => {
+      alertWithMessage(data.message)
     })
   })
   // 物流跟踪
@@ -150,7 +152,7 @@ $((function (host) {
     $('.comp-dialog-logisticTrack').html('')
     logisticsOrder(billId, companyId).then(function (data) {
       if (!data && !data[0]) {
-        return
+        return alertWithMessage(data.message)
       }
       data = data[0]
       if (data.code === 0 && data.data) {
@@ -163,18 +165,136 @@ $((function (host) {
         $('.comp-dialog-logisticTrack').html(logisticTrackHTMLAgain)
         $('#logisticTrack').modal()
       } else {
-        let dialogHTML = tipDialog({
-          message: data.message,
-          title: '信息提示',
-          id: 'logisticTrack'
-        })
-        $('.comp-dialog-logisticTrack').html(dialogHTML)
-        $('#logisticTrack').modal()
+        alertWithMessage(data.message)
       }
+    }, (data) => {
+      alertWithMessage(data.message)
     })
   })
 
 
+  // 看看物流到哪儿
+  $(document).on('click', '.whereGo', function () {
+    let deliveryBillNo = $(this).attr('data-on')
+    transportPath(deliveryBillNo).then((data) => {
+      if (!data && !data[0]) {
+        return
+      }
+      data = data[0]
+      if (data.code === 0 && data.data) {
+        let urlData = data.data
+        window.open(urlData)
+      } else {
+        alertWithMessage(data.message)
+      }
+    }, (data) => {
+      alertWithMessage(data.message)
+    })
+  })
+
+  // 打开签章须知
+  $(document).on('click', '.open-contract-salesign-notice', function () {
+    let treasureContractInstanceId = $(this).attr('data-id')
+    let dialogHTML = contractSignNoticeDialog({
+      title: '在线签章须知',
+      id: 'contract-salesign-notice',
+      contractId: treasureContractInstanceId,
+      confirmClass: 'open-contract-salesign-dialog',
+    })
+    $('.comp-tips-dialog').html(dialogHTML)
+    $('#contract-salesign-notice').modal()
+  })
+
+  // 签章
+  $(document).on('click', '.open-contract-salesign-dialog', function () {
+    $('#contract-salesign-notice').modal('hide')
+    let treasureContractInstanceId = $(this).attr('data-id')
+    getContractInstanceByAjax(treasureContractInstanceId)
+      .then((res) => {
+        let result = res[0]
+        $('.comp-dialog-salesign').html(contractSaleSignDialogTemplate({
+          title: '合同签章',
+          id: 'contract-salesign',
+          treasureContractInstanceId: treasureContractInstanceId
+        }))
+        $('#contract-content').html(result.data.contractInstanceHTML)
+        $('#contract-salesign').modal()
+      })
+  })
+
+  $(document).on('click', '.contract-content', function (e) {
+    let scrollTop = $('.contract-content').scrollTop()
+    let rect = document.querySelector('.contract-content').getBoundingClientRect()
+    let offsetX = e.clientX - rect.left - 35
+    let offsetY = e.clientY - rect.top - 35 + scrollTop
+    $('.contract-stamp').remove()
+    $('#contract-content').append(stampTemplate({ offsetX, offsetY }))
+  })
+
+
+  // 合同签章
+  $(document).on('click', '.confirm-contract-salesign', function () {
+    if ($('.contract-stamp').length < 1) {
+      $('.errorMsg').css('display', 'block')
+      $('.errorMsg').html('请选择签章位置！')
+      return
+    }
+    let left = $('.contract-stamp').css('left')
+    let top = $('.contract-stamp').css('top')
+    let stampPos = [`{1,${parseInt(left)},${parseInt(top)}}`]
+    let treasureContractInstanceId = $(this).attr('data-id')
+    let signStatus = 1
+    let url = '/treasureWeb/contractInstance/buyerSign.do'
+    sendHttpWithUrlAndParamsByAjax(url, { treasureContractInstanceId, stampPos, signStatus })
+      .then(() => {
+        $('#contract-salesign').modal('hide')
+      })
+  })
+  $(document).on('click', '.check-contract-content', function () {
+    let treasureContractInstanceId = $(this).attr('data-id')
+    getContractInstanceByAjax(treasureContractInstanceId)
+      .then((res) => {
+        let result = res[0]
+        if (result.code === 0) return window.open(result.data.contractInstanceUrl)
+        alertWithMessage(result.message)
+      })
+  })
+
+  function sendHttpWithUrlAndParamsByAjax(url, params) {
+    return http.ajax({
+      url: url,
+      data: params
+    }).then(
+      (res) => {
+        let result = res[0]
+        if (result.code === 0) {
+          ListData(1)
+        }
+        alertWithMessage(result.message)
+      },
+      () => {
+        alertWithMessage('程序员正在赶来的路上，请稍等')
+      })
+  }
+  // 获取合同
+  function getContractInstanceByAjax(id) {
+    return http.ajax({
+      url: '/treasureWeb/contractInstance/get.do',
+      data: {
+        treasureContractInstanceId: id
+      }
+    })
+  }
+  // 提示框
+  function alertWithMessage(message) {
+    let dialogHTML = tipDialog({
+      message: message,
+      title: '信息提示',
+      id: 'tip'
+    })
+    $('.error-dialog').html(dialogHTML)
+    $('#tip').modal()
+  }
 
   // 状态筛选
   $('.content').on('click', '.statusSelect', function () {
@@ -222,19 +342,22 @@ $((function (host) {
           })
           $('.sorter').html(orderSorter)
         }
+
         let orderListHTML = OrderListTemplate({
           orders: orderList.list
         })
         $('.order-list').html(orderListHTML)
+
+
         bindPagination({
           maxPage: totalDataCount,
           currPage: pageNo
         })
       } else {
-        alert(data.message)
+        alertWithMessage(data.message)
       }
     }, (data) => {
-      alert(data.message)
+      alertWithMessage(data.message)
     })
   }
 
@@ -283,6 +406,17 @@ $((function (host) {
       data: {
         treasureBillId: billId,
         treasureEnterpriseId: enterpriseId
+      }
+    })
+  }
+
+
+  // 物流轨迹接口
+  function transportPath(no) {
+    return http.ajax({
+      url: '/treasureBill/transportPathTrack.do',
+      data: {
+        deliveryNo: no
       }
     })
   }

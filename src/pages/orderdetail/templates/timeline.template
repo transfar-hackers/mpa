@@ -14,7 +14,7 @@
         <!-- bootstraps tabs code -->
         <div class='my-tabs'>
           <ul class='nav nav-tabs my-tab-header'>
-            {{#each treasureLogisticsVOs.treasureLogisticsVOs}}
+            {{#each treasureLogisticsVOs}}
             {{#expressionHelper @index '===' 0}}
             <li class="active">
             {{else}}
@@ -25,7 +25,7 @@
             {{/each}}
           </ul>
           <div class='tab-content'>
-            {{#each treasureLogisticsVOs.treasureLogisticsVOs}}
+            {{#each treasureLogisticsVOs}}
             {{#expressionHelper @index '===' 0}}
             <div id='contracts-management-{{@index}}' class='tab-pane fade in active'>
             {{else}}
@@ -33,8 +33,8 @@
             {{/expressionHelper}}
                 {{#each treasureLogisticsInfoVOs}}
                 <div class="o-time-logistics-record">
-                    <div>{{logisticsDate}}</div>
-                    <div>{{logisticsInfo}}</div>
+                    <div style="width: 120px">{{logisticsDate}}</div>
+                    <div class="logisticsInfo">{{logisticsInfo}}</div>
                     {{#if hasLogisticsTrack}}
                     <div><i class='iconfont icon-wuliusonghuo'>看看物流到哪儿</i></div>
                     {{/if}}
@@ -56,7 +56,7 @@
     <div class="o-time-date">
       {{inputDate}}
     </div>
-    <div class="o-time-date">
+    <div class="o-time-date o-time-content" style="width: 560px">
       {{content}}
     </div>
   </div>

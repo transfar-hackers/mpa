@@ -1,6 +1,7 @@
 import 'babel-polyfill'
 import './style.css'
 import 'styles/app.css'
+import 'styles/fonts/iconfont.less'
 import 'styles/dialog.css'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -21,6 +22,9 @@ import Leftnav from 'components/LeftNavComponent/index.js'
 import logisticsTrackDialogTemplate from './templates/logisticsTrackDialog.template'
 import tipDialog from './templates/tipDialog.template'
 import closeOrderDialogTemplate from './templates/closeOrderdialog.template'
+import contractSaleSignDialogTemplate from './templates/contractSaleSignDialog.template'
+import stampTemplate from './templates/stamp.template'
+import contractSignNoticeDialog from './templates/contractSignNoticeDialog.template'
 const Page = {
   initData: {
     pageSize: 10,
@@ -81,10 +85,19 @@ const Page = {
       }
     })
   },
+  // 获取合同
+  getContractInstanceByAjax(id) {
+    return http.ajax({
+      url: '/treasureWeb/contractInstance/get.do',
+      data: {
+        treasureContractInstanceId: id
+      }
+    })
+  },
   // 发送请求
   sendHttpWithUrlAndParamsByAjax(url, params) {
     let self = this
-    http.ajax({
+    return http.ajax({
       url: url,
       data: params
     }).then(
@@ -101,11 +114,16 @@ const Page = {
       })
   },
   // 提示框
-  alertWithMessage(message) {
+  alertWithMessage(message, title, orderId, isShowBtn, confirmClass) {
     let dialogHTML = tipDialog({
       message: message,
-      title: '信息提示',
-      id: 'tips'
+      title: title ? title : '信息提示',
+      id: 'tips',
+      orderId: orderId,
+      isShowBtn: isShowBtn ? isShowBtn : false,
+      confirmClass: confirmClass,
+      positive: '确认',
+      negative: '取消'
     })
     $('.comp-tips-dialog').html(dialogHTML)
     $('#tips').modal()
@@ -137,12 +155,12 @@ const Page = {
           $this.addClass('current')
         }
         if ($this.html() == '全部') {
-          delete  self.initData.status
+          delete self.initData.status
           self.initData.statusStr = '1,3,6'
         } else if ($this.html() == '待确认') {
           self.initData.status = '待确认'
           self.initData.statusStr = ''
-        } else if ($this.html() == '待收货') {
+        } else if ($this.html() == '待确认收货') {
           self.initData.status = '待确认收货'
           self.initData.statusStr = ''
         } else if ($this.html() == '交易完成') {
@@ -233,11 +251,17 @@ const Page = {
         let url = '/treasureWeb/treasureBillStatusUpdate/closeBill.do'
         self.sendHttpWithUrlAndParamsByAjax(url, { state, treasureBillId })
       })
+      //打开确认收款提示框
+      .on('click', '.open-order-receipt-confirm', function () {
+        let treasureBillId = $(this).attr('data-id')
+        self.alertWithMessage('确认收款吗？', '提示', treasureBillId, true, 'order-confirm-receipt')
+      })
       // 确认收款
       .on('click', '.order-confirm-receipt', function () {
         let treasureBillId = $(this).attr('data-id')
         let url = '/treasureWeb/treasureBillSaleMan/confirmReceipt.do'
         self.sendHttpWithUrlAndParamsByAjax(url, { treasureBillId })
+        $('#tips').modal('hide')
       })
       .on('click', '.send-bill-to-oms', function () {
         let treasureBillId = $(this).attr('data-id')
@@ -269,10 +293,79 @@ const Page = {
           }
         })
       })
+      // 打开签章须知
+      .on('click', '.open-contract-salesign-notice', function () {
+        let treasureContractInstanceId = $(this).attr('data-id')
+        let dialogHTML = contractSignNoticeDialog({
+          title: '在线签章须知',
+          id: 'contract-salesign-notice',
+          contractId: treasureContractInstanceId,
+          confirmClass: 'open-contract-salesign-dialog',
+        })
+        $('.comp-tips-dialog').html(dialogHTML)
+        $('#contract-salesign-notice').modal()
+      })
+      .on('click', '.open-contract-salesign-dialog', function () {
+        $('#contract-salesign-notice').modal('hide')
+        let treasureContractInstanceId = $(this).attr('data-id')
+        self.getContractInstanceByAjax(treasureContractInstanceId)
+          .then((res) => {
+            let result = res[0]
+            $('.comp-dialog-salesign').html(contractSaleSignDialogTemplate({
+              title: '合同签章',
+              id: 'contract-salesign',
+              treasureContractInstanceId: treasureContractInstanceId
+            }))
+            $('#contract-content').html(result.data.contractInstanceHTML)
+            $('#contract-salesign').modal()
+          })
+      })
+      .on('click', '.contract-content', function (e) {
+        let scrollTop = $('.contract-content').scrollTop()
+        let rect = document.querySelector('.contract-content').getBoundingClientRect()
+        let offsetX = e.clientX - rect.left - 35
+        let offsetY = e.clientY - rect.top - 35 + scrollTop
+        $('.contract-stamp').remove()
+        $('#contract-content').append(stampTemplate({ offsetX, offsetY }))
+      })
+      // 合同签章
+      .on('click', '.confirm-contract-salesign', function () {
+        if ($('.contract-stamp').length < 1) {
+          $('.errorMsg').css('display', 'block')
+          $('.errorMsg').html('请选择签章位置！')
+          return
+        }
+        let left = $('.contract-stamp').css('left')
+        let top = $('.contract-stamp').css('top')
+        let stampPos = [`{1,${parseInt(left)},${parseInt(top)}}`]
+        let treasureContractInstanceId = $(this).attr('data-id')
+        let signStatus = 1
+        let url = '/treasureWeb/contractInstance/saleSign.do'
+        self.sendHttpWithUrlAndParamsByAjax(url, { treasureContractInstanceId, stampPos, signStatus })
+          .then(() => {
+            $('#contract-salesign').modal('hide')
+          })
+      })
+      // 设置合同模板
+      .on('click', '.set-contract-template', function () {
+        let billId = $(this).attr('data-id')
+        window.location.href = `../contractsCreation/index.html?sellId=${billId}&pageNo=${self.initData.pageNo}`
+      })
+      .on('click', '.check-contract-content', function () {
+        let treasureContractInstanceId = $(this).attr('data-id')
+        self.getContractInstanceByAjax(treasureContractInstanceId)
+          .then((res) => {
+            let result = res[0]
+            if (result.code === 0) return window.open(result.data.contractInstanceUrl)
+            self.alertWithMessage(result.message)
+          })
+      })
   },
   // 页面加载完之后执行
   mounted() {
     let self = this
+    let pageNo = http.getUrlParam('pageNo')
+    if (pageNo) self.initData.pageNo = pageNo
     self.initPage()
     self.getSellOrderListByAjax(self.initData)
     self.bindEventHandlers()

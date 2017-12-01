@@ -55,6 +55,7 @@ $((function() {
   // end of dialog codes
 
   // pagination codes
+  /*
   let $heroListElem = $('.hero-list')
   let pageSize = 10
 
@@ -85,8 +86,9 @@ $((function() {
 
   $paginationElem.pagination(options)
   options.callback(1) // display page 1 by default
-
+*/
   // end of pagination codes
+
 
   let messageHTML = MessageTemplate()
   $('.message').html(messageHTML)

@@ -26,92 +26,220 @@ import ReceivablesTemplte from './templates/receivables.template'
 import ReceivablesHeaderTemplte from './templates/receivablesHeader.template'
 import TipDialogTemplate from './templates/tipDialog.template'
 
-$((function () {
-  //插入链接，头部登录,banner,左侧导航,footer
-  // Links.render($('#links'))
-  let $headerElem = $('.header')
-  HeaderTemplate.rerender($headerElem)
-  let bannerHtml = BannerTemplate.render()
-  $('.banner').html(bannerHtml)
-  Leftnav.render($('.leftnav'))
-  Footer.render($('.footer'))
-  //获取列表内容
-  let inputDateStart, inputDateEnd, status
-  getList(1)
-  function getList(page) {
+const Page = {
+  initData: {
+    params: {
+      pageNo: 1,
+      pageSize: 10,
+    },
+    data: {}
+  },
+  //初始化页面
+  initPage() {
+    //插入链接，头部登录,banner,左侧导航,footer
+    let $headerElem = $('.header')
+    HeaderTemplate.rerender($headerElem)
+    let bannerHtml = BannerTemplate.render()
+    $('.banner').html(bannerHtml)
+    Leftnav.render($('.leftnav'))
+    Footer.render($('.footer'))
+    //datetime picker codes
+    $('#datetimepicker1').datetimepicker({
+      minView: 'month',
+      format: 'yyyy-mm-dd',
+      language: 'zh-CN',
+      autoclose: 1,
+    })
+    $('#datetimepicker2').datetimepicker({
+      minView: 'month',
+      format: 'yyyy-mm-dd',
+      language: 'zh-CN',
+      autoclose: 1,
+    })
+  },
+  //列表数据渲染
+  renderPageWithData(receivables) {
+    let self = this
+
+    //头部应收数据
+    let othersData = receivables.others
+    let totalAmountUnreceived, totalAmountReceivable, totalAmountReceived
+
+    if (othersData) {
+      totalAmountUnreceived = othersData.totalAmountUnreceived
+      totalAmountReceivable = othersData.totalAmountReceivable
+      totalAmountReceived = othersData.totalAmountReceived
+    }
+
+    let headerHtml = ReceivablesHeaderTemplte({
+      othersData: {
+        totalAmountUnreceived: totalAmountUnreceived,
+        totalAmountReceivable: totalAmountReceivable,
+        totalAmountReceived: totalAmountReceived
+      }
+    })
+    $('.container-header').html(headerHtml)
+    //应收列表数据
+    let html = ReceivablesTemplte({
+      receivablesData: {
+        data: receivables.data
+      }
+    })
+    $('.container-content').html(html)
+    //分页
+    self.bindPagination(self.initData.params.pageSize, receivables.totalCount, self.initData.params.pageNo)
+  },
+  //获取列表数据
+  getList(params) {
+    let self = this
     return http.ajax({
       url: '/treasureWeb/receivable/getReceivable.do',
-      data: {
-        pageNo: page,
-        pageSize: 10,
-        inputDateStart: inputDateStart,
-        inputDateEnd: inputDateEnd,
-        status: status
-      }
-    }).then((res) => {
-
-      if (!res || !res[0] && res[0].code != 0) {
-
+      data: params
+    }).then(
+      (res) => {
+        self.renderPageWithData(res[0])
+        self.initData.data = res
+        return res
+      },
+      () => {
         $('.container').html('暂无应收记录哦( ^_^ )')
-        return
       }
-      let receivables = res[0]
-
-
-
-      const totalDataCount = receivables.totalCount
-      //头部应收数据
-      const othersData = receivables.others
-      let totalAmountUnreceived, totalAmountReceivable, totalAmountReceived
-      if (othersData) {
-        totalAmountUnreceived = othersData.totalAmountUnreceived ? othersData.totalAmountUnreceived : 0
-        totalAmountReceivable = othersData.totalAmountReceivable ? othersData.totalAmountReceivable : 0
-        totalAmountReceived = othersData.totalAmountReceived ? othersData.totalAmountReceived : 0
+    )
+  },
+  //核销数据请求
+  vertification(id, paymentAmount, payMethod) {
+    return http.ajax({
+      url: '/treasureWeb/receivable/verification.do',
+      data: {
+        'treasureReceivableId': id,
+        'paymentAmount': paymentAmount,
+        'payMethod': payMethod
       }
-
-      let headerHtml = ReceivablesHeaderTemplte({
-        othersData: {
-          totalAmountUnreceived: totalAmountUnreceived,
-          totalAmountReceivable: totalAmountReceivable,
-          totalAmountReceived: totalAmountReceived
-        }
-      })
-      $('.container-header').html(headerHtml)
-      //应收列表数据
-      let html = ReceivablesTemplte({
-        receivablesData: {
-          data: receivables.data
-        }
-      })
-      $('.container-content').html(html)
-      //调用分页
-      bindPagination({
-        maxPage: totalDataCount,
-        currPage: page
-      })
-      //pageNumber局部刷新时需要的页码
-      let pageNumber = $('.my-pagination  .pagination').find('.active').text()
-      getVertificateContent(receivables, pageNumber)
-      return res
     })
-  }
-  //请核销弹窗
-  function getVertificateContent(receivables, pageNumber) {
+  },
 
-    $('.container').on('click', '.vertificate', function () {
-      var id = $(this).data('id')
-      var index = $(this).data('index')
+  // 绑定分页事件
+  bindPagination(pageSize, totalCount, currPage) {
+    let self = this
+    let $paginationElem = $('.my-pagination')
+    let maxPage = Math.ceil(totalCount / pageSize)
+    $paginationElem.pagination({
+      maxPage: maxPage,
+      currPage: currPage,
+      callback: function (page) {
+        self.initData.params.pageNo = page
+        self.getList(self.initData.params)
+      }
+    })
+  },
+  //默认时间过滤
+  timeFilter() {
+    let self = this
+    let date = new Date()
+    let year = date.getFullYear()
+    let months = date.getMonth() + 1
+    let day = date.getDate()
+    // let now = date.toLocaleDateString()
+    let prev = year + '-' + self.addZero(months) + '-' + '01'
+    let now = year + '-' + self.addZero(months) + '-' + self.addZero(day)
+    self.initData.params.inputDateStart = prev
+    self.initData.params.inputDateEnd = now
+    $('#datetimepicker1').find('input').val(prev)
+    $('#datetimepicker2').find('input').val(now)
+    self.getList(self.initData.params)
+  },
+  //添零
+  addZero(n) {
+    if (n > 10) {
+      return n
+    } else {
+      return '0' + n
+    }
+  },
+  //绑定事件
+  bindEventHandlers() {
+    let self = this
+    var id, paymentAmount, payMethod
+    //只看待核销
+    $(document).on('click', '#vertif', function () {
+      var _this = $(this)
+      if (_this.prop('checked') === true) {
+        self.initData.params.status = '待核销'
+      } else {
+        self.initData.params.status = ''
+      }
+      self.initData.params.pageNo = 1
+      self.getList(self.initData.params).then(function (res) {
+        if (res[0].code === 0 && res[0].data.length === 0) {
+          //提示窗
+          let dialogHTML = TipDialogTemplate({
+            message: '暂无待核销记录哦( ^_^ )',
+            title: '信息提示',
+            id: 'alert-dialog'
+          })
+          $('.comp-dialog').html(dialogHTML)
+          $('#alert-dialog').modal()
 
-      var data = receivables.data[index]
-      var paymentAmount, payMethod, method
-      //总应收账款
-      $('.totalAccount').text(data.amountReceivable)
-      //已收账款
-      $('.receivedAccount').text(data.amountReceived)
-      //本次核销
-      $('#inp').val(data.amountUnreceived)
-      paymentAmount = $('#inp').val()
-      $('.vActions').on('click', 'div', function () {
+        }
+      })
+    })
+      //按日期查询账单
+      .on('click', '.operation-btn', function () {
+        self.initData.params.pageNo = 1
+        let start = $('#datetimepicker1').find('input').val()
+        let end = $('#datetimepicker2').find('input').val()
+        if (start > end) {
+          let dialogHTML = TipDialogTemplate({
+            message: '开始时间不得大于结束时间哦( ^_^ )',
+            title: '信息提示',
+            id: 'alert-dialog'
+          })
+          $('.comp-dialog').html(dialogHTML)
+          $('#alert-dialog').modal()
+          return
+        }
+        self.initData.params.inputDateStart = start
+        self.initData.params.inputDateEnd = end
+        self.getList(self.initData.params).then(function (res) {
+          if (res[0].code === 0 && res[0].data.length === 0) {
+            // alert('暂无该日期范围应收记录哦( ^_^ )')
+            let dialogHTML = TipDialogTemplate({
+              message: '暂无该日期范围应收记录哦( ^_^ )',
+              title: '信息提示',
+              id: 'alert-dialog'
+            })
+            $('.comp-dialog').html(dialogHTML)
+            $('#alert-dialog').modal()
+          }
+        })
+      })
+      //请核销弹窗
+      .on('click', '.vertificate', function () {
+        id = $(this).data('id')
+        var index = $(this).data('index')
+        var receivables = self.initData.data
+        var data = receivables[0].data[index]
+
+        //总应收账款
+        $('.totalAccount').text(data.amountReceivable)
+        //已收账款
+        $('.receivedAccount').text(data.amountReceived)
+        //本次核销
+        $('#inp').val(data.amountUnreceived)
+        paymentAmount = $('#inp').val()
+        //防止error信息重复渲染
+        $('.errorMsg').html('')
+      })
+      //支付方式选择
+      .on('click', '.vActions div', function () {
+        var $this = $(this)
+        var method
+        if (!$this.hasClass('.selected')) {
+          $('.vActions').find('.selected').removeClass('selected')
+          $('.vActions').find('i').remove()
+          $this.addClass('selected')
+          $this.append('<i></i>')
+        }
         method = $('.vActions').find('.selected').text()
         if (method === '银行卡') {
           payMethod = 1
@@ -128,129 +256,39 @@ $((function () {
         if (method === '其他') {
           payMethod = 5
         }
-        clickSure(id, paymentAmount, payMethod, pageNumber)
+
       })
-    })
-  }
-
-  //点击核销确认按钮传参
-  function clickSure(id, paymentAmount, payMethod, pageNumber) {
-
-    $('.modal').on('click', '.sure', function () {
-      //   if ($('.vActions').find('.slected').length === 0) {
-      //     alert('请选择核销方式')
-      //     return
-      //   }
-      http.ajax({
-        url: '/treasureWeb/receivable/verification.do',
-        data: {
-          'treasureReceivableId': id,
-          'paymentAmount': paymentAmount,
-          'payMethod': payMethod
-        }
-      }).then(function (res) {
-
-        if (res[0].code === 0) {
-          $('#exampleModal').modal('hide')
-          let dialogHTML = TipDialogTemplate({
-            message: '核销成功( ^_^ )',
-            title: '信息提示',
-            id: 'alert-dialog'
-          })
-          $('.comp-dialog').html(dialogHTML)
-          $('#alert-dialog').modal()
-          getList(pageNumber)
-          // location.reload()
-        } else {
-          $('.errorMsg').css('display', 'block')
-          $('.errorMsg').html(res[0].message)
-        }
-      })
-    })
-
-  }
-
-  //支付方式选中样式
-  $('.vActions').on('click', 'div', function () {
-    var $this = $(this)
-    if (!$this.hasClass('.selected')) {
-      $('.vActions').find('.selected').removeClass('selected')
-      $('.vActions').find('i').remove()
-      $this.addClass('selected')
-      $this.append('<i></i>')
-    }
-  })
-
-  //只看待核销
-  vertificate()
-  function vertificate() {
-    $('.container').on('click', '#vertif', function () {
-      var _this = $(this)
-
-      if (_this.prop('checked') === true) {
-        status = '待核销'
-      } else {
-        status = ''
-      }
-      // getList(1)
-      getList(1).then(function (res) {
-        if (res[0].code === 0 && res[0].data.length === 0) {
-          //提示窗
-          let dialogHTML = TipDialogTemplate({
-            message: '暂无待核销记录哦( ^_^ )',
-            title: '信息提示',
-            id: 'alert-dialog'
-          })
-          $('.comp-dialog').html(dialogHTML)
-          $('#alert-dialog').modal()
-
-        }
-      })
-    })
-  }
-
-  //datetime picker codes
-  $('#datetimepicker1').datetimepicker({
-    minView: 'month',
-    format: 'yyyy-mm-dd',
-    language: 'zh-CN',
-    autoclose: 1,
-  })
-  $('#datetimepicker2').datetimepicker({
-    minView: 'month',
-    format: 'yyyy-mm-dd',
-    language: 'zh-CN',
-    autoclose: 1,
-  })
-
-  $('.order-date').on('click', 'button', function () {
-    inputDateStart = $('#datetimepicker1').find('input').val()
-    inputDateEnd = $('#datetimepicker2').find('input').val()
-    getList(1).then(function (res) {
-      if (res[0].code === 0 && res[0].data.length === 0) {
-        // alert('暂无该日期范围应收记录哦( ^_^ )')
-        let dialogHTML = TipDialogTemplate({
-          message: '暂无该日期范围应收记录哦( ^_^ )',
-          title: '信息提示',
-          id: 'alert-dialog'
+      //确定核销
+      .on('click', '.sure', function () {
+        self.vertification(id, paymentAmount, payMethod).then(function (res) {
+          if (res[0].code === 0) {
+            $('#exampleModal').modal('hide')
+            let dialogHTML = TipDialogTemplate({
+              message: '核销成功( ^_^ )',
+              title: '信息提示',
+              id: 'alert-dialog'
+            })
+            $('.comp-dialog').html(dialogHTML)
+            $('#alert-dialog').modal()
+            self.getList(self.initData.params)
+          } else {
+            $('.errorMsg').css('display', 'block')
+            $('.errorMsg').html(res[0].message)
+          }
         })
-        $('.comp-dialog').html(dialogHTML)
-        $('#alert-dialog').modal()
-      }
-    })
-  })
-  //end of datatime picker codes
+      })
 
-  // pagination codes
-  function bindPagination(options) {
-    let $paginationElem = $('.my-pagination')
-    var maxPage = Math.ceil(options.maxPage / 10)
-    $paginationElem.pagination({
-      maxPage: maxPage,
-      currPage: options.currPage,
-      callback: function (page) {
-        getList(page)
-      }
-    })
+  },
+  //页面加载完后执行
+  mounted() {
+    let self = this
+    self.initPage()
+    // self.getList(self.initData.params)
+    self.bindEventHandlers()
+    self.timeFilter()
   }
-})(window))
+}
+$(function () {
+  Page.mounted()
+
+})

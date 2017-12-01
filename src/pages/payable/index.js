@@ -35,7 +35,7 @@ $((function () {
   Footer.render($('.footer'))
   //获取列表内容
   let treasureBillInputDateStart, treasureBillInputDateEnd
-  getList(1)
+  // getList(1)
   function getList(page) {
     return http.ajax({
       url: '/treasureWeb/treasurePayableController/getTreasurePayableList.do',
@@ -57,12 +57,12 @@ $((function () {
       const totalDataCount = payables.totalCount
       //头部应付数据
       let totalAmountPayable, totalAmountUnpaid, totalAmountPaid
-      const othersData = payables.others
+      let othersData = payables.others
 
       if (othersData) {
-        totalAmountPayable = othersData.totalAmountPayable ? othersData.totalAmountPayable : 0
-        totalAmountUnpaid = othersData.totalAmountUnpaid ? othersData.totalAmountUnpaid : 0
-        totalAmountPaid = othersData.totalAmountPaid ? othersData.totalAmountPaid : 0
+        totalAmountPayable = othersData.totalAmountPayable
+        totalAmountUnpaid = othersData.totalAmountUnpaid
+        totalAmountPaid = othersData.totalAmountPaid
       }
       //应付数据模板渲染
       let html = payablesTemplate({
@@ -100,8 +100,20 @@ $((function () {
   })
 
   $('.order-date').on('click', 'button', function () {
-    treasureBillInputDateStart = $('#datetimepicker1').find('input').val()
-    treasureBillInputDateEnd = $('#datetimepicker2').find('input').val()
+    let start = $('#datetimepicker1').find('input').val()
+    let end = $('#datetimepicker2').find('input').val()
+    if (start > end) {
+      let dialogHTML = TipDialogTemplate({
+        message: '开始时间不得大于结束时间哦( ^_^ )',
+        title: '信息提示',
+        id: 'alert-dialog'
+      })
+      $('.comp-dialog').html(dialogHTML)
+      $('#alert-dialog').modal()
+      return
+    }
+    treasureBillInputDateStart = start
+    treasureBillInputDateEnd = end
     getList(1).then(function (res) {
       if (res[0].code === 0 && res[0].data.length === 0) {
         //提示窗
@@ -116,7 +128,30 @@ $((function () {
     })
   })
   //end of datatime picker codes
-
+  //默认时间过滤
+  timeFilter()
+  function timeFilter() {
+    let date = new Date()
+    let year = date.getFullYear()
+    let months = date.getMonth() + 1
+    let day = date.getDate()
+    // let now = date.toLocaleDateString()
+    let prev = year + '-' + addZero(months) + '-' + '01'
+    let now = year + '-' + addZero(months) + '-' + addZero(day)
+    treasureBillInputDateStart = prev
+    treasureBillInputDateEnd = now
+    $('#datetimepicker1').find('input').val(prev)
+    $('#datetimepicker2').find('input').val(now)
+    getList(1)
+  }
+  //添零
+  function addZero(n) {
+    if (n > 10) {
+      return n
+    } else {
+      return '0' + n
+    }
+  }
   // pagination codes
   function bindPagination(options) {
     let $paginationElem = $('.my-pagination')

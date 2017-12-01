@@ -1,3 +1,11 @@
 {{#> dialog}}
-<div class="styleSize">{{message}}</div>
+<div class="contant" style="text-align:center">
+  <span>{{defaultValHelper message}}</span>
+</div>
+{{#if isShowBtn}}
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary {{confirmClass}} sure-btn" data-id={{orderId}}>{{positive}}</button>
+    <button type="button" class="btn btn-secondary tips-close-btn close-btn" data-dismiss="modal">{{negative}}</button>
+</div>
+{{/if}}
 {{/dialog}}
