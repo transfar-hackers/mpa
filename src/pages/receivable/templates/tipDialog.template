@@ -1,6 +1,0 @@
-{{#> dialog}}
-<div>{{message}}</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-primary sure-btn" data-dismiss="modal">确定</button>
-</div>
-{{/dialog}}

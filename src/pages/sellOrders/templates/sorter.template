@@ -1,6 +1,0 @@
-<div class='list-header'>
-  <span class='list-title statistic statusSelect  current'>全部</span>
-  <span class='list-title statistic statusSelect'>待确认</span>&nbsp&nbsp<span class="red">{{toBeConfirmed}}</span>
-  <span class='list-title statistic statusSelect'>待确认收货</span>&nbsp&nbsp<span class="red">{{toBeTaked}}</span>
-  <span class='list-title statistic statusSelect'>交易完成</span>&nbsp&nbsp<span class="red">{{dealClose}}</span>
-</div>

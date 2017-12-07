@@ -1,3 +1,0 @@
-{{#> dialog}}
-<div class="styleSize">{{message}}</div>
-{{/dialog}}

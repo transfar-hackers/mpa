@@ -1,7 +1,0 @@
-{{#othersData}}
- <div class="order-header">
-    <div class="td-width1">总应收账款：<span>{{defaultValHelper totalAmountReceivable 0}}</span>&nbsp;元</div>
-    <div class="td-width1">未到账：<span>{{defaultValHelper totalAmountUnreceived 0}}</span>&nbsp;元</div>
-    <div class="td-width1">已到账：<span>{{defaultValHelper totalAmountReceived 0}}</span>&nbsp;元</div>
-  </div>
-{{/othersData}}

@@ -1,9 +1,0 @@
-{{#> dialog}}
-<div class="iconfont icon-qianshou checkImg"></div>
-<div class="words">确认收到货，本次交易成功</div>
-<div class="errorMsg">{{message}}</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-primary sure-btn" data-id={{orderId}}>{{positive}}</button>
-    <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">{{negative}}</button>
-</div>
-{{/dialog}}

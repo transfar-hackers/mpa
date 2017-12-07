@@ -1,8 +1,0 @@
-<div class='template-record'>
-  <label class='template-name'>{{contractName}}</label>
-  <label class='template-creator'>{{inputMan}}</label>
-  <label class='upload-date'>{{inputDate}}</label>
-  <label class='template-operations' x-templateId={{treasureContractId}}>
-    <a href='#' class='template-edit'>用该模板创建合同</a>
-  </label>
-</div>
