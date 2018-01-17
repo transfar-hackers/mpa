@@ -20,12 +20,12 @@ function calculateHtmlOutpath(inpath) {
 
 function getEntries(config) {
   var i = 0,
-    len = config.entryJS.length,
+    len = config.entries.length,
     entries = {}
 
   for (i = 0; i < len; i += 1) {
-    let entryName = config.entryHTMLs[i]
-    let entryPath = config.entryJS[i]
+    let entryName = config.entries[i].html
+    let entryPath = config.entries[i].js
     entries[entryName] =
       path.resolve(__dirname, `../pages/${entryName}/` + entryPath)
   }
@@ -36,11 +36,11 @@ function getEntries(config) {
 // generate plugins depending on AppConfig
 function generatePlugins(config) {
   var i = 0,
-    len = config.entryJS.length,
+    len = config.entries.length,
     plugins = []
 
   for (i = 0; i < len; i += 1) {
-    let pageName = config.entryHTMLs[i]
+    let pageName = config.entries[i].html
     plugins.push(new HtmlWebpackPlugin({
       // favicon: path.resolve(__dirname, '../styles/images/favicon.ico'),
       template: path.resolve(__dirname, `../pages/${pageName}/index.html`),

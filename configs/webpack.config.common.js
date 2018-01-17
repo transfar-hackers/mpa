@@ -77,6 +77,7 @@ module.exports = {
       common: path.resolve(__dirname, '../src/common/'),
       utilities: path.resolve(__dirname, '../src/utilities/'),
       styles: path.resolve(__dirname, '../src/styles/'),
+      vendor: path.resolve(__dirname, '../src/vendor')
     }
   },
   node: {

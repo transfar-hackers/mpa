@@ -11,7 +11,7 @@ const plugin = require('./webpack.plugin.js')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const prodConfig = {
   plugins: [
-    new UglifyJSPlugin(),
+    //new UglifyJSPlugin(),
   ]
 }
 

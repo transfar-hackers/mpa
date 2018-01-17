@@ -13,6 +13,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const AppConfig = require('./app.config.js')
 const MyPath = require('../src/utilities/path.js')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const args = require('yargs').argv
 
 module.exports = {
@@ -22,14 +23,15 @@ module.exports = {
       name: 'common' // name the bundle for common modules across different bundles
     }),
     new CleanWebpackPlugin([path.resolve(__dirname, '../dist')], {
-      root: path.resolve(__dirname, '../')
+      root: path.resolve(__dirname, '../'),
+      exclude: ['vendor']
     }),
     new webpack.ProvidePlugin({
       lodash: 'lodash',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
+      //jQuery: 'jquery',
+      //'window.jQuery': 'jquery',
       Proper: ['proper.js', 'default'],
-      $: 'jquery',
+      //$: 'jquery',
       moment: 'moment',
       handlebars: 'handlebars'
     }),
@@ -46,6 +48,10 @@ module.exports = {
     }),
     new BuildCleanerWebpackPlugin({
       options: null
+    }),
+    new webpack.DllReferencePlugin({
+      context: '.',
+      manifest: require('../dist/vendor/vendor-manifest.json')
     })
   ]
 }
@@ -58,9 +64,9 @@ module.exports = {
  * author: j-sparrow
  */
 function AssetsFilterWebpackPlugin() {}
-AssetsFilterWebpackPlugin.prototype.apply = function(compiler) {
-  compiler.plugin('compilation', function(compilation) {
-    compilation.plugin('html-webpack-plugin-before-html-processing', function(htmlPluginData, callback) {
+AssetsFilterWebpackPlugin.prototype.apply = function (compiler) {
+  compiler.plugin('compilation', function (compilation) {
+    compilation.plugin('html-webpack-plugin-before-html-processing', function (htmlPluginData, callback) {
       let isWindows = htmlPluginData.outputName.indexOf('\\') !== -1
       let htmlName = ''
       let upperAssetsJS = htmlPluginData.assets.js,
@@ -110,18 +116,19 @@ AssetsFilterWebpackPlugin.prototype.apply = function(compiler) {
  * author: j-sparrow
  */
 function BuildCleanerWebpackPlugin() {}
-BuildCleanerWebpackPlugin.prototype.apply = function(compiler) {
-  compiler.plugin('done', function(compilation) {
+BuildCleanerWebpackPlugin.prototype.apply = function (compiler) {
+  compiler.plugin('done', function (compilation) {
     let existingFiles = MyPath.walkDirSyncFlat(path.resolve(__dirname, '../dist'))
     let newFiles = Object.keys(compilation.compilation.assets)
       // remove outdated output files
-    console.log(`new files: ${newFiles}`)
+      // console.log(`\nnew files: ${newFiles}`)
     _.each(existingFiles, file => {
       var shortname = file.split('dist')[1].slice(1)
-      var reg = /\.(woff|ttf|gif|svg|eot|html)$/ // (ignore .woff, .ttf, .gif, .svg, .eot files, they don't regrenerate)
+      var reg = /\.(woff|woff2|ttf|gif|svg|eot|html)$/ // (ignore .woff, .ttf, .gif, .svg, .eot files, they don't regrenerate)
         // console.log(`existing file: ${shortname}`)
-      if (newFiles.indexOf(shortname.replace('\\', '/')) === -1 &&
-        (!reg.test(shortname))) {
+      if (newFiles.indexOf(shortname.replace('\\', '/')) === -1 && // not new files
+        shortname.indexOf('vendor') === -1 && // nor vendor files
+        (!reg.test(shortname))) { // nor woff|tff... files
         // file outdated, delete it
         fs.unlink(file, () => {
           console.log(`${file} is outdated and therefore deleted `)
