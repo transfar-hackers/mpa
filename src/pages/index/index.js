@@ -13,26 +13,23 @@ $((function () {
   // slider
   let $slider = $('.slider')
   let sliders = [{
-    url: '../styles/images/sliders/slider_1.jpg',
+    url: '../styles/images/sliders/slider1.jpg',
+    alt: '武汉麦念科技信息有限公司',
+    title: '',
+    description: '',
+    active: true
+  }, {
+    url: '../styles/images/sliders/slider2.jpg',
     alt: '武汉麦念科技信息有限公司',
     title: '',
     description: ''
   }, {
-    url: '../styles/images/sliders/slider_2.jpg',
-    alt: '武汉麦念科技信息有限公司',
-    title: '',
-    description: ''
-  }, {
-    url: '../styles/images/sliders/slider_3.jpg',
+    url: '../styles/images/sliders/slider3.jpg',
     alt: '武汉麦念科技信息有限公司',
     title: '',
     description: ''
   }]
 
-  // console.log(Menu)
-
-  SliderComponent.render($slider, {
-    sliders: sliders
-  })
+  SliderComponent.render($slider, sliders)
 
 })())

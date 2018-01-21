@@ -55,10 +55,10 @@ module.exports = {
       from: 'src/styles/images/sliders',
       to: 'styles/images/sliders'
     }]),
-    // new webpack.DllReferencePlugin({
-    //   context: '.',
-    //   manifest: require('../dist/vendor/vendor_manifest.json')
-    // })
+    new webpack.DllReferencePlugin({
+      context: '.',
+      manifest: require('../dist/vendor/vendor_manifest.json')
+    })
   ]
 }
 
