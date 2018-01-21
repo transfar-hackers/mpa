@@ -9,22 +9,14 @@ import 'common/base.js'
 import 'common/pagination.js'
 // end of imports for pagination component
 
-import LinksTemplate from 'components/LinksComponent/index.js'
-import Leftnav from 'components/LeftNavComponent/index.js'
 import basicInfoTemplate from 'components/BasicInfoComponent/index.js'
-import headerTemplate from 'components/HeaderComponent/index.js'
 import myDialogTemplate from './templates/mydialog.template'
 import herosTemplate from './templates/heros.template'
 import MessageTemplate from './templates/Message.template'
 
 const totalData = require('utilities/mock_data.js').page_data
 
-$((function() {
-  // LinksTemplate.render($('.links'))
-
-  Leftnav.render($('.m-leftnav'))
-  let $header = $('header')
-  headerTemplate.rerender($header)
+$((function () {
 
   let infoHTML = basicInfoTemplate.render()
   let $sparrowElem = $('.j-sparrow')
@@ -41,11 +33,11 @@ $((function() {
   })
   $dialogElem.html(dialogHTML)
 
-  $('#my-btn').on('click', function() {
+  $('#my-btn').on('click', function () {
     console.log('you clicked me!')
   })
 
-  $('#myDialog').on('hide.bs.modal', function(e) {
+  $('#myDialog').on('hide.bs.modal', function (e) {
     console.log(`I'm about to hide`)
     e.stopImmediatePropagation()
 

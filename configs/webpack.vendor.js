@@ -8,11 +8,13 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, '../vendor'),
+    path: path.resolve(__dirname, '../dist/vendor'),
     library: 'vendor_lib'
   },
-  plugins: [new webpack.DllPlugin({
-    name: 'vendor_lib',
-    path: path.resolve(__dirname, '../vendor/vendor-manifest.json')
-  })]
+  plugins: [
+    new webpack.DllPlugin({
+      name: 'vendor_lib',
+      path: path.resolve(__dirname, '../dist/vendor/vendor-manifest.json')
+    })
+  ]
 }
