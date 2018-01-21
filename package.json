@@ -16,7 +16,6 @@
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.0",
-    "popper.js": "*",
     "bootstrap": "^4.0.0",
     "bootstrap-datetime-picker": "^2.4.4",
     "handlebars": "^4.0.11",
@@ -25,11 +24,13 @@
     "jquery": "^3.3.0",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
+    "popper.js": "*",
     "sass-loader": "^6.0.6"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.17",
     "colors": "^1.1.2",
+    "copy-webpack-plugin": "^4.3.1",
     "css-loader": "^0.28.9",
     "csv-loader": "^2.1.1",
     "debug": "^3.1.0",

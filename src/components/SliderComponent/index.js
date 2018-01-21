@@ -1,14 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import './style.css'
 import 'bootstrap/dist/js/bootstrap.js'
-import SliderTemplate from './slider.template'
+import SliderTemplate from './Slider.template'
 
 module.exports = {
-  render: function ($elem, data) {
+  render: function ($elem, sliders) {
     var html = ''
-    data = data ? data : {}
+    sliders ? sliders : []
 
-    html = SliderTemplate(data)
+    html = SliderTemplate({
+      sliders: sliders
+    })
+
+    console.log('slider html: ', html)
 
     if ($elem) {
       $elem.html(html)

@@ -9,11 +9,14 @@ const _ = require('lodash')
 const colors = require('colors')
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const args = require('yargs').argv
+
 const AppConfig = require('./app.config.js')
 const BuildHelper = require('../src/utilities/build.helper.js')
-const args = require('yargs').argv
+
 
 module.exports = {
   plugins: [
@@ -48,10 +51,14 @@ module.exports = {
     new BuildCleanerWebpackPlugin({
       options: null
     }),
-    new webpack.DllReferencePlugin({
-      context: '.',
-      manifest: require('../dist/vendor/vendor_manifest.json')
-    })
+    new CopyWebpackPlugin([{
+      from: 'src/styles/images/sliders',
+      to: 'styles/images/sliders'
+    }]),
+    // new webpack.DllReferencePlugin({
+    //   context: '.',
+    //   manifest: require('../dist/vendor/vendor_manifest.json')
+    // })
   ]
 }
 
@@ -123,7 +130,7 @@ BuildCleanerWebpackPlugin.prototype.apply = function (compiler) {
       // console.log(`\nnew files: ${newFiles}`)
     _.each(existingFiles, file => {
       var shortname = file.split('dist')[1].slice(1)
-      var reg = /\.(woff|woff2|ttf|gif|svg|eot|html)$/ // (ignore .woff, .ttf, .gif, .svg, .eot files, they don't regrenerate)
+      var reg = /\.(woff|woff2|ttf|gif|svg|eot|html|jpg|png)$/ // (ignore .woff, .ttf, .gif, .svg, .eot files, they don't regrenerate)
         // console.log(`existing file: ${shortname}`)
       if (newFiles.indexOf(shortname.replace('\\', '/')) === -1 && // not new files
         shortname.indexOf('vendor') === -1 && // nor vendor files

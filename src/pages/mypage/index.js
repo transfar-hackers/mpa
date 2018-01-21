@@ -9,7 +9,7 @@ import 'common/base.js'
 import 'common/pagination.js'
 // end of imports for pagination component
 
-import basicInfoTemplate from 'components/BasicInfoComponent/index.js'
+import basicInfoTemplate from 'components/BasicInfoComponent'
 import myDialogTemplate from './templates/mydialog.template'
 import herosTemplate from './templates/heros.template'
 import MessageTemplate from './templates/Message.template'
