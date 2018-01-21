@@ -5,8 +5,8 @@
  *
  */
 const AppConfig = require('./app.config.js')
-const MyPath = require('../src/utilities/path.js')
+const BuildHelper = require('../src/utilities/build.helper.js')
 
 module.exports = {
-  entry: MyPath.getEntries(AppConfig)
+  entry: BuildHelper.getEntries(AppConfig)
 }

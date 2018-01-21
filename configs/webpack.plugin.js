@@ -12,13 +12,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const AppConfig = require('./app.config.js')
-const MyPath = require('../src/utilities/path.js')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const BuildHelper = require('../src/utilities/build.helper.js')
 const args = require('yargs').argv
 
 module.exports = {
   plugins: [
-    ...MyPath.generatePlugins(AppConfig),
+    ...BuildHelper.generatePlugins(AppConfig),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common' // name the bundle for common modules across different bundles
     }),
@@ -76,9 +75,9 @@ AssetsFilterWebpackPlugin.prototype.apply = function (compiler) {
         commonJS = ''
 
       if (!isWindows) {
-        htmlName = MyPath.removePostfix(htmlPluginData.outputName.split('/')[0])
+        htmlName = BuildHelper.removePostfix(htmlPluginData.outputName.split('/')[0])
       } else {
-        htmlName = MyPath.removePostfix(htmlPluginData.outputName.split('\\')[0])
+        htmlName = BuildHelper.removePostfix(htmlPluginData.outputName.split('\\')[0])
       }
 
       for (let i = 0; i < upperAssetsJS.length; i += 1) {
@@ -118,7 +117,7 @@ AssetsFilterWebpackPlugin.prototype.apply = function (compiler) {
 function BuildCleanerWebpackPlugin() {}
 BuildCleanerWebpackPlugin.prototype.apply = function (compiler) {
   compiler.plugin('done', function (compilation) {
-    let existingFiles = MyPath.walkDirSyncFlat(path.resolve(__dirname, '../dist'))
+    let existingFiles = BuildHelper.walkDirSyncFlat(path.resolve(__dirname, '../dist'))
     let newFiles = Object.keys(compilation.compilation.assets)
       // remove outdated output files
       // console.log(`\nnew files: ${newFiles}`)

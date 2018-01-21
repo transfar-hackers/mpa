@@ -1,7 +1,6 @@
 /*
- * filename: path.js
- * purpose: resolve path related problems, base on application level
- *   configurations(app.config.js)
+ * filename: build.helper.js
+ * purpose: functions to help webpack build process.
  * author: j-sparrow
  */
 

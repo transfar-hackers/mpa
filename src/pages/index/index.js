@@ -1,8 +1,5 @@
 import 'babel-polyfill'
 import './style.css'
-import {
-  $
-} from 'vendor/dev/jquery.js'
 
 const favicon = require('styles/images/favicon.ico')
 const messageTemplate = require('./Index.template')

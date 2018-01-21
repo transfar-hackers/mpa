@@ -3,8 +3,7 @@ var path = require('path')
 
 module.exports = {
   entry: {
-    jquery: ['jquery'],
-    bootstrap: ['bootstrap/dist/js/bootstrap.js']
+    libs: ['jquery', 'bootstrap']
   },
   output: {
     filename: '[name].bundle.js',
@@ -14,7 +13,7 @@ module.exports = {
   plugins: [
     new webpack.DllPlugin({
       name: 'vendor_lib',
-      path: path.resolve(__dirname, '../dist/vendor/vendor-manifest.json')
+      path: path.resolve(__dirname, '../dist/vendor/vendor_manifest.json')
     })
   ]
 }
