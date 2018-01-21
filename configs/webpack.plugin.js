@@ -27,10 +27,10 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       lodash: 'lodash',
-      //jQuery: 'jquery',
-      //'window.jQuery': 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
       Proper: ['proper.js', 'default'],
-      //$: 'jquery',
+      $: 'jquery',
       moment: 'moment',
       handlebars: 'handlebars'
     }),
@@ -50,7 +50,7 @@ module.exports = {
     }),
     new webpack.DllReferencePlugin({
       context: '.',
-      manifest: require('../dist/vendor/vendor-manifest.json')
+      manifest: require('../dist/vendor/vendor_manifest.json')
     })
   ]
 }

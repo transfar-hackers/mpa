@@ -14,8 +14,6 @@ import myDialogTemplate from './templates/mydialog.template'
 import herosTemplate from './templates/heros.template'
 import MessageTemplate from './templates/Message.template'
 
-const totalData = require('utilities/mock_data.js').page_data
-
 $((function () {
 
   let infoHTML = basicInfoTemplate.render()
