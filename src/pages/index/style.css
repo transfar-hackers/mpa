@@ -7,6 +7,6 @@ body {
 }
 
 .sliders {
-    /*width: 500px;*/
-    /*height: 300px;*/
+    padding-left: 10rem;
+    padding-right: 10rem;
 }

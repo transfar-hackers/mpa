@@ -6,10 +6,19 @@
   font-style: italic;
 }
 
-.toper {
-  background-color: #D3D3D3;
+.c-toper {
+  background-color: #696969;
+  padding-left: 10rem;
+  color: #FFFFFF;
 }
 
-.toper a {
+.c-toper a {
   color: #FFFFFF;
+  font-size: 1rem;
+  float: right;
+  padding-right: 1rem;
+}
+
+.c-toper:last-child {
+  padding-right: 10rem;
 }

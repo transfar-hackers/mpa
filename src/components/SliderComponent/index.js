@@ -12,8 +12,6 @@ module.exports = {
       sliders: sliders
     })
 
-    // console.log('slider html: ', html)
-
     if ($elem) {
       $elem.html(html)
     } else {
