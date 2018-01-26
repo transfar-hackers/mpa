@@ -5,20 +5,14 @@
  */
 
 import './style.css'
-var template = require('./BasicInformation.template')
+var template = require('./Header.template')
 
 module.exports = {
   render: render
 }
 
-function render(data) {
-  let html = template(data ? data : {
-    info: {
-      name: 'jack sparrow',
-      hobbies: 'adventure, and the ocean',
-      gender: 'male'
-    }
-  })
+function render($element) {
+  let html = template()
 
-  return html
+  $element.html(html)
 }

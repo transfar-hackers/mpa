@@ -5,3 +5,21 @@
 .italic {
   font-style: italic;
 }
+
+.c-header {
+  height: 10rem;
+}
+
+.c-logo-div {
+  height: 10rem;
+}
+
+.c-logo {
+  height: 10rem;
+  padding-left: 10rem;
+}
+
+.c-header {
+  display: inline-block;
+
+}

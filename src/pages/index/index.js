@@ -1,7 +1,8 @@
 import 'babel-polyfill'
 import './style.css'
-import SliderComponent from 'components/SliderComponent'
 import ToperComponent from 'components/ToperComponent'
+import HeaderComponent from 'components/HeaderComponent'
+import SliderComponent from 'components/SliderComponent'
 import favicon from 'styles/images/favicon.ico'
 
 $((function () {
@@ -14,6 +15,7 @@ $((function () {
   // toper, header, and slider
   let $toper = $('.toper')
   let $slider = $('.slider')
+  let $header = $('.header')
 
   let sliders = [{
     url: '../styles/images/sliders/slider1.jpg',
@@ -47,6 +49,7 @@ $((function () {
   }
 
   ToperComponent.render(toper, $toper)
+  HeaderComponent.render($header)
   SliderComponent.render(sliders, $slider)
 
 })())

@@ -51,9 +51,13 @@ module.exports = {
     new BuildCleanerWebpackPlugin({
       options: null
     }),
+    // new CopyWebpackPlugin([{
+    //   from: 'src/styles/images/sliders',
+    //   to: 'styles/images/sliders'
+    // }]),
     new CopyWebpackPlugin([{
-      from: 'src/styles/images/sliders',
-      to: 'styles/images/sliders'
+      from: 'src/styles/images',
+      to: 'styles/images'
     }]),
     new webpack.DllReferencePlugin({
       context: '.',

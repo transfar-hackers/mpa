@@ -1,6 +1,6 @@
-<div>
-  <div><span class='bold'>My name is:</span><input type='text' /></div>
-  <div><span class='bold'>My hobbies are:</span><input type='text' /></div><br>
-  <div><span class='upper-case'>My name is: {{info.name}}</span></div>
-  <div><span class='upper-case'>I love {{info.hobbies}}</span></div>
+<div class='c-header'>
+  <div class='c-logo-div'>
+    <img src='../styles/images/logo-w.jpg' class='c-logo' />
+    <h1 class='c-header'>武汉麦念科技有限公司</h1>
+  </div>
 </div>

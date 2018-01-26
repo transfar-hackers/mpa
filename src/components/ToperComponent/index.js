@@ -26,6 +26,5 @@ function render(data, $element) {
     }]
   })
 
-  // console.log('toper: ', html)
   $element.html(html)
 }
