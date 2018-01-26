@@ -1,0 +1,15 @@
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.toper {
+  background-color: #D3D3D3;
+}
+
+.toper a {
+  color: #FFFFFF;
+}

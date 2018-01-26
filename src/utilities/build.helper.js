@@ -41,7 +41,7 @@ function generatePlugins(config) {
   for (i = 0; i < len; i += 1) {
     let pageName = config.entries[i].html
     plugins.push(new HtmlWebpackPlugin({
-      // favicon: path.resolve(__dirname, '../styles/images/favicon.ico'),
+      favicon: path.resolve(__dirname, '../styles/images/favicon.ico'),
       template: path.resolve(__dirname, `../pages/${pageName}/index.html`),
       filename: path.resolve(__dirname, `../../dist/${pageName}/index.html`)
     }))

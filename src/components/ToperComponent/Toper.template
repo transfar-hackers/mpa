@@ -1,0 +1,6 @@
+<div class='toper'>
+  <span>{{welcome}}</span>
+  {{#each topers}}
+    <a href={{url}}>{{name}}</a>
+  {{/each}}
+</div>
