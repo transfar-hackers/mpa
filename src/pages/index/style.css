@@ -9,4 +9,10 @@ body {
 .sliders {
     padding-left: 10rem;
     padding-right: 10rem;
+    background-color: grey;
+}
+
+.slider {
+  width: 80%;
+  margin: auto;
 }
