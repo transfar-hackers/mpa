@@ -8,17 +8,17 @@
 
 .c-toper {
   background-color: #696969;
-  padding-left: 10rem;
+  padding: 0 10rem;
   color: #FFFFFF;
 }
 
 .c-toper a {
   color: #FFFFFF;
   font-size: 1rem;
-  float: right;
-  padding-right: 1rem;
+  /*float: right;*/
+  padding-left: 1rem;
 }
 
-.c-toper:last-child {
-  padding-right: 10rem;
+.c-links {
+  float: right;
 }

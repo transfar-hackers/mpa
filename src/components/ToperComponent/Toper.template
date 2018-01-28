@@ -1,6 +1,8 @@
 <div class='c-toper'>
   <span>{{message}}</span>
-  {{#each topers}}
+  <div class='c-links'>
+    {{#each topers}}
     <a href={{url}}>{{name}}</a>
-  {{/each}}
+    {{/each}}
+  </div>
 </div>
