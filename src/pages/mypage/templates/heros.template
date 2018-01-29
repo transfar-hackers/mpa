@@ -1,9 +1,0 @@
-{{#heros}}
-<div class='hero'>
-<span>Hero: </span>
-<div>hero name: {{hero_name}}</div>
-<div>hero hobbies: {{hero_hobbies}}</div>
-<div>hero hobbies: {{hero_hobbies}}</div>
-<div>hero slogan: {{hero_slogan}}</div>
-</div>
-{{/heros}}

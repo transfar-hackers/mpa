@@ -2,14 +2,18 @@
 
 @import "~bootstrap/dist/css/bootstrap.css";
 
+html {
+  font-size: 100%; /* 16px by default */
+}
+
 body {
-    margin: 0.2em;
+  margin: 0.2rem;
 }
 
 .sliders {
-    padding-left: 10rem;
-    padding-right: 10rem;
-    background-color: grey;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: grey;
 }
 
 .slider {

@@ -18,18 +18,18 @@ $((function () {
   let $header = $('.header')
 
   let sliders = [{
-    url: '../styles/images/sliders/slider1.jpg',
+    url: '../styles/images/sliders/slider-i-01.jpg',
     alt: '武汉麦念科技信息有限公司',
     title: '',
     description: '',
     active: true
   }, {
-    url: '../styles/images/sliders/slider2.jpg',
+    url: '../styles/images/sliders/slider-i-03.jpg',
     alt: '武汉麦念科技信息有限公司',
     title: '',
     description: ''
   }, {
-    url: '../styles/images/sliders/slider3.jpg',
+    url: '../styles/images/sliders/slider-i-04.jpg',
     alt: '武汉麦念科技信息有限公司',
     title: '',
     description: ''

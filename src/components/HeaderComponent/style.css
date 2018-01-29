@@ -6,19 +6,27 @@
   font-style: italic;
 }
 
-.c-header {
-  height: 200px;
+.c-logo-div {
+  padding-left: 1rem;
 }
 
-.c-logo-div {
-  height: 200px;
+.c-logo-div h1 {
+  font-size: 1rem;
 }
 
 .c-logo {
-  height: 200px;
-  padding-left: 1em;
+  display: none;
 }
 
 .c-header {
   display: inline;
 }
+
+@media(min-width: 380px) {
+  .c-logo {
+    display: inline;
+    height: 8rem;
+    width: auto;
+  }
+}
+
