@@ -21,3 +21,9 @@
 .c-links {
   float: right;
 }
+
+@media(min-width: 440px) {
+  .c-toper-content {
+    padding: 0 10rem;
+  }
+}

@@ -1,8 +1,10 @@
 <div class='c-toper'>
-  <span>{{message}}</span>
-  <div class='c-links'>
-    {{#each topers}}
-    <a href={{url}}>{{name}}</a>
-    {{/each}}
+  <div class='c-toper-content'>
+    <span>{{message}}</span>
+    <div class='c-links'>
+      {{#each topers}}
+      <a href={{url}}>{{name}}</a>
+      {{/each}}
+    </div>
   </div>
 </div>

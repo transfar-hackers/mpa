@@ -31,5 +31,6 @@ body {
 @media(min-width: 440px) {
   .header {
     margin-top: 0;
+    padding: 0 10rem;
   }
 }
