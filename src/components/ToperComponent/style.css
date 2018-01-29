@@ -19,11 +19,22 @@
 }
 
 .c-links {
-  float: right;
+  display: none;
 }
 
 @media(min-width: 440px) {
+  .c-toper {
+    padding: 0;
+  }
   .c-toper-content {
     padding: 0 10rem;
+  }
+}
+
+@media(min-width:  800px) {
+  .c-links {
+    display: inline;
+    position: absolute;
+    right: 10rem;
   }
 }
