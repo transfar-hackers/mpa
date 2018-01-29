@@ -5,3 +5,33 @@
 .img-fluid {
   margin: auto;
 }
+
+.slider-title {
+  background-color: black;
+  color: #FFFFFF;
+}
+
+.slider-description {
+  background-color: black;
+  color: #FFFFFF;
+}
+
+.carousel-caption {
+  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.carousel-caption h3 {
+  background-color: rgba(221, 221, 221, 0.5);
+  color: #000000;
+  font-weight: 700;
+}
+
+.carousel-caption p {
+  background-color: rgba(221, 221, 221, 0.5);
+  color: #000000;
+  font-weight: 700;
+}
+
+
