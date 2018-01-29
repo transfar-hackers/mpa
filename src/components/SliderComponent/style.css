@@ -2,8 +2,6 @@
   width: 100%;
 }
 
-.carousel-item {
-  text-align: -webkit-center;
-  text-align: -moz-center;
-  text-align: -ms-center;
+.img-fluid {
+  margin: auto;
 }

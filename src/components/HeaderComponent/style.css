@@ -21,12 +21,12 @@
 
   .c-name {
     width: 70%;
-    max-height: 150px;
+    max-height: 100px;
   }
 
   .c-logo {
     display: inline;
-    max-height: 200px;
+    max-height: 100px;
     width: 20%;
   }
 
