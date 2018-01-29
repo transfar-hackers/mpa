@@ -16,7 +16,7 @@
 
 .c-name {
   width: 100%;
-  float: right;
+  /*float: right;*/
 }
 
 @media(min-width: 380px) {
