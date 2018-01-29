@@ -12,6 +12,8 @@ body {
 
 .header {
   display: inline-block;
+  text-align: center;
+  width: 100%;
 }
 
 .sliders {
@@ -21,6 +23,6 @@ body {
 }
 
 .slider {
-  width: 80%;
+  width: 96%;
   margin: auto;
 }
