@@ -1,6 +1,6 @@
 /*@import url("../../../node_modules/bootstrap/dist/css/bootstrap.css");*/
 
-@import "~bootstrap/dist/css/bootstrap.css";
+@import "~bootstrap/dist/css/bootstrap.min.css";
 
 html {
   font-size: 100%; /* 16px by default */
@@ -14,7 +14,7 @@ body {
   display: inline-block;
   text-align: center;
   width: 100%;
-  margin-top: -20px;
+  /*margin-top: -20px;*/
 }
 
 .sliders {
@@ -24,7 +24,7 @@ body {
 }
 
 .slider {
-  width: 98%;
+  width: 100%;
   margin: auto;
 }
 

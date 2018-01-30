@@ -3,7 +3,8 @@ var path = require('path')
 
 module.exports = {
   entry: {
-    libs: ['jquery', 'bootstrap']
+    libs: ['jquery/dist/jquery.min.js', 'bootstrap/dist/js/bootstrap.min.js', 'popper.js/dist/popper.min.js']
+      // libs: ['jquery', 'bootstrap', 'popper.js']
   },
   output: {
     filename: '[name].bundle.js',
