@@ -30,6 +30,9 @@ body {
 
 .products {
   margin: auto;
+  background-color: #0f2a3c;
+  color: #143850;
+  padding: 1rem 0;
 }
 
 .section {
@@ -39,6 +42,9 @@ body {
   transform: translateX(-50%);
   left: 50%;
   max-width: 800px;
+  background-color: #FFFFFF;
+  padding: 1rem;
+  border-radius: 0.5rem;
 }
 
 @media(min-width: 440px) {
