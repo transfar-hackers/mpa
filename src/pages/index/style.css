@@ -28,6 +28,19 @@ body {
   margin: auto;
 }
 
+.products {
+  margin: auto;
+}
+
+.section {
+  display: inline-block;
+  text-align: left;
+  position: relative;
+  transform: translateX(-50%);
+  left: 50%;
+  max-width: 800px;
+}
+
 @media(min-width: 440px) {
   .header {
     margin-top: 0;

@@ -14,7 +14,7 @@ const plugin = require('./webpack.plugin.js')
 
 const devConfig = {
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    //new webpack.HotModuleReplacementPlugin()
   ],
   devtool: 'inline-source-map',
   watch: true,

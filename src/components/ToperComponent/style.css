@@ -22,23 +22,23 @@
   display: none;
 }
 
-.c-toper-content>span {
-
+.c-message {
+  text-align: center;
 }
 
-@media(min-width: 440px) {
-  .c-toper {
-    padding: 0;
+@media(min-width: 700px) and (orientation: landscape) {
+  .c-message {
+    text-align: left;
   }
-  .c-toper-content {
-    padding: 0 10rem;
-  }
-}
 
-@media(min-width:  800px) {
   .c-links {
     display: inline;
-    position: absolute;
-    right: 10rem;
+    float: right;
+  }
+}
+
+@media(min-width: 800px) {
+  .c-toper-content {
+    padding: 0 10rem;
   }
 }

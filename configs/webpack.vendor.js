@@ -1,5 +1,6 @@
 var webpack = require('webpack')
 var path = require('path')
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -15,6 +16,7 @@ module.exports = {
     new webpack.DllPlugin({
       name: 'vendor_lib',
       path: path.resolve(__dirname, '../dist/vendor/vendor_manifest.json')
-    })
+    }),
+    new UglifyJSPlugin()
   ]
 }
