@@ -44,6 +44,10 @@ body {
   border-radius: 0.3rem;
 }
 
+.section h5 {
+  font-weight: 750;
+}
+
 @media(min-width: 440px) {
   .header {
     margin-top: 0;

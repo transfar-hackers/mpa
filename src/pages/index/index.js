@@ -37,11 +37,14 @@ $((function () {
   let toper = {
     message: '您好！欢迎访问武汉麦念科技有限公司官网！',
     topers: [{
+      url: '../index/index.html',
+      name: '返回首页'
+    }, {
       url: '../about_us/index.html',
       name: '收藏麦念'
     }, {
       url: '../about_us/index.html',
-      name: '| 常见问题'
+      name: '| 最新政策'
     }, {
       url: '../about_us/index.html',
       name: '| 关于麦念'

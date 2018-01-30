@@ -20,8 +20,15 @@ body {
   padding: 0.5rem 0;
 }
 
-.test-class {
+.sliders {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: #0f2a3c;
+}
 
+.slider {
+  width: 100%;
+  margin: auto;
 }
 
 .section {
@@ -34,6 +41,10 @@ body {
   background-color: #FFFFFF;
   padding: 0.5rem;
   border-radius: 0.3rem;
+}
+
+.section h5 {
+  font-weight: 750;
 }
 
 @media(min-width: 440px) {

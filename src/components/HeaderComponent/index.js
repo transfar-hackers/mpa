@@ -13,6 +13,10 @@ module.exports = {
 
 function render($element) {
   let html = template()
+    // bind event
+  $('.header').on('click', function () {
+    window.location.href = '../index/index.html';
+  })
 
   $element.html(html)
 }
