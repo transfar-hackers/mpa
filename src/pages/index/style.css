@@ -14,7 +14,6 @@ body {
   display: inline-block;
   text-align: center;
   width: 100%;
-  /*margin-top: -20px;*/
 }
 
 .sliders {
@@ -32,7 +31,7 @@ body {
   margin: auto;
   background-color: #0f2a3c;
   color: #143850;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
 }
 
 .section {
@@ -43,13 +42,19 @@ body {
   left: 50%;
   max-width: 800px;
   background-color: #FFFFFF;
-  padding: 1rem;
-  border-radius: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
 }
 
 @media(min-width: 440px) {
   .header {
     margin-top: 0;
     padding: 0 10rem;
+  }
+}
+
+@media(min-width: 980px) {
+  .section {
+     min-width: 980px;
   }
 }

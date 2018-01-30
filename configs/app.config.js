@@ -11,5 +11,8 @@ module.exports = {
   entries: [{
     html: 'index',
     js: 'index.js'
+  }, {
+    html: 'about_us',
+    js: 'index.js'
   }]
 }
