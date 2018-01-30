@@ -4,7 +4,7 @@
  * author: j-sparrow
  */
 
-import './style.css'
+require('./style.css')
 var template = require('./Toper.template')
 
 module.exports = {

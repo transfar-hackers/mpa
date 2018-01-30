@@ -17,6 +17,7 @@ const args = require('yargs').argv
 const AppConfig = require('./app.config.js')
 const BuildHelper = require('../src/utilities/build.helper.js')
 
+// console.log(`args: `, args)
 
 module.exports = {
   plugins: [
@@ -103,7 +104,7 @@ AssetsFilterWebpackPlugin.prototype.apply = function (compiler) {
       htmlPluginData.assets.js = usefulJS
 
       for (let i = 0; i < upperAssetsCSS.length; i += 1) {
-        if (upperAssetsCSS[i].indexOf(htmlName) !== -1) {
+        if (upperAssetsCSS[i].indexOf(htmlName) !== -1 || upperAssetsCSS[i].indexOf('common') !== -1) {
           usefulCSS.push(upperAssetsCSS[i])
         }
       }

@@ -1,4 +1,5 @@
 import 'babel-polyfill'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './style.css'
 import ToperComponent from 'components/ToperComponent'
 import HeaderComponent from 'components/HeaderComponent'
@@ -16,7 +17,6 @@ $((function () {
   let $toper = $('.toper')
   let $slider = $('.slider')
   let $header = $('.header')
-
   let sliders = [{
     url: '../styles/images/sliders/slider-i-01.jpg',
     alt: '武汉麦念科技信息有限公司',
@@ -37,13 +37,13 @@ $((function () {
   let toper = {
     message: '您好！欢迎访问武汉麦念科技有限公司官网！',
     topers: [{
-      url: 'http://www.baidu.com',
+      url: '../about_us/index.html',
       name: '收藏麦念'
     }, {
-      url: 'http://www.baidu.com',
+      url: '../about_us/index.html',
       name: '| 常见问题'
     }, {
-      url: 'http://www.baidu.com',
+      url: '../about_us/index.html',
       name: '| 关于麦念'
     }]
   }

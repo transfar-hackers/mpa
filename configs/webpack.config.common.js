@@ -1,5 +1,7 @@
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const args = require('yargs').argv
+const prod = args.env && args.env.production
 
 module.exports = {
   output: {
@@ -34,7 +36,7 @@ module.exports = {
         use: [{
           loader: 'css-loader',
           options: {
-            minimize: true
+            minimize: prod ? true : false
           }
         }]
       })

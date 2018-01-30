@@ -1,9 +1,7 @@
-/*@import url("../../../node_modules/bootstrap/dist/css/bootstrap.css");*/
-
-@import "~bootstrap/dist/css/bootstrap.min.css";
+/*@import "~bootstrap/dist/css/bootstrap.min.css";*/
 
 html {
-  font-size: 100%; /* 16px by default */
+  font-size: 100%;
 }
 
 body {

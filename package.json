@@ -7,7 +7,7 @@
     "vendor": "webpack --config configs/webpack.vendor.js",
     "build": "webpack --config configs/webpack.config.development.js --colors --progress",
     "listen": "nodemon ./app.js",
-    "release": "webpack --config configs/webpack.config.production.js --colors --progress"
+    "release": "webpack --env.production --config configs/webpack.config.production.js --colors --progress"
   },
   "author": "j-sparrow",
   "license": "ISC",

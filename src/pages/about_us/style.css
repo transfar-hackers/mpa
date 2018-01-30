@@ -1,0 +1,50 @@
+/*@import "~bootstrap/dist/css/bootstrap.min.css";*/
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0.2rem;
+}
+
+.header {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
+.products {
+  margin: auto;
+  background-color: #0f2a3c;
+  color: #143850;
+  padding: 0.5rem 0;
+}
+
+.test-class {
+
+}
+
+.section {
+  display: inline-block;
+  text-align: left;
+  position: relative;
+  transform: translateX(-50%);
+  left: 50%;
+  max-width: 800px;
+  background-color: #FFFFFF;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+}
+
+@media(min-width: 440px) {
+  .header {
+    margin-top: 0;
+    padding: 0 10rem;
+  }
+}
+
+@media(min-width: 980px) {
+  .section {
+     min-width: 980px;
+  }
+}
