@@ -55,11 +55,12 @@ module.exports = {
     new CopyWebpackPlugin([{
       from: 'src/styles/images',
       to: 'styles/images'
-    }]),
-    new webpack.DllReferencePlugin({
-      context: '.',
-      manifest: require('../dist/vendor/vendor_manifest.json')
-    })
+    }])
+    /*,
+        new webpack.DllReferencePlugin({
+          context: '.',
+          manifest: require('../dist/vendor/vendor_manifest.json')
+        })*/
   ]
 }
 
