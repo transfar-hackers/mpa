@@ -37,7 +37,7 @@ $((function () {
   let toper = {
     message: '您好！欢迎访问武汉麦念科技有限公司官网！',
     topers: [{
-      url: '../index/index.html',
+      url: '../index.html',
       name: '返回首页'
     }, {
       url: '../about_us/index.html',
