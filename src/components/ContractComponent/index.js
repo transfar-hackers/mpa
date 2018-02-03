@@ -5,6 +5,8 @@
  */
 
 import tinymce from 'tinymce/tinymce'
+
+/*
 import 'tinymce/themes/modern/theme'
 import 'tinymce/skins/lightgray/skin.min.css'
 import 'tinymce/skins/lightgray/content.min.css'
@@ -22,8 +24,9 @@ import 'tinymce/plugins/print/plugin'
 import 'tinymce/plugins/preview/plugin'
 import 'tinymce/plugins/save/plugin'
 import 'tinymce/plugins/autoresize/plugin'
+*/
 
 // language package
-import './zh_CN.js'
+//import './zh_CN.js'
 
 module.exports = tinymce

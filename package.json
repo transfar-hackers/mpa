@@ -25,7 +25,8 @@
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
     "popper.js": "*",
-    "sass-loader": "^6.0.6"
+    "sass-loader": "^6.0.6",
+    "tinymce": "^4.7.6"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.18",

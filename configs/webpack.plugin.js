@@ -30,13 +30,13 @@ module.exports = {
       exclude: ['vendor']
     }),
     new webpack.ProvidePlugin({
-      lodash: 'lodash',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      Proper: ['proper.js', 'default'],
-      $: 'jquery',
-      moment: 'moment',
-      handlebars: 'handlebars'
+      //lodash: 'lodash',
+      //jQuery: 'jquery',
+      //'window.jQuery': 'jquery',
+      //Proper: ['proper.js', 'default'],
+      //$: 'jquery',
+      //moment: 'moment',
+      //handlebars: 'handlebars'
     }),
     new webpack.DefinePlugin({
       appRoot: JSON.stringify(path.resolve(__dirname, '..')),
@@ -55,6 +55,21 @@ module.exports = {
     new CopyWebpackPlugin([{
       from: 'src/styles/images',
       to: 'styles/images'
+    }, {
+      from: 'node_modules/bootstrap',
+      to: 'vendor/bootstrap'
+    }, {
+      from: 'node_modules/jquery',
+      to: 'vendor/jquery'
+    }, {
+      from: 'node_modules/lodash',
+      to: 'vendor/lodash'
+    }, {
+      from: 'node_modules/moment',
+      to: 'vendor/moment'
+    }, {
+      from: 'node_modules/tinymce',
+      to: 'vendor/tinymce'
     }])
     /*,
         new webpack.DllReferencePlugin({
